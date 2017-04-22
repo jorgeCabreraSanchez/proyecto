@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="418.0" prefWidth="591.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Jefe.JefeController">
+    <stylesheets>
+        <URL value="@iniciojefe.css" />
+    </stylesheets>
+   <children>
+      <Button fx:id="sevilla" mnemonicParsing="false" onAction="#cargarSevilla" prefHeight="209.0" prefWidth="296.0" text="Sevilla" />
+      <Button fx:id="barcelona" layoutX="296.0" layoutY="209.0" mnemonicParsing="false" onAction="#cargarBarcelona" prefHeight="209.0" prefWidth="296.0" text="Barcelona" />
+      <Button fx:id="madrid" layoutY="209.0" mnemonicParsing="false" onAction="#cargarMadrid" prefHeight="209.0" prefWidth="296.0" text="Madrid" />
+      <Button fx:id="valencia" layoutX="296.0" mnemonicParsing="false" onAction="#cargarValencia" prefHeight="209.0" prefWidth="296.0" text="Valencia" />
+   </children>
+</AnchorPane>
