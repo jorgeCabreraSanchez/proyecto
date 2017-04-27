@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Empleados;
+package Trabajadores;
 
 /**
  *
  * @author jorge
  */
-public abstract class Empleados {
+public abstract class Trabajadores {
 
     protected int id;
     protected String nombre;
     protected String contraseña;
 
-    public Empleados() {
+    public Trabajadores() {
 
     }
 
-    public Empleados(String nombre, String contraseña) {
+    public Trabajadores(String nombre, String contraseña) {
         this.nombre = nombre;
         this.contraseña = contraseña;
     }

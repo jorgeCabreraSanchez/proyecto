@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Empleados;
+package Trabajadores;
 
 /**
  *
  * @author jorge
  */
-public class Empleado extends Empleados{
+public class Empleado extends Trabajadores{
     
     public Empleado(String nombre, String contraseña) {
         super(nombre, contraseña);

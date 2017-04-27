@@ -5,14 +5,14 @@
  */
 package Jefe;
 
-import Empleados.Empleados;
-import Empleados.Empleados;
+import Trabajadores.Trabajadores;
+import Trabajadores.Trabajadores;
 
 /**
  *
  * @author jorge
  */
-public class Jefe extends Empleados {
+public class Jefe extends Trabajadores {
     
     public Jefe(String nombre, String contraseña) {
         super(nombre, contraseña);

@@ -1,14 +1,12 @@
 #fondo{
     -fx-background-image: url("images/logo.png");
-    -fx-background-size: stretch;
-}
-#labelErrores{
-    -fx-text-fill: #ff3333;
-}
-#buttonLogin:enabled{
-    -fx-background-color: #00ccff;
+    -fx-background-size: stretch; 
 }
 #fondoHuerto{
     -fx-background-image: url("images/fotoHuerto.jpg");
     -fx-background-size: stretch;
+}
+#fondoLogin{
+    -fx-background-color: rgba(0,0,0,0.43);
+    
 }

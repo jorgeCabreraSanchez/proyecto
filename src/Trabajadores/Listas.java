@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Empleados;
+package Trabajadores;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,9 +17,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-public class Total {
+public class Listas {
 
-    public Total() {
+    public Listas() {
 
     }
 
@@ -36,10 +36,9 @@ public class Total {
                     String tipo = rs.getString(2);
                     if (tipo.equalsIgnoreCase("Jefe")) {
                         Stage stage = new Stage();
-                        Parent root = FXMLLoader.load(getClass().getResource("InicioJefe.fxml"));
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
+                        Parent root = FXMLLoader.load(getClass().getResource("InicioJefe.fxml"));                
+                        stage.setScene(new Scene(root));
+                        stage.showAndWait();
                     }
                     if (tipo.equalsIgnoreCase("Encargado")) {
 

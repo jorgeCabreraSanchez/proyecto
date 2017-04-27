@@ -1,7 +1,7 @@
 package proyecto;
 
-import Empleados.Empleados;
-import Empleados.Total;
+import Trabajadores.Trabajadores;
+import Trabajadores.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,12 +17,10 @@ import javafx.scene.layout.AnchorPane;
 
 public class FXMLDocumentController implements Initializable {
 
-    Total total = new Total();
+    Listas total = new Listas();
 
     @FXML
     private AnchorPane fondo;
-    @FXML
-    private Button boton;
     @FXML
     private TextField fieldUsuario;
     @FXML
@@ -33,12 +31,21 @@ public class FXMLDocumentController implements Initializable {
     private Button buttonCancelar;
     @FXML
     private Label labelErrores;
+    @FXML
+    private AnchorPane fondoHuerto;
+    @FXML
+    private AnchorPane fondoLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         this.fieldUsuario.textProperty().addListener((observable, oldValue, newValue) -> {
-            this.buttonLogin.setDisable(newValue.trim().isEmpty());
+            this.buttonLogin.setVisible(!newValue.trim().isEmpty());
+            if (this.buttonLogin.isVisible()){
+                this.buttonLogin.setStyle("-fx-background-color: #00ff00");
+            } else {
+                this.buttonLogin.setStyle("-fx-background-color: none");
+            }
         });
 
         Platform.runLater(() -> this.fieldUsuario.requestFocus());
