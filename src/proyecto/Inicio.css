@@ -1,11 +1,14 @@
-#boton{
+#fondo{
     -fx-background-image: url("images/logo.png");
     -fx-background-size: stretch;
-    -fx-background-color: white;
 }
 #labelErrores{
     -fx-text-fill: #ff3333;
 }
 #buttonLogin:enabled{
     -fx-background-color: #00ccff;
+}
+#fondoHuerto{
+    -fx-background-image: url("images/fotoHuerto.jpg");
+    -fx-background-size: stretch;
 }
