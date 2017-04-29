@@ -15,7 +15,7 @@
       <AnchorPane fx:id="fondoLogin" layoutX="111.0" layoutY="116.0" prefHeight="173.0" prefWidth="255.0">
          <children>
             <TextField fx:id="fieldUsuario" layoutX="78.0" layoutY="24.0" promptText="ID" />
-            <Button fx:id="buttonLogin" layoutX="128.0" layoutY="141.0" mnemonicParsing="false" onAction="#login" text="Login" visible="false">
+            <Button fx:id="buttonLogin" disable="true" layoutX="128.0" layoutY="141.0" mnemonicParsing="false" onAction="#login" text="Login">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
