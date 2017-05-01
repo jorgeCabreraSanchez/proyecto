@@ -1,4 +1,4 @@
-#fondo{
+#fondoLogo{
     -fx-background-image: url("images/logo.png");
     -fx-background-size: stretch; 
 }

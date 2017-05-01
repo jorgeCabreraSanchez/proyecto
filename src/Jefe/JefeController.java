@@ -11,39 +11,56 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 
 public class JefeController implements Initializable {
 
     @FXML
-    private Button sevilla;
+    private AnchorPane fondo;
     @FXML
-    private Button barcelona;
+    private TextField ciudad;
     @FXML
-    private Button madrid;
+    private ContextMenu menuCiudad;
     @FXML
-    private Button valencia;
+    private TextField dirección;
+    @FXML
+    private MenuItem menuCiudadItems;
+
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.ciudad.setContextMenu(menuCiudad);
+        this.menuCiudad.getItems().add(new MenuItem("Valencia"));
+        this.ciudad.textProperty().addListener((observable,oldValue,newValue) -> {
+            if(!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()){
+                
+            }
+            
+            
+        });
+        
+        
+ 
     }    
 
     @FXML
-    private void cargarSevilla(ActionEvent event) {
+    private void elegirCiudad(ActionEvent event) {
+        this.menuCiudad.getProperties().get("Pre");
     }
 
     @FXML
-    private void cargarBarcelona(ActionEvent event) {
+    private void elegirDireccion(ActionEvent event) {
     }
 
     @FXML
-    private void cargarMadrid(ActionEvent event) {
+    private void elegirCiudadItem(ActionEvent event) {
     }
 
-    @FXML
-    private void cargarValencia(ActionEvent event) {
-    }
     
 }

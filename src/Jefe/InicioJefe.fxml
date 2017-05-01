@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,14 +8,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="418.0" prefWidth="591.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Jefe.JefeController">
+<AnchorPane id="AnchorPane" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Jefe.JefeController">
     <stylesheets>
         <URL value="@iniciojefe.css" />
     </stylesheets>
    <children>
-      <Button fx:id="sevilla" mnemonicParsing="false" onAction="#cargarSevilla" prefHeight="209.0" prefWidth="296.0" text="Sevilla" />
-      <Button fx:id="barcelona" layoutX="296.0" layoutY="209.0" mnemonicParsing="false" onAction="#cargarBarcelona" prefHeight="209.0" prefWidth="296.0" text="Barcelona" />
-      <Button fx:id="madrid" layoutY="209.0" mnemonicParsing="false" onAction="#cargarMadrid" prefHeight="209.0" prefWidth="296.0" text="Madrid" />
-      <Button fx:id="valencia" layoutX="296.0" mnemonicParsing="false" onAction="#cargarValencia" prefHeight="209.0" prefWidth="296.0" text="Valencia" />
+      <AnchorPane fx:id="fondo" prefHeight="418.0" prefWidth="545.0">
+         <children>
+            <Text layoutX="35.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" wrappingWidth="46.966796875">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text layoutX="242.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" wrappingWidth="59.966796875">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <TextField fx:id="ciudad" layoutX="82.0" layoutY="36.0" onAction="#elegirCiudad" prefHeight="25.0" prefWidth="142.0">
+               <contextMenu>
+                  <ContextMenu fx:id="menuCiudad">
+                    <items>
+                      <MenuItem fx:id="menuCiudadItems" mnemonicParsing="false" onAction="#elegirCiudadItem" text="Unspecified Action" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TextField>
+            <TextField fx:id="dirección" layoutX="302.0" layoutY="36.0" onAction="#elegirDireccion" prefHeight="25.0" prefWidth="206.0" />
+         </children></AnchorPane>
    </children>
 </AnchorPane>

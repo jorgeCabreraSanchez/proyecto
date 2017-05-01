@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="fondo" prefHeight="299.0" prefWidth="476.0" stylesheets="@Inicio.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="fondoAtras" prefHeight="299.0" prefWidth="476.0" stylesheets="@Inicio.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.FXMLDocumentController">
     <children>
       <AnchorPane fx:id="fondoHuerto" opacity="0.83" prefHeight="303.0" prefWidth="476.0" />
-      <AnchorPane fx:id="fondo" layoutX="97.0" prefHeight="108.0" prefWidth="284.0" />
-      <AnchorPane fx:id="fondoLogin" layoutX="111.0" layoutY="116.0" prefHeight="173.0" prefWidth="255.0">
+      <AnchorPane fx:id="fondoLogo" layoutX="97.0" prefHeight="108.0" prefWidth="284.0" />
+      <AnchorPane fx:id="fondoLogin" layoutX="112.0" layoutY="-173.0" prefHeight="173.0" prefWidth="255.0">
          <children>
             <TextField fx:id="fieldUsuario" layoutX="78.0" layoutY="24.0" promptText="ID" />
             <Button fx:id="buttonLogin" disable="true" layoutX="128.0" layoutY="141.0" mnemonicParsing="false" onAction="#login" text="Login">

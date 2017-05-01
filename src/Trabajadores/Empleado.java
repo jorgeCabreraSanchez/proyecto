@@ -10,9 +10,15 @@ package Trabajadores;
  * @author jorge
  */
 public class Empleado extends Trabajadores{
-    
-    public Empleado(String nombre, String contraseña) {
-        super(nombre, contraseña);
+
+    public Empleado(int id, String nombre, String contraseña, int iDTienda) {
+        super(id, nombre, contraseña, iDTienda);
     }
+
+    public Empleado(int id, String nombre, String apellidos, String contraseña, int iDTienda) {
+        super(id, nombre, apellidos, contraseña, iDTienda);
+    }
+    
+    
     
 }

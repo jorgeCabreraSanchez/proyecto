@@ -8,27 +8,28 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class FXMLDocumentController implements Initializable {
 
-    Listas listas = new Listas();
+    Login login = new Login();
 
-    @FXML
-    private AnchorPane fondo;
     @FXML
     private TextField fieldUsuario;
     @FXML
@@ -43,23 +44,18 @@ public class FXMLDocumentController implements Initializable {
     private AnchorPane fondoHuerto;
     @FXML
     private AnchorPane fondoLogin;
+    @FXML
+    private AnchorPane fondoAtras;
+    @FXML
+    private AnchorPane fondoLogo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/Jefe/InicioJefe.fxml"));
-//        loader.setBuilderFactory(new JavaFXBuilderFactory());
-//        AnchorPane page = this.fondoLogin;
-//        try {
-//            page = (AnchorPane) loader.load();
-//        } catch (IOException ex) {
-//        }
-//
-//        FadeTransition ft = new FadeTransition(Duration.millis(3000), page);
-//        ft.setFromValue(0.0);
-//        ft.setToValue(1.0);
-//        ft.play();
-//        Scene scene = new Scene(page);
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(2));
+        transition.setNode(this.fondoLogin);
+        transition.setToY(288);
+        transition.play();
 
         this.fieldUsuario.textProperty().addListener((observable, oldValue, newValue) -> {
             this.buttonLogin.setDisable(newValue.trim().isEmpty());
@@ -70,7 +66,6 @@ public class FXMLDocumentController implements Initializable {
             }
         });
 
-        Platform.runLater(() -> this.fieldUsuario.requestFocus());
     }
 
     @FXML
@@ -90,7 +85,8 @@ public class FXMLDocumentController implements Initializable {
 
         try {
             id1 = Integer.parseInt(id);
-            String error = listas.comprobar(id1, contraseña);
+            Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
+            String error = login.comprobar(id1, contraseña, stage);
             if (error.equalsIgnoreCase("Usuario")) {
                 this.labelErrores.setText("- La ID escrita no existe.");
             }
@@ -98,12 +94,10 @@ public class FXMLDocumentController implements Initializable {
                 this.labelErrores.setText("- La contraseña escrita es incorrecta.");
                 this.fieldPassword.setText("");
             }
-
             if (error.equalsIgnoreCase("OK")) {
-                Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
-                stage.close();
-                /* No funciona */
+                /* Hacer pregunta, lo cargo aqui o desde el login? */
             }
+            
         } catch (NumberFormatException e) {
             this.labelErrores.setText("- El ID solo puede contener números");
         }

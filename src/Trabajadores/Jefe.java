@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Jefe;
+package Trabajadores;
 
 import Trabajadores.Trabajadores;
 import Trabajadores.Trabajadores;
@@ -13,9 +13,17 @@ import Trabajadores.Trabajadores;
  * @author jorge
  */
 public class Jefe extends Trabajadores {
-    
-    public Jefe(String nombre, String contraseña) {
-        super(nombre, contraseña);
+
+    public Jefe(int id, String nombre, String contraseña, int iDTienda) {
+        super(id, nombre, contraseña, iDTienda);
     }
+
+    public Jefe(int id, String nombre, String apellidos, String contraseña, int iDTienda) {
+        super(id, nombre, apellidos, contraseña, iDTienda);
+    }
+    
+    
+    
+    
     
 }
