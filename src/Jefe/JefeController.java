@@ -34,9 +34,12 @@ public class JefeController implements Initializable {
 
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        this.ciudad.setContextMenu(menuCiudad);
+    public void initialize(URL url, ResourceBundle rb) {        
         this.menuCiudad.getItems().add(new MenuItem("Valencia"));
+        this.menuCiudad.getItems().add(new MenuItem("Madrid"));
+        this.ciudad.setContextMenu(menuCiudad);
+       this.menuCiudad.show(ciudad.getClip(), 85, 40);
+                
         this.ciudad.textProperty().addListener((observable,oldValue,newValue) -> {
             if(!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()){
                 
@@ -51,7 +54,7 @@ public class JefeController implements Initializable {
 
     @FXML
     private void elegirCiudad(ActionEvent event) {
-        this.menuCiudad.getProperties().get("Pre");
+         System.out.println();
     }
 
     @FXML
@@ -61,6 +64,12 @@ public class JefeController implements Initializable {
     @FXML
     private void elegirCiudadItem(ActionEvent event) {
     }
+
+    @FXML
+    private void elegirCiudadMenu(ActionEvent event) {
+        this.ciudad.setText(this.menuCiudad.getUserData().toString());
+    }
+
 
     
 }
