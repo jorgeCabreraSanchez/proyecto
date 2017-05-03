@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Trabajadores;
+package Tiendas;
 
-
-public class Listas {
-
+/**
+ *
+ * @author Jorge Cabrera
+ */
+public class ListaCiudades {
     
-    public Listas() {
-
+    
+    public ListaCiudades(){
+        
     }
-
 }

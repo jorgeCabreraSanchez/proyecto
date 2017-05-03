@@ -5,18 +5,20 @@
  */
 package Jefe;
 
+import Tiendas.ListaCiudadesConTienda;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 
 public class JefeController implements Initializable {
 
@@ -28,33 +30,29 @@ public class JefeController implements Initializable {
     private ContextMenu menuCiudad;
     @FXML
     private TextField dirección;
-    @FXML
-    private MenuItem menuCiudadItems;
 
-
-    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
-        this.menuCiudad.getItems().add(new MenuItem("Valencia"));
-        this.menuCiudad.getItems().add(new MenuItem("Madrid"));
-        this.ciudad.setContextMenu(menuCiudad);
-       this.menuCiudad.show(ciudad.getClip(), 85, 40);
-                
-        this.ciudad.textProperty().addListener((observable,oldValue,newValue) -> {
-            if(!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()){
-                
+    public void initialize(URL url, ResourceBundle rb) {
+//        menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
+//            public void handle(ActionEvent e) {
+//                ciudad.setText();
+//            }
+//        });
+
+        
+        this.ciudad.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {                
+                this.menuCiudad.getItems().addAll(ListaCiudadesConTienda.getCiudades());
+                menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);
+            } else {
+                menuCiudad.hide();
             }
-            
-            
         });
-        
-        
- 
-    }    
+    }
 
     @FXML
     private void elegirCiudad(ActionEvent event) {
-         System.out.println();
+
     }
 
     @FXML
@@ -62,14 +60,8 @@ public class JefeController implements Initializable {
     }
 
     @FXML
-    private void elegirCiudadItem(ActionEvent event) {
-    }
-
-    @FXML
     private void elegirCiudadMenu(ActionEvent event) {
-        this.ciudad.setText(this.menuCiudad.getUserData().toString());
+
     }
 
-
-    
 }

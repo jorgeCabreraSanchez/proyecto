@@ -27,11 +27,7 @@
             </Text>
             <TextField fx:id="ciudad" layoutX="82.0" layoutY="36.0" onAction="#elegirCiudad" prefHeight="25.0" prefWidth="142.0">
                <contextMenu>
-                  <ContextMenu fx:id="menuCiudad" autoHide="false" consumeAutoHidingEvents="false" hideOnEscape="false" onAction="#elegirCiudadMenu">
-                    <items>
-                      <MenuItem fx:id="menuCiudadItems" mnemonicParsing="false" onAction="#elegirCiudadItem" text="Accion" />
-                    </items>
-                  </ContextMenu>
+                  <ContextMenu fx:id="menuCiudad" autoHide="false" consumeAutoHidingEvents="false" hideOnEscape="false" onAction="#elegirCiudadMenu" />
                </contextMenu>
             </TextField>
             <TextField fx:id="dirección" layoutX="302.0" layoutY="36.0" onAction="#elegirDireccion" prefHeight="25.0" prefWidth="206.0" />

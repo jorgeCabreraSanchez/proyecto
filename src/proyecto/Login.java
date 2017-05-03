@@ -6,6 +6,7 @@
 package proyecto;
 
 import Alertas.Alertas;
+import Tiendas.ListaCiudadesConTienda;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -55,23 +57,31 @@ public class Login {
                 if (contraseña.equals(contraseñaUser)) {
                     String tipo = rs.getString(2);
                     stage.close();
-                    Parent root = null;
-                    if (tipo.equalsIgnoreCase("Jefe")) {
-                        root = FXMLLoader.load(getClass().getResource("/Jefe/InicioJefe.fxml"));
-
+                    
+                    if (tipo.equalsIgnoreCase("Jefe")) { 
+                        
+                        String sentencia2 = "Select distinct(ciudad) from tiendas";
+                        ps = connect.prepareStatement(sentencia2);
+                        rs = ps.executeQuery();
+                        
+                        while (rs.next()) {
+                            ListaCiudadesConTienda.setCiudad(new MenuItem(rs.getString(1)));
+                        }
+                        /*Aqui me traigo ya las ciudades debido a que hay pocos,
+                        si fueran muchas haria una busqueda a la BD trayendome solo 
+                        las que contengan lo escrito is like '%nombre%' en JefeController y otra clase
+                        que crearia */
+                        return "Jefe";
                     }
                     if (tipo.equalsIgnoreCase("Encargado")) {
-
+                        return "Encargado";
                     }
                     if (tipo.equalsIgnoreCase("Empleado")) {
-
+                        return "Empleado";
                     }
-                    Stage stage2 = new Stage();
-                    stage2.initModality(Modality.APPLICATION_MODAL);
-                    stage2.setScene(new Scene(root));
-                    stage2.show();
+                   
                     /* Hacer la carga */
-                    return "OK";
+
                 }
                 return "Contraseña";
             } catch (SQLException e) {

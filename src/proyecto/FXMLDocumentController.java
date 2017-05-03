@@ -89,15 +89,24 @@ public class FXMLDocumentController implements Initializable {
             String error = login.comprobar(id1, contraseña, stage);
             if (error.equalsIgnoreCase("Usuario")) {
                 this.labelErrores.setText("- La ID escrita no existe.");
-            }
-            if (error.equalsIgnoreCase("Contraseña")) {
+            } else if (error.equalsIgnoreCase("Contraseña")) {
                 this.labelErrores.setText("- La contraseña escrita es incorrecta.");
                 this.fieldPassword.setText("");
+            } else {
+                Parent root = null;
+                if (error.equalsIgnoreCase("Jefe")) {
+                    root = FXMLLoader.load(getClass().getResource("/Jefe/InicioJefe.fxml"));
+                } else if (error.equalsIgnoreCase("Encargado")) {
+                    root = FXMLLoader.load(getClass().getResource("/"));
+                } else if (error.equalsIgnoreCase("Empleado")) {
+                    root = FXMLLoader.load(getClass().getResource("/"));
+                }
+                Stage stage2 = new Stage();
+                stage2.initModality(Modality.APPLICATION_MODAL);
+                stage2.setScene(new Scene(root));
+                stage2.show();
             }
-            if (error.equalsIgnoreCase("OK")) {
-                /* Hacer pregunta, lo cargo aqui o desde el login? */
-            }
-            
+
         } catch (NumberFormatException e) {
             this.labelErrores.setText("- El ID solo puede contener números");
         }
