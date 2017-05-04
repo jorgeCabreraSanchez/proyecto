@@ -59,18 +59,6 @@ public class Login {
                     stage.close();
                     
                     if (tipo.equalsIgnoreCase("Jefe")) { 
-                        
-                        String sentencia2 = "Select distinct(ciudad) from tiendas";
-                        ps = connect.prepareStatement(sentencia2);
-                        rs = ps.executeQuery();
-                        
-                        while (rs.next()) {
-                            ListaCiudadesConTienda.setCiudad(new MenuItem(rs.getString(1)));
-                        }
-                        /*Aqui me traigo ya las ciudades debido a que hay pocos,
-                        si fueran muchas haria una busqueda a la BD trayendome solo 
-                        las que contengan lo escrito is like '%nombre%' en JefeController y otra clase
-                        que crearia */
                         return "Jefe";
                     }
                     if (tipo.equalsIgnoreCase("Encargado")) {
