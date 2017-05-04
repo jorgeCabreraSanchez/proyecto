@@ -13,17 +13,19 @@ import javafx.scene.control.Alert;
  */
 public class Alertas {
 
-    static public void generarAlerta(String header, String content, Alert.AlertType alert) {
+    static public void generarAlerta(String title,String header, Alert.AlertType alert) {
         Alert alerta = new Alert(alert);
+        alerta.setTitle(title);
+        alerta.setHeaderText(header);
+        alerta.showAndWait();
+    }
+
+     static public void generarAlerta(String title, String header,String content, Alert.AlertType alert) {
+        Alert alerta = new Alert(alert);
+        alerta.setTitle(title);
         alerta.setHeaderText(header);
         alerta.setContentText(content);
         alerta.showAndWait();
     }
-
-    static public void generarAlerta(String header, Alert.AlertType alert) {
-        Alert alerta = new Alert(alert);
-        alerta.setHeaderText(header);
-        alerta.showAndWait();
-    }
-
+    
 }

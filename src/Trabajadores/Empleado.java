@@ -11,13 +11,17 @@ package Trabajadores;
  */
 public class Empleado extends Trabajadores{
 
-     public Empleado(int id, String nombre, String contraseña, int iDTienda, String horario) {
-        super(id, nombre, contraseña, iDTienda, horario);
-    }    
-
-    public Empleado(int id, String nombre, String apellidos, String contraseña, int iDTienda, String horario) {
-        super(id, nombre, apellidos, contraseña, iDTienda, horario);
+    public Empleado(int id, String nombre, String apellido1, String contraseña, int iDTienda, String horario, String estado) {
+        super(id, nombre, apellido1, contraseña, iDTienda, horario, estado);
     }
+
+    public Empleado(int id, String nombre, String apellido1, String apellido2, String contraseña, int iDTienda, String horario, String estado) {
+        super(id, nombre, apellido1, apellido2, contraseña, iDTienda, horario, estado);
+    }
+
+    
+
+     
     
     
     

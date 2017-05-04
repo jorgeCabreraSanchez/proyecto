@@ -14,6 +14,7 @@ public class Incidencias {
     private int iDTrabajador;
     private String titulo;
     private String descripcion;
+    private String tipo;
     
     public Incidencias(){
         

@@ -85,14 +85,18 @@ public class FXMLDocumentController implements Initializable {
 
         try {
             id1 = Integer.parseInt(id);
-            Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
-            String error = login.comprobar(id1, contraseña, stage);
+
+            String error = login.comprobar(id1, contraseña);
+
             if (error.equalsIgnoreCase("Usuario")) {
                 this.labelErrores.setText("- La ID escrita no existe.");
             } else if (error.equalsIgnoreCase("Contraseña")) {
                 this.labelErrores.setText("- La contraseña escrita es incorrecta.");
                 this.fieldPassword.setText("");
             } else {
+                Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
+                stage.close();
+
                 Parent root = null;
                 if (error.equalsIgnoreCase("Jefe")) {
                     root = FXMLLoader.load(getClass().getResource("/Jefe/InicioJefe.fxml"));

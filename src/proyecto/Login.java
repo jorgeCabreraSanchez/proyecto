@@ -37,7 +37,7 @@ public class Login {
 
     }
 
-    public String comprobar(Integer id, String contraseña, Stage stage) throws IOException {
+    public String comprobar(Integer id, String contraseña) throws IOException {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
 
             String sentencia = "Select Contraseña,Tipo from trabajadores where IDTrabajador = ?";
@@ -56,7 +56,11 @@ public class Login {
             try {
                 if (contraseña.equals(contraseñaUser)) {
                     String tipo = rs.getString(2);
-                    stage.close();
+                    
+                    sentencia = "Update trabajadores set estado = 'Conectado' where IDTrabajador = ?";
+                    ps = connect.prepareStatement(sentencia);
+                    ps.setInt(1, id);
+                    ps.executeUpdate();
                     
                     if (tipo.equalsIgnoreCase("Jefe")) { 
                         return "Jefe";
@@ -73,12 +77,12 @@ public class Login {
                 }
                 return "Contraseña";
             } catch (SQLException e) {
-                Alertas.generarAlerta("Ha habido un problema con la BD y no se han podido cargar los datos", Alert.AlertType.ERROR);
+                Alertas.generarAlerta("Error BD","Ha habido un problema con la BD y no se han podido cargar los datos", Alert.AlertType.ERROR);
             }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            Alertas.generarAlerta("Ha habido un problema con la BD y no se puede acceder.", "Hable con el administrador de la BD para solucionar este problema.", Alert.AlertType.ERROR);
+            Alertas.generarAlerta("Error BD","Ha habido un problema con la BD y no se puede acceder.", "Hable con el administrador de la BD para solucionar este problema.", Alert.AlertType.ERROR);
         }
 
         return "";
