@@ -5,7 +5,7 @@
  */
 package Jefe;
 
-import Tiendas.ListaCiudadesConTienda;
+import Tiendas.ListaTiendas;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
@@ -67,15 +67,16 @@ public class JefeController implements Initializable {
     }
 
     private void tiendas() {
+        ListaTiendas ls = new ListaTiendas();
         //        menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
 //            public void handle(ActionEvent e) {
 //                ciudad.setText();
 //            }
-//        });
+//        });   
 
         this.ciudad.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
-                this.menuCiudad.getItems().addAll(ListaCiudadesConTienda.getCiudades());
+                this.menuCiudad.getItems().addAll(ls.getCiudades(newValue));
                 menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);
             } else {
                 menuCiudad.hide();
