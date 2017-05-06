@@ -58,14 +58,6 @@ public class JefeController implements Initializable {
         cerrar();
     }
 
-    @FXML
-    private void elegirCiudad(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void elegirDireccion(ActionEvent event) {
-    }
 
     @FXML
     private void elegirCiudadMenu(ActionEvent event) {
@@ -77,7 +69,7 @@ public class JefeController implements Initializable {
         ciudades(ls);
         direcciones(ls);
 
-        ls.cargarTiendas("", "ciudad");
+        ls.cargarTiendas("", "ciudad","");
         this.tabla.setItems(ls.getTiendas());
         this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
         this.tablaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
@@ -124,16 +116,17 @@ public class JefeController implements Initializable {
             }
         });
 
-        this.menuDireccion.getItems().addAll(ls.getDirecciones(""));
+        String ciudad = this.ciudad.getText();
+        this.menuDireccion.getItems().addAll(ls.getDirecciones("",ciudad));
 
         this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
                 this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue));
+                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue,ciudad));
                 menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
             } else {
                 this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones(""));
+                this.menuDireccion.getItems().addAll(ls.getDirecciones("",ciudad));
                 menuDireccion.hide();
             }
 

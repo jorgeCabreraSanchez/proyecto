@@ -33,7 +33,7 @@ public class ListaTiendas {
     }
 
     public ObservableList<MenuItem> getCiudades(String palabra) {
-        cargarTiendas(palabra, "ciudad");
+        cargarTiendas(palabra, "ciudad","");
         return ciudades;
     }
 
@@ -45,12 +45,12 @@ public class ListaTiendas {
         return direcciones;
     }
     
-    public ObservableList<MenuItem> getDirecciones(String palabra) {
-        cargarTiendas(palabra, "direccion");
+    public ObservableList<MenuItem> getDirecciones(String palabra,String ciudad) {
+        cargarTiendas(palabra, "direccion",ciudad);
         return direcciones;
     }
 
-    public void cargarTiendas(String palabra, String lugar) {
+    public void cargarTiendas(String palabra, String lugar, String ciudad2) {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
             tiendas.clear();
             if (lugar.equalsIgnoreCase("direccion")) {
@@ -60,13 +60,16 @@ public class ListaTiendas {
 
             String sentencia = "";
             if (lugar.equalsIgnoreCase("direccion")) {
-                sentencia = "call tiendaDirComienzaPor(?)";
+                sentencia = "call tiendaDirComienzaPor(?,?)";
             } else {
                 sentencia = "call tiendaCiuComienzaPor(?)";
             }
 
             PreparedStatement ps = connect.prepareStatement(sentencia);
             ps.setString(1, palabra);
+            if(lugar.equalsIgnoreCase("direccion")){
+                ps.setString(2, ciudad2);
+            }
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
