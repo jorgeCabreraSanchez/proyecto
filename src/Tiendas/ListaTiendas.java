@@ -27,40 +27,83 @@ public class ListaTiendas {
 
     private ObservableList<MenuItem> ciudades = FXCollections.observableArrayList();
     private ObservableList<Tienda> tiendas = FXCollections.observableArrayList();
+    private ObservableList<MenuItem> direcciones = FXCollections.observableArrayList();
 
     public ListaTiendas() {
-    }    
-    
+    }
+
     public ObservableList<MenuItem> getCiudades(String palabra) {
-        cargarTiendas(palabra);
+        cargarTiendas(palabra, "ciudad");
         return ciudades;
     }
 
     public ObservableList<Tienda> getTiendas() {
         return tiendas;
     }
-        
+
+    public ObservableList<MenuItem> getDirecciones() {
+        return direcciones;
+    }
     
-    public void cargarTiendas(String palabra){
-        try {
+    public ObservableList<MenuItem> getDirecciones(String palabra) {
+        cargarTiendas(palabra, "direccion");
+        return direcciones;
+    }
+
+    public void cargarTiendas(String palabra, String lugar) {
+        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
             tiendas.clear();
-            ciudades.clear();
-            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root");
-            String sentencia = "call tiendaCiuComienzaPor(?)";
+            if (lugar.equalsIgnoreCase("direccion")) {
+                ciudades.clear();
+            }
+            direcciones.clear();
+
+            String sentencia = "";
+            if (lugar.equalsIgnoreCase("direccion")) {
+                sentencia = "call tiendaDirComienzaPor(?)";
+            } else {
+                sentencia = "call tiendaCiuComienzaPor(?)";
+            }
+
             PreparedStatement ps = connect.prepareStatement(sentencia);
             ps.setString(1, palabra);
             ResultSet rs = ps.executeQuery();
-            
-            Tienda t = new Tienda();
-            while(rs.next()){
+
+            while (rs.next()) {
+                String ciudad = rs.getString(3);
+                String direccion = rs.getString(2);
+
+                Tienda t = new Tienda();
                 t.setIdTienda(rs.getInt(1));
-                t.setDireccion(rs.getString(2));
-                t.setCiudad(rs.getString(3));
+                t.setDireccion(direccion);
+                t.setCiudad(ciudad);
                 tiendas.add(t);
-                ciudades.add(new MenuItem(rs.getString(3)));
+
+                if (lugar.equalsIgnoreCase("ciudad")) {
+                    if (!ciudadExiste(ciudad)) {
+                        MenuItem mn = new MenuItem(ciudad);
+                        mn.setUserData(ciudad);
+                        ciudades.add(mn);
+                    }
+                }
+
+                MenuItem mn2 = new MenuItem(direccion);
+                mn2.setUserData(direccion);
+                direcciones.add(mn2);
             }
         } catch (SQLException ex) {
-            Alertas.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer la información de las tiendas",ex.getMessage(), Alert.AlertType.ERROR);
+            Alertas.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer la información de las tiendas", ex.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private boolean ciudadExiste(String ciudad) {
+        Iterator it = this.ciudades.iterator();
+        while (it.hasNext()) {
+            MenuItem m = (MenuItem) it.next();
+            if (m.getText().equalsIgnoreCase(ciudad)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

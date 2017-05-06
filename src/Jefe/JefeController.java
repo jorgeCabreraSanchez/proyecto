@@ -6,32 +6,28 @@
 package Jefe;
 
 import Tiendas.ListaTiendas;
+import Tiendas.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowListener;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.awt.Window;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.WindowEvent;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
-import javax.swing.event.HyperlinkEvent;
 
 public class JefeController implements Initializable {
 
@@ -42,9 +38,19 @@ public class JefeController implements Initializable {
     @FXML
     private ContextMenu menuCiudad;
     @FXML
-    private TextField dirección;
-    @FXML
     private AnchorPane base;
+    @FXML
+    private TableView<Tienda> tabla;
+    @FXML
+    private TableColumn<Tienda, Integer> tablaID;
+    @FXML
+    private TableColumn<Tienda, String> tablaCiudad;
+    @FXML
+    private TableColumn<Tienda, String> tablaDireccion;
+    @FXML
+    private ContextMenu menuDireccion;
+    @FXML
+    private TextField direccion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,34 +74,114 @@ public class JefeController implements Initializable {
 
     private void tiendas() {
         ListaTiendas ls = new ListaTiendas();
-        //        menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
-//            public void handle(ActionEvent e) {
-//                ciudad.setText();
-//            }
-//        });   
+        ciudades(ls);
+        direcciones(ls);
+
+        ls.cargarTiendas("", "ciudad");
+        this.tabla.setItems(ls.getTiendas());
+        this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
+        this.tablaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        this.tablaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+
+    }
+
+    private void ciudades(ListaTiendas ls) {
+        menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                MenuItem mn = (MenuItem) e.getTarget();
+                ciudad.setText(mn.getUserData().toString());
+            }
+        });
+
+        this.menuCiudad.getItems().addAll(ls.getCiudades(""));
 
         this.ciudad.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
+                this.menuCiudad.getItems().clear();
                 this.menuCiudad.getItems().addAll(ls.getCiudades(newValue));
+                this.menuDireccion.getItems().clear();
+                this.menuDireccion.getItems().addAll(ls.getDirecciones());
                 menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);
+                this.direccion.setDisable(false);
             } else {
+                this.menuCiudad.getItems().clear();
+                this.menuCiudad.getItems().addAll(ls.getCiudades(""));
                 menuCiudad.hide();
+                this.direccion.setDisable(true);
             }
         });
+
     }
 
-    private void cerrar(){       
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-               
-                Alertas.Alertas.generarAlerta("Advertencia","Esta seguro que desea salir de la aplicación?",Alert.AlertType.INFORMATION);
+    private void direcciones(ListaTiendas ls) {
+        this.direccion.setDisable(true);
+
+        this.menuDireccion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MenuItem mn = (MenuItem) event.getTarget();
+                direccion.setText(mn.getUserData().toString());
             }
         });
-        
-      
-         
 
+        this.menuDireccion.getItems().addAll(ls.getDirecciones(""));
 
+        this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
+                this.menuDireccion.getItems().clear();
+                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue));
+                menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
+            } else {
+                this.menuDireccion.getItems().clear();
+                this.menuDireccion.getItems().addAll(ls.getDirecciones(""));
+                menuDireccion.hide();
+            }
+
+        });
+
+    }
+
+    private void cerrar() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+
+                Alertas.Alertas.generarAlerta("Advertencia", "Esta seguro que desea salir de la aplicación?", Alert.AlertType.INFORMATION);
+            }
+        });
+
+    }
+
+    @FXML
+    private void ciudadesClick(MouseEvent event) {
+        if (this.menuCiudad.isShowing()) {
+            this.menuCiudad.hide();
+        } else {
+            menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);
+        }
+        if (this.menuDireccion.isShowing()) {
+            this.menuDireccion.hide();
+        }
+    }
+
+    @FXML
+    private void direccionClick(MouseEvent event) {
+        if (this.menuDireccion.isShowing()) {
+            this.menuDireccion.hide();
+        } else {
+            menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
+        }
+        if (this.menuCiudad.isShowing()) {
+            this.menuCiudad.hide();
+        }
+    }
+
+    @FXML
+    private void nadaClick(MouseEvent event) {
+        if (this.menuCiudad.isShowing()) {
+            this.menuCiudad.hide();
+        } else if (this.menuDireccion.isShowing()) {
+            this.menuDireccion.hide();
+        }
     }
 
 }
