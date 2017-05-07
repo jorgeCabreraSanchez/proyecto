@@ -170,13 +170,17 @@ public class JefeController implements Initializable {
 
     @FXML
     private void nadaClick(MouseEvent event) {
+        desclickarContextMenu();
+    }
+
+    private void desclickarContextMenu(){
         if (this.menuCiudad.isShowing()) {
             this.menuCiudad.hide();
         } else if (this.menuDireccion.isShowing()) {
             this.menuDireccion.hide();
         }
     }
-
+    
     private void tabla() {
         this.tabla.setItems(ls.getTiendas());
         this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
@@ -190,7 +194,7 @@ public class JefeController implements Initializable {
 
     @FXML
     private void accionEditar(ActionEvent event) {
-        
+        desclickarContextMenu();
     }
 
     @FXML
@@ -201,9 +205,11 @@ public class JefeController implements Initializable {
 
     @FXML
     private void accionNuevo(ActionEvent event) {
+        desclickarContextMenu();
     }
 
     @FXML
     private void accionVer(ActionEvent event) {
+//        desclickarContextMenu();
     }
 }
