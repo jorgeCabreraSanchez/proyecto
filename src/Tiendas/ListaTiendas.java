@@ -33,7 +33,7 @@ public class ListaTiendas {
     }
 
     public ObservableList<MenuItem> getCiudades(String palabra) {
-        cargarTiendas(palabra, "ciudad","");
+        cargarTiendas(palabra,"ciudad","");
         return ciudades;
     }
 
@@ -46,14 +46,14 @@ public class ListaTiendas {
     }
     
     public ObservableList<MenuItem> getDirecciones(String palabra,String ciudad) {
-        cargarTiendas(palabra, "direccion",ciudad);
+        cargarTiendas(palabra,"direccion",ciudad);
         return direcciones;
     }
 
     public void cargarTiendas(String palabra, String lugar, String ciudad2) {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
             tiendas.clear();
-            if (lugar.equalsIgnoreCase("direccion")) {
+            if (lugar.equalsIgnoreCase("ciudad")) {
                 ciudades.clear();
             }
             direcciones.clear();
@@ -109,4 +109,9 @@ public class ListaTiendas {
         }
         return false;
     }
+    
+    public void borrarTienda(int idTienda){
+        
+    }
+    
 }

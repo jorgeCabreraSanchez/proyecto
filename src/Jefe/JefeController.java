@@ -19,7 +19,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +32,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.WindowEvent;
 
 public class JefeController implements Initializable {
+
+    ListaTiendas ls = new ListaTiendas();
 
     @FXML
     private AnchorPane fondo;
@@ -51,33 +55,30 @@ public class JefeController implements Initializable {
     private ContextMenu menuDireccion;
     @FXML
     private TextField direccion;
+    @FXML
+    private Button buttonEditar;
+    @FXML
+    private Button buttonBorrar;
+    @FXML
+    private Button buttonNuevo;
+    @FXML
+    private Button buttonVer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tiendas();
         cerrar();
-    }
-
-
-    @FXML
-    private void elegirCiudadMenu(ActionEvent event) {
-
+        tabla();
     }
 
     private void tiendas() {
-        ListaTiendas ls = new ListaTiendas();
-        ciudades(ls);
-        direcciones(ls);
+        ciudades();
+        direcciones();
 
-        ls.cargarTiendas("", "ciudad","");
-        this.tabla.setItems(ls.getTiendas());
-        this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
-        this.tablaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
-        this.tablaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-
+        ls.cargarTiendas("", "ciudad", "");
     }
 
-    private void ciudades(ListaTiendas ls) {
+    private void ciudades() {
         menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 MenuItem mn = (MenuItem) e.getTarget();
@@ -105,7 +106,7 @@ public class JefeController implements Initializable {
 
     }
 
-    private void direcciones(ListaTiendas ls) {
+    private void direcciones() {
         this.direccion.setDisable(true);
 
         this.menuDireccion.setOnAction(new EventHandler<ActionEvent>() {
@@ -116,17 +117,16 @@ public class JefeController implements Initializable {
             }
         });
 
-        String ciudad = this.ciudad.getText();
-        this.menuDireccion.getItems().addAll(ls.getDirecciones("",ciudad));
-
         this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
+            String ciudad = "";
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
+                ciudad = this.ciudad.getText();
                 this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue,ciudad));
+                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue, ciudad));
                 menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
             } else {
                 this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones("",ciudad));
+                this.menuDireccion.getItems().addAll(ls.getDirecciones("", ciudad));
                 menuDireccion.hide();
             }
 
@@ -177,4 +177,33 @@ public class JefeController implements Initializable {
         }
     }
 
+    private void tabla() {
+        this.tabla.setItems(ls.getTiendas());
+        this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
+        this.tablaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        this.tablaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+
+        tabla.setTableMenuButtonVisible(true);
+        tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación.")); 
+                
+    }
+
+    @FXML
+    private void accionEditar(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void accionBorrar(ActionEvent event) {
+        int idTienda = tabla.getSelectionModel().getSelectedItem().getIdTienda();
+        ls.borrarTienda(idTienda);       
+    }
+
+    @FXML
+    private void accionNuevo(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionVer(ActionEvent event) {
+    }
 }
