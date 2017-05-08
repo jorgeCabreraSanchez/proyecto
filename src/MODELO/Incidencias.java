@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Tiendas;
+package MODELO;
 
 /**
  *
  * @author Jorge Cabrera
  */
-public class ListaCiudades {
+public class Incidencias {
+    private int iDIncidencia;
+    private int iDTrabajador;
+    private String titulo;
+    private String descripcion;
+    private String tipo;
     
-    
-    public ListaCiudades(){
+    public Incidencias(){
         
     }
 }

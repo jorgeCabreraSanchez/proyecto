@@ -1,9 +1,9 @@
 #fondoLogo{
-    -fx-background-image: url("images/logo.png");
+    -fx-background-image: url("../../images/logo.png");
     -fx-background-size: stretch; 
 }
 #fondoHuerto{
-    -fx-background-image: url("images/fotoHuerto.jpg");
+    -fx-background-image: url("../../images/fotoHuerto.jpg");
     -fx-background-size: stretch;
 }
 #fondoLogin{

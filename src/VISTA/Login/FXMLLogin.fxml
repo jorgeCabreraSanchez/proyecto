@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="fondoAtras" prefHeight="299.0" prefWidth="476.0" stylesheets="@Inicio.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proyecto.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="fondoAtras" prefHeight="299.0" prefWidth="476.0" stylesheets="@CssLogin.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Login.ControllerLogin">
     <children>
       <AnchorPane fx:id="fondoHuerto" opacity="0.83" prefHeight="303.0" prefWidth="476.0" />
       <AnchorPane fx:id="fondoLogo" layoutX="97.0" prefHeight="108.0" prefWidth="284.0" />

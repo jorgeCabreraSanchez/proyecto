@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto;
+package VISTA;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -19,16 +19,16 @@ import javafx.util.Duration;
  *
  * @author jorge
  */
-public class Proyecto extends Application {
+public class Inicio extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Inicio.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login/FXMLLogin.fxml"));
 
         Scene scene = new Scene(root);
 
         stage.setTitle("Valmercat");
-        stage.getIcons().add(new Image("proyecto/images/logoMin1.png"));
+        stage.getIcons().add(new Image("images/logoMin1.png"));
         stage.setScene(scene);
         stage.show();
     }

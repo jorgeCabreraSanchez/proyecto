@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Jefe;
+package VISTA.Jefe;
 
-import Tiendas.ListaTiendas;
+import DATOS.ListaTiendas;
 import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
@@ -31,10 +31,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.WindowEvent;
 
-public class JefeController implements Initializable {
+public class InicioJefeController implements Initializable {
 
     ListaTiendas ls = new ListaTiendas();
-
+    ListaCiudades lc = new ListaCiudades();
+    ObservableList<MenuItem> ciudadesHayTienda = FXMLCollection.;
+    
     @FXML
     private AnchorPane fondo;
     @FXML
@@ -74,8 +76,6 @@ public class JefeController implements Initializable {
     private void tiendas() {
         ciudades();
         direcciones();
-
-        ls.cargarTiendas("", "ciudad", "");
     }
 
     private void ciudades() {
@@ -86,12 +86,24 @@ public class JefeController implements Initializable {
             }
         });
 
-        this.menuCiudad.getItems().addAll(ls.getCiudades(""));
+        
+        //                if (lugar.equalsIgnoreCase("ciudad")) {
+//                    if (!ciudadExiste(ciudad)) {
+//                        MenuItem mn = new MenuItem(ciudad);
+//                        mn.setUserData(ciudad);
+//                        ciudadesHayTienda.add(mn);
+//                    }
+//                }
+//
+//                MenuItem mn2 = new MenuItem(direccion);
+//                mn2.setUserData(direccion);
+//                direcciones.add(mn2);
+        this.menuCiudad.getItems().addAll();
 
         this.ciudad.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
                 this.menuCiudad.getItems().clear();
-                this.menuCiudad.getItems().addAll(ls.getCiudades(newValue));
+                this.menuCiudad.getItems()..addAll(ls.getCiudades(newValue));
                 this.menuDireccion.getItems().clear();
                 this.menuDireccion.getItems().addAll(ls.getDirecciones());
                 menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);

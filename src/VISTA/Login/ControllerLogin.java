@@ -1,20 +1,13 @@
-package proyecto;
+package VISTA.Login;
 
-import Trabajadores.Trabajadores;
-import Trabajadores.Listas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,8 +18,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import DATOS.Login;
 
-public class FXMLDocumentController implements Initializable {
+public class ControllerLogin implements Initializable {
 
     Login login = new Login();
 
@@ -97,13 +91,13 @@ public class FXMLDocumentController implements Initializable {
                 Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
                 stage.close();
 
-                Parent root = null;
+                Parent root = new Parent() {};
                 if (error.equalsIgnoreCase("Jefe")) {
-                    root = FXMLLoader.load(getClass().getResource("/Jefe/InicioJefe.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/InicioJefe.fxml"));
                 } else if (error.equalsIgnoreCase("Encargado")) {
-                    root = FXMLLoader.load(getClass().getResource("/"));
+                    root = FXMLLoader.load(getClass().getResource("/VISTA/Encargado/InicioEncargado.fxml"));
                 } else if (error.equalsIgnoreCase("Empleado")) {
-                    root = FXMLLoader.load(getClass().getResource("/"));
+                    root = FXMLLoader.load(getClass().getResource("/VISTA/Empleado/InicioEmpleado.fxml"));
                 }
                 Stage stage2 = new Stage();
                 stage2.initModality(Modality.APPLICATION_MODAL);

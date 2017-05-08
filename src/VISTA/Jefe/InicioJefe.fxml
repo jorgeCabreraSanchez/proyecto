@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Jefe.JefeController">
+<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Jefe.InicioJefeController">
     <stylesheets>
-        <URL value="@iniciojefe.css" />
+        <URL value="@InicioJefeCSS.css" />
     </stylesheets>
    <children>
       <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="459.0" prefWidth="545.0">

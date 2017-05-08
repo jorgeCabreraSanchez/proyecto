@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Trabajadores;
+package VISTA;
 
-
-public class Listas {
-
+public class cerrar extends javax.swing.JFrame{
     
-    public Listas() {
-
+    private void Cerrar(){
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        
     }
-
 }

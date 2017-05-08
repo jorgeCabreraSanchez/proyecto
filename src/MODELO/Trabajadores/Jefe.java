@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Trabajadores;
+package MODELO.Trabajadores;
 
-import Trabajadores.Trabajadores;
-import Trabajadores.Trabajadores;
+import MODELO.Trabajadores.Trabajadores;
 
 /**
  *
