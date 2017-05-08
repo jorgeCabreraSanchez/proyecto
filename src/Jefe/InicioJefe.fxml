@@ -40,9 +40,9 @@
                </contextMenu></TextField>
             <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" prefHeight="281.0" prefWidth="470.0">
               <columns>
-                <TableColumn fx:id="tablaID" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="tablaCiudad" prefWidth="141.0" text="Ciudad" />
-                  <TableColumn fx:id="tablaDireccion" prefWidth="253.0" text="Dirección" />
+                <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="columnaCiudad" prefWidth="141.0" text="Ciudad" />
+                  <TableColumn fx:id="columnaDireccion" prefWidth="253.0" text="Dirección" />
               </columns>
             </TableView>
             <Button fx:id="buttonEditar" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionEditar" prefHeight="25.0" prefWidth="51.0" text="Editar">

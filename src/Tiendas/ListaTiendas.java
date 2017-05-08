@@ -5,6 +5,7 @@
  */
 package Tiendas;
 
+import MODELO.Tienda;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -95,7 +96,7 @@ public class ListaTiendas {
                 direcciones.add(mn2);
             }
         } catch (SQLException ex) {
-            Alertas.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer la información de las tiendas", ex.getMessage(), Alert.AlertType.ERROR);
+            MODELO.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer la información de las tiendas", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
 

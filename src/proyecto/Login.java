@@ -5,7 +5,7 @@
  */
 package proyecto;
 
-import Alertas.Alertas;
+import MODELO.Alertas;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;

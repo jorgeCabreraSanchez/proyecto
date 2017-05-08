@@ -6,7 +6,7 @@
 package Jefe;
 
 import Tiendas.ListaTiendas;
-import Tiendas.Tienda;
+import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.net.URL;
@@ -46,11 +46,11 @@ public class JefeController implements Initializable {
     @FXML
     private TableView<Tienda> tabla;
     @FXML
-    private TableColumn<Tienda, Integer> tablaID;
+    private TableColumn<Tienda, Integer> columnaID;
     @FXML
-    private TableColumn<Tienda, String> tablaCiudad;
+    private TableColumn<Tienda, String> columnaCiudad;
     @FXML
-    private TableColumn<Tienda, String> tablaDireccion;
+    private TableColumn<Tienda, String> columnaDireccion;
     @FXML
     private ContextMenu menuDireccion;
     @FXML
@@ -138,7 +138,7 @@ public class JefeController implements Initializable {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
 
-                Alertas.Alertas.generarAlerta("Advertencia", "Esta seguro que desea salir de la aplicación?", Alert.AlertType.INFORMATION);
+                MODELO.Alertas.generarAlerta("Advertencia", "Esta seguro que desea salir de la aplicación?", Alert.AlertType.INFORMATION);
             }
         });
 
@@ -183,9 +183,9 @@ public class JefeController implements Initializable {
     
     private void tabla() {
         this.tabla.setItems(ls.getTiendas());
-        this.tablaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
-        this.tablaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
-        this.tablaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        this.columnaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
+        this.columnaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
 
         tabla.setTableMenuButtonVisible(true);
         tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación.")); 
