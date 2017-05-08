@@ -87,11 +87,14 @@ public class ControllerLogin implements Initializable {
             } else if (error.equalsIgnoreCase("Contraseña")) {
                 this.labelErrores.setText("- La contraseña escrita es incorrecta.");
                 this.fieldPassword.setText("");
+            } else if (error.equals("")) {
+                
             } else {
                 Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
                 stage.close();
 
-                Parent root = new Parent() {};
+                Parent root = new Parent() {
+                };
                 if (error.equalsIgnoreCase("Jefe")) {
                     root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/InicioJefe.fxml"));
                 } else if (error.equalsIgnoreCase("Encargado")) {

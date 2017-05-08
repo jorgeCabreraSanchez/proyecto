@@ -11,14 +11,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.MenuItem;
 
 /**
  *
@@ -26,10 +21,10 @@ import javafx.scene.control.MenuItem;
  */
 public class ListaTiendas {
 
-    private List<String> ciudadesHayTienda = ArrayList < > ();
-    private List<Tienda> tiendas = ArrayList < > ();
-    private List<String> direcciones = ArrayList < > ();
-    private List<String> tiendasMostrar = ArrayList < > ();
+    private List<String> ciudadesHayTienda = new ArrayList<>();
+    private List<Tienda> tiendas = new ArrayList<>();
+    private List<String> direcciones = new ArrayList<>();
+    private List<Tienda> tiendasMostrar = new ArrayList<>();
 
     public ListaTiendas() {
         cargarTiendas();
@@ -77,11 +72,11 @@ public class ListaTiendas {
             while (rs.next()) {
                 Tienda t = new Tienda();
                 t.setIdTienda(rs.getInt(1));
-                t.setDireccion(rs.getString(2););
-                t.setCiudad(rs.getString(3););
+                t.setDireccion(rs.getString(2));
+                t.setCiudad(rs.getString(3));
                 tiendas.add(t);
             }
-            tiendasMostrar.add(tiendas);
+            tiendasMostrar.addAll(tiendas);
         } catch (SQLException ex) {
             MODELO.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer la información de las tiendas", ex.getMessage(), Alert.AlertType.ERROR);
         }

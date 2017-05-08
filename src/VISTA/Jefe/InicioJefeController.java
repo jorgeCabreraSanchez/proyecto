@@ -5,13 +5,17 @@
  */
 package VISTA.Jefe;
 
+import DATOS.ListaCiudades;
 import DATOS.ListaTiendas;
 import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
@@ -35,8 +39,10 @@ public class InicioJefeController implements Initializable {
 
     ListaTiendas ls = new ListaTiendas();
     ListaCiudades lc = new ListaCiudades();
-    ObservableList<MenuItem> ciudadesHayTienda = FXMLCollection.;
-    
+    ObservableList<MenuItem> ciudadesHayTienda = FXCollections.observableArrayList();
+    ObservableList<MenuItem> direcciones = FXCollections.observableArrayList();
+    ObservableList<Tienda> tiendas = FXCollections.observableArrayList(ls.getTiendas());
+
     @FXML
     private AnchorPane fondo;
     @FXML
@@ -73,12 +79,23 @@ public class InicioJefeController implements Initializable {
         tabla();
     }
 
+    private void tabla() {
+        this.tabla.setItems(tiendas);
+        this.columnaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
+        this.columnaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+
+        tabla.setTableMenuButtonVisible(true);
+        tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación."));
+
+    }
+
     private void tiendas() {
-        ciudades();
+        ciudadesHayTienda();
         direcciones();
     }
 
-    private void ciudades() {
+    private void ciudadesHayTienda() {
         menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 MenuItem mn = (MenuItem) e.getTarget();
@@ -86,35 +103,44 @@ public class InicioJefeController implements Initializable {
             }
         });
 
-        
-        //                if (lugar.equalsIgnoreCase("ciudad")) {
-//                    if (!ciudadExiste(ciudad)) {
-//                        MenuItem mn = new MenuItem(ciudad);
-//                        mn.setUserData(ciudad);
-//                        ciudadesHayTienda.add(mn);
-//                    }
-//                }
-//
-//                MenuItem mn2 = new MenuItem(direccion);
-//                mn2.setUserData(direccion);
-//                direcciones.add(mn2);
-        this.menuCiudad.getItems().addAll();
+        actualizarCiudades("");
 
         this.ciudad.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
-                this.menuCiudad.getItems().clear();
-                this.menuCiudad.getItems()..addAll(ls.getCiudades(newValue));
-                this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones());
+                actualizarCiudades(newValue);
                 menuCiudad.show(ciudad, Side.BOTTOM, 0, 0);
                 this.direccion.setDisable(false);
             } else {
-                this.menuCiudad.getItems().clear();
-                this.menuCiudad.getItems().addAll(ls.getCiudades(""));
+                actualizarCiudades("");
                 menuCiudad.hide();
                 this.direccion.setDisable(true);
             }
         });
+
+    }
+
+    private void actualizarCiudades(String ciu) {
+        tiendas = FXCollections.observableArrayList(ls.getTiendas(ciu, ""));
+        List<String> ciudadesTienda = ls.getCiudadesHayTienda();
+        ciudadesHayTienda.clear();
+        for (String ciudad : ciudadesTienda) {
+            MenuItem mn = new MenuItem(ciudad);
+            mn.setUserData(ciudad);
+            ciudadesHayTienda.add(mn);
+        }
+        this.menuCiudad.getItems().clear();
+        this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
+
+        if (!ciu.isEmpty()) {
+            List<String> direcciones = ls.getDirecciones();
+            for (String direccion : direcciones) {
+                MenuItem mn2 = new MenuItem(direccion);
+                mn2.setUserData(direccion);
+                this.direcciones.add(mn2);
+            }
+            this.menuDireccion.getItems().clear();
+            this.menuDireccion.getItems().addAll(this.direcciones);
+        }
 
     }
 
@@ -129,21 +155,32 @@ public class InicioJefeController implements Initializable {
             }
         });
 
+        actualizarDirecciones("", "");
+
         this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
             String ciudad = "";
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
                 ciudad = this.ciudad.getText();
-                this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones(newValue, ciudad));
+                actualizarDirecciones(ciudad, newValue);
                 menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
             } else {
-                this.menuDireccion.getItems().clear();
-                this.menuDireccion.getItems().addAll(ls.getDirecciones("", ciudad));
+                actualizarDirecciones(ciudad, "");
                 menuDireccion.hide();
             }
 
         });
+    }
 
+    private void actualizarDirecciones(String ciu, String dire) {
+        this.tiendas = FXCollections.observableArrayList(ls.getTiendas(ciu, dire));
+        List<String> direcciones = ls.getDirecciones();
+        for (String direccion : direcciones) {
+            MenuItem mn2 = new MenuItem(direccion);
+            mn2.setUserData(direccion);
+            this.direcciones.add(mn2);
+        }
+        this.menuDireccion.getItems().clear();
+        this.menuDireccion.getItems().addAll(this.direcciones);
     }
 
     private void cerrar() {
@@ -185,23 +222,12 @@ public class InicioJefeController implements Initializable {
         desclickarContextMenu();
     }
 
-    private void desclickarContextMenu(){
+    private void desclickarContextMenu() {
         if (this.menuCiudad.isShowing()) {
             this.menuCiudad.hide();
         } else if (this.menuDireccion.isShowing()) {
             this.menuDireccion.hide();
         }
-    }
-    
-    private void tabla() {
-        this.tabla.setItems(ls.getTiendas());
-        this.columnaID.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
-        this.columnaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
-        this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-
-        tabla.setTableMenuButtonVisible(true);
-        tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación.")); 
-                
     }
 
     @FXML
@@ -212,7 +238,7 @@ public class InicioJefeController implements Initializable {
     @FXML
     private void accionBorrar(ActionEvent event) {
         int idTienda = tabla.getSelectionModel().getSelectedItem().getIdTienda();
-        ls.borrarTienda(idTienda);       
+        ls.borrarTienda(idTienda);
     }
 
     @FXML
