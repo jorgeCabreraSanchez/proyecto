@@ -6,6 +6,8 @@
 package DATOS;
 
 import MODELO.Alertas;
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Trabajadores;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,7 +29,7 @@ public class Login {
     public String comprobar(Integer id, String contraseña) throws IOException {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
 
-            String sentencia = "Select Contraseña,Tipo from trabajadores where IDTrabajador = ?";
+            String sentencia = "Select * from trabajadores where IDTrabajador = ?";
             PreparedStatement ps = connect.prepareStatement(sentencia);
             ps.setInt(1, id);
 
@@ -36,13 +38,13 @@ public class Login {
 
             String contraseñaUser;
             try {
-                contraseñaUser = rs.getString(1);
+                contraseñaUser = rs.getString(5);
             } catch (SQLException e) {
                 return "Usuario";
             }
             try {
                 if (contraseña.equals(contraseñaUser)) {
-                    String tipo = rs.getString(2);
+                    String tipo = rs.getString(6);
                     
                     sentencia = "Update trabajadores set estado = 'Conectado' where IDTrabajador = ?";
                     ps = connect.prepareStatement(sentencia);
@@ -56,6 +58,8 @@ public class Login {
                         return "Encargado";
                     }
                     if (tipo.equalsIgnoreCase("Empleado")) {
+                        Trabajadores trabajador = new Empleado();
+                        ListaTrabajadores.setTrabajadores(trabajador);
                         return "Empleado";
                     }
                    

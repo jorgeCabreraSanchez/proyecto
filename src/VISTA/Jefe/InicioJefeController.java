@@ -120,6 +120,7 @@ public class InicioJefeController implements Initializable {
     }
 
     private void actualizarCiudades(String ciu) {
+        System.out.println(ls.getTiendas(ciu, ""));
         tiendas = FXCollections.observableArrayList(ls.getTiendas(ciu, ""));
         List<String> ciudadesTienda = ls.getCiudadesHayTienda();
         ciudadesHayTienda.clear();

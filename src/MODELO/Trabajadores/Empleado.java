@@ -11,8 +11,8 @@ import MODELO.Trabajadores.Trabajadores;
  *
  * @author jorge
  */
-public class Empleado extends Trabajadores{
-
+public class Empleado extends Trabajadores{s
+    
     public Empleado(int id, String nombre, String apellido1, String contraseña, int iDTienda, String horario, String estado) {
         super(id, nombre, apellido1, contraseña, iDTienda, horario, estado);
     }

@@ -56,4 +56,11 @@ public class Tienda {
         direccion.set(value);
     }
 
+    @Override
+    public String toString() {
+        return "Tienda{" + "idTienda=" + idTienda + ", ciudad=" + ciudad + ", direccion=" + direccion + '}';
+    }
+    
+    
+
 }

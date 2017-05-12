@@ -49,6 +49,7 @@ public class ListaTiendas {
 
         for (Tienda tienda : tiendas) {
             if (tienda.getCiudad().startsWith(ciudad) && tienda.getDireccion().startsWith(direccion)) {
+                System.out.println("Entra en tienda");
                 this.tiendasMostrar.add(tienda);
                 if (!ciudadesHayTienda.contains(ciudad)) {
                     this.ciudadesHayTienda.add(ciudad);
