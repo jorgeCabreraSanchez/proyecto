@@ -58,7 +58,7 @@ public class Tienda {
 
     @Override
     public String toString() {
-        return "Tienda{" + "idTienda=" + idTienda + ", ciudad=" + ciudad + ", direccion=" + direccion + '}';
+        return "Tienda{" + "idTienda=" + idTienda.getValue() + ", ciudad=" + ciudad.getValue()+ ", direccion=" + direccion.getValue() + '}';
     }
     
     

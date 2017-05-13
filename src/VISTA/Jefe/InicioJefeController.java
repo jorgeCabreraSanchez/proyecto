@@ -120,8 +120,9 @@ public class InicioJefeController implements Initializable {
     }
 
     private void actualizarCiudades(String ciu) {
-        System.out.println(ls.getTiendas(ciu, ""));
-        tiendas = FXCollections.observableArrayList(ls.getTiendas(ciu, ""));
+        tiendas.clear();
+        tiendas.addAll(ls.getTiendas(ciu,""));
+        
         List<String> ciudadesTienda = ls.getCiudadesHayTienda();
         ciudadesHayTienda.clear();
         for (String ciudad : ciudadesTienda) {
@@ -132,9 +133,10 @@ public class InicioJefeController implements Initializable {
         this.menuCiudad.getItems().clear();
         this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
 
-        if (!ciu.isEmpty()) {
-            List<String> direcciones = ls.getDirecciones();
-            for (String direccion : direcciones) {
+        if (!ciu.isEmpty()) {            
+            List<String> direccione = ls.getDirecciones();
+            direcciones.clear();
+            for (String direccion : direccione) {
                 MenuItem mn2 = new MenuItem(direccion);
                 mn2.setUserData(direccion);
                 this.direcciones.add(mn2);
@@ -159,9 +161,8 @@ public class InicioJefeController implements Initializable {
         actualizarDirecciones("", "");
 
         this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
-            String ciudad = "";
+            String ciudad = this.ciudad.getText();
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
-                ciudad = this.ciudad.getText();
                 actualizarDirecciones(ciudad, newValue);
                 menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
             } else {
@@ -173,9 +174,12 @@ public class InicioJefeController implements Initializable {
     }
 
     private void actualizarDirecciones(String ciu, String dire) {
-        this.tiendas = FXCollections.observableArrayList(ls.getTiendas(ciu, dire));
-        List<String> direcciones = ls.getDirecciones();
-        for (String direccion : direcciones) {
+        this.tiendas.clear();
+        this.tiendas.addAll(ls.getTiendas(ciu, dire));
+        
+        List<String> direccione = ls.getDirecciones();
+        this.direcciones.clear();
+        for (String direccion : direccione) {
             MenuItem mn2 = new MenuItem(direccion);
             mn2.setUserData(direccion);
             this.direcciones.add(mn2);

@@ -16,7 +16,7 @@ public abstract class Trabajadores {
     protected String apellido1;
     protected String apellido2;
     protected String contraseña;
-    protected int iDTienda;
+    protected int idTienda;
     protected String horario;
     protected String estado;
 
@@ -29,7 +29,7 @@ public abstract class Trabajadores {
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.contraseña = contraseña;
-        this.iDTienda = iDTienda;
+        this.idTienda = iDTienda;
         this.horario = horario;
         this.estado = estado;
     }
@@ -40,7 +40,7 @@ public abstract class Trabajadores {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.contraseña = contraseña;
-        this.iDTienda = iDTienda;
+        this.idTienda = iDTienda;
         this.horario = horario;
         this.estado = estado;
     }

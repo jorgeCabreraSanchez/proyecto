@@ -42,14 +42,15 @@ public class ListaTiendas {
         return tiendasMostrar;
     }
 
-    public List<Tienda> getTiendas(String ciudad, String direccion) {
+    public List<Tienda> getTiendas(String ciu, String dire) {
         this.tiendasMostrar.clear();
         this.ciudadesHayTienda.clear();
         this.direcciones.clear();
-
+        
         for (Tienda tienda : tiendas) {
-            if (tienda.getCiudad().startsWith(ciudad) && tienda.getDireccion().startsWith(direccion)) {
-                System.out.println("Entra en tienda");
+            String ciudad = tienda.getCiudad();
+            String direccion = tienda.getDireccion();
+            if (empiezaPor(ciudad, ciu) && empiezaPor(direccion, dire)) {                
                 this.tiendasMostrar.add(tienda);
                 if (!ciudadesHayTienda.contains(ciudad)) {
                     this.ciudadesHayTienda.add(ciudad);
@@ -85,6 +86,20 @@ public class ListaTiendas {
 
     public void borrarTienda(int idTienda) {
 
+    }
+
+    private boolean empiezaPor(String palabra1, String empieza) {
+        if (empieza.equalsIgnoreCase("")) {
+            return true;
+        }
+        int longitud = empieza.length();
+        String palabra = palabra1.substring(0, longitud);
+
+        if (palabra.equalsIgnoreCase(empieza)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
