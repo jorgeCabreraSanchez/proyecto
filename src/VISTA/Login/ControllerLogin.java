@@ -96,7 +96,7 @@ public class ControllerLogin implements Initializable {
                 Parent root = new Parent() {
                 };
                 if (error.equalsIgnoreCase("Jefe")) {
-                    root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/InicioJefe.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/InicioJefe.fxml"));
                 } else if (error.equalsIgnoreCase("Encargado")) {
                     root = FXMLLoader.load(getClass().getResource("/VISTA/Encargado/InicioEncargado.fxml"));
                 } else if (error.equalsIgnoreCase("Empleado")) {

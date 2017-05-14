@@ -23,6 +23,7 @@ import javafx.scene.control.MenuItem;
 public class ListaCiudades {
 
     private List<String> ciudades = new ArrayList<>();
+    private List<String> ciudadesMostrar = new ArrayList<>();
 
     public ListaCiudades() {
         cargarCiudades();
@@ -42,9 +43,36 @@ public class ListaCiudades {
             MODELO.Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer las ciudades", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
-    
-    public List<String> getCiudades(){
-        return ciudades;
+
+    public List<String> getCiudades() {
+        return ciudadesMostrar;
+    }
+
+    public List<String> actualizarCiudades(String ciu) {
+        ciudadesMostrar.clear();
+        for (String ciudad : ciudades) {
+            if (empiezaPor(ciudad, ciu)) {
+                ciudadesMostrar.add(ciudad);
+            }
+        }
+        return ciudadesMostrar;
+    }
+
+    private boolean empiezaPor(String palabra1, String empieza) {
+        if (empieza.equalsIgnoreCase("")) {
+            return true;
+        }
+        int longitud = empieza.length();
+        if (longitud > palabra1.length()) {
+            return false;
+        }
+        String palabra = palabra1.substring(0, longitud);
+
+        if (palabra.equalsIgnoreCase(empieza)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Jefe;
+package VISTA.Jefe.Tiendas;
 
 import DATOS.ListaCiudades;
 import DATOS.ListaTiendas;
 import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -20,10 +22,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -33,11 +40,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class InicioJefeController implements Initializable {
 
     ListaTiendas ls = new ListaTiendas();
+
+    {
+        ls.cargarTiendas();
+    }
     ListaCiudades lc = new ListaCiudades();
     ObservableList<MenuItem> ciudadesHayTienda = FXCollections.observableArrayList();
     ObservableList<MenuItem> direcciones = FXCollections.observableArrayList();
@@ -121,8 +134,8 @@ public class InicioJefeController implements Initializable {
 
     private void actualizarCiudades(String ciu) {
         tiendas.clear();
-        tiendas.addAll(ls.getTiendas(ciu,""));
-        
+        tiendas.addAll(ls.getTiendas(ciu, ""));
+
         List<String> ciudadesTienda = ls.getCiudadesHayTienda();
         ciudadesHayTienda.clear();
         for (String ciudad : ciudadesTienda) {
@@ -133,7 +146,7 @@ public class InicioJefeController implements Initializable {
         this.menuCiudad.getItems().clear();
         this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
 
-        if (!ciu.isEmpty()) {            
+        if (!ciu.isEmpty()) {
             List<String> direccione = ls.getDirecciones();
             direcciones.clear();
             for (String direccion : direccione) {
@@ -158,25 +171,25 @@ public class InicioJefeController implements Initializable {
             }
         });
 
-        actualizarDirecciones("", "");
+        actualizarDirecciones("");
 
         this.direccion.textProperty().addListener((observable, oldValue, newValue) -> {
-            String ciudad = this.ciudad.getText();
             if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
-                actualizarDirecciones(ciudad, newValue);
+                actualizarDirecciones(newValue);
                 menuDireccion.show(direccion, Side.BOTTOM, 0, 0);
             } else {
-                actualizarDirecciones(ciudad, "");
+                actualizarDirecciones("");
                 menuDireccion.hide();
             }
 
         });
     }
 
-    private void actualizarDirecciones(String ciu, String dire) {
+    private void actualizarDirecciones(String dire) {
+        String ciu = this.ciudad.getText();
         this.tiendas.clear();
         this.tiendas.addAll(ls.getTiendas(ciu, dire));
-        
+
         List<String> direccione = ls.getDirecciones();
         this.direcciones.clear();
         for (String direccion : direccione) {
@@ -236,23 +249,72 @@ public class InicioJefeController implements Initializable {
     }
 
     @FXML
-    private void accionEditar(ActionEvent event) {
+    private void accionEditar(ActionEvent event) throws IOException {
         desclickarContextMenu();
+        Tienda tienda = this.tabla.getSelectionModel().getSelectedItem();
+        if (tienda != null) {
+            ls.setTiendaEditar(tienda);
+            Parent root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/Editar/EditarTienda.fxml"));
+            Stage stage = new Stage();
+            stage.initModality((Modality.APPLICATION_MODAL));
+            stage.setScene(new Scene(root));
+            stage.show();
+            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+        }
+
     }
 
     @FXML
     private void accionBorrar(ActionEvent event) {
-        int idTienda = tabla.getSelectionModel().getSelectedItem().getIdTienda();
-        ls.borrarTienda(idTienda);
+        desclickarContextMenu();
+        Tienda tienda = tabla.getSelectionModel().getSelectedItem();
+        if (tienda != null) {
+            Alert check = new Alert(AlertType.CONFIRMATION);
+            check.setTitle("Tiendas");
+            check.setHeaderText("Esta seguro que desea borra la tienda?");
+            check.setContentText("Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion());
+            Optional<ButtonType> boton = check.showAndWait();
+            if (boton.get().getText().equalsIgnoreCase("aceptar")) {
+                ls.borrarTienda(tabla.getSelectionModel().getSelectedItem());
+                actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+            }
+        }
     }
 
     @FXML
     private void accionNuevo(ActionEvent event) {
         desclickarContextMenu();
+
+        actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
     }
 
     @FXML
     private void accionVer(ActionEvent event) {
-//        desclickarContextMenu();
+        desclickarContextMenu();
+    }
+
+    private void actualizarCiuYDire(String ciu, String dire) {
+        tiendas.clear();
+        this.tiendas.addAll(ls.getTiendas(ciu, dire));
+
+        List<String> ciudadesTienda = ls.getCiudadesHayTienda();
+        ciudadesHayTienda.clear();
+        for (String ciudad : ciudadesTienda) {
+            MenuItem mn = new MenuItem(ciudad);
+            mn.setUserData(ciudad);
+            ciudadesHayTienda.add(mn);
+        }
+        this.menuCiudad.getItems().clear();
+        this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
+
+        List<String> direccione = ls.getDirecciones();
+        this.direcciones.clear();
+        for (String direccion : direccione) {
+            MenuItem mn2 = new MenuItem(direccion);
+            mn2.setUserData(direccion);
+            this.direcciones.add(mn2);
+        }
+        this.menuDireccion.getItems().clear();
+        this.menuDireccion.getItems().addAll(this.direcciones);
     }
 }

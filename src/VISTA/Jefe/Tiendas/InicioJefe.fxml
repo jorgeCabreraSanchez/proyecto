@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Jefe.InicioJefeController">
+<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Jefe.Tiendas.InicioJefeController">
     <stylesheets>
         <URL value="@InicioJefeCSS.css" />
     </stylesheets>
@@ -38,7 +38,7 @@
                     </items>
                   </ContextMenu>
                </contextMenu></TextField>
-            <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" onMouseDragOver="#pataat" prefHeight="281.0" prefWidth="470.0">
+            <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" onMouseReleased="#nadaClick" prefHeight="281.0" prefWidth="470.0">
               <columns>
                 <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="columnaCiudad" prefWidth="141.0" text="Ciudad" />

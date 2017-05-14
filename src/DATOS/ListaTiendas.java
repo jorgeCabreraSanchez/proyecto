@@ -5,6 +5,7 @@
  */
 package DATOS;
 
+import MODELO.Alertas;
 import MODELO.Tienda;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 /**
@@ -21,13 +25,22 @@ import javafx.scene.control.Alert;
  */
 public class ListaTiendas {
 
-    private List<String> ciudadesHayTienda = new ArrayList<>();
-    private List<Tienda> tiendas = new ArrayList<>();
-    private List<String> direcciones = new ArrayList<>();
-    private List<Tienda> tiendasMostrar = new ArrayList<>();
+    private static List<String> ciudadesHayTienda = new ArrayList<>();
+    private static List<Tienda> tiendas = new ArrayList<>();
+    private static List<String> direcciones = new ArrayList<>();
+    private static List<Tienda> tiendasMostrar = new ArrayList<>();
+    private static Tienda tiendaEditar = new Tienda();
 
     public ListaTiendas() {
-        cargarTiendas();
+
+    }
+
+    public static Tienda getTiendaEditar() {
+        return tiendaEditar;
+    }
+
+    public void setTiendaEditar(Tienda tiendaEditar) {
+        ListaTiendas.tiendaEditar = tiendaEditar;
     }
 
     public List<String> getDirecciones() {
@@ -46,11 +59,11 @@ public class ListaTiendas {
         this.tiendasMostrar.clear();
         this.ciudadesHayTienda.clear();
         this.direcciones.clear();
-        
+
         for (Tienda tienda : tiendas) {
             String ciudad = tienda.getCiudad();
             String direccion = tienda.getDireccion();
-            if (empiezaPor(ciudad, ciu) && empiezaPor(direccion, dire)) {                
+            if (empiezaPor(ciudad, ciu) && empiezaPor(direccion, dire)) {
                 this.tiendasMostrar.add(tienda);
                 if (!ciudadesHayTienda.contains(ciudad)) {
                     this.ciudadesHayTienda.add(ciudad);
@@ -84,7 +97,37 @@ public class ListaTiendas {
         }
     }
 
-    public void borrarTienda(int idTienda) {
+    public void borrarTienda(Tienda tienda) {
+        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
+            String sentencia = "Delete from tiendas where idTienda = ?";
+            PreparedStatement ps = connect.prepareStatement(sentencia);
+            ps.setInt(1, tienda.getIdTienda());
+            ps.executeUpdate();
+            this.tiendas.remove(tienda);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido borrar la tienda", "No se ha podido borrar la tienda debido a que esta contiene empleados, y los empleados siempre tienen que estar asignados a una tienda", Alert.AlertType.ERROR);
+        }
+
+    }
+
+    public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
+        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
+            String sentencia = "Update tiendas set ";
+            
+            /* En la lista de tiendas modifico la tienda */
+            boolean seguir = true;
+            Iterator<Tienda> it = ListaTiendas.tiendas.iterator();
+            while (it.hasNext() && seguir == true) {
+                Tienda tienda = it.next();
+                if (tienda == antiguaTienda) {
+                    tienda = nuevaTienda;
+                    seguir = false;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido modificar la Tienda", Alert.AlertType.ERROR);
+        }
 
     }
 
@@ -93,6 +136,9 @@ public class ListaTiendas {
             return true;
         }
         int longitud = empieza.length();
+        if (longitud > palabra1.length()) {
+            return false;
+        }
         String palabra = palabra1.substring(0, longitud);
 
         if (palabra.equalsIgnoreCase(empieza)) {
