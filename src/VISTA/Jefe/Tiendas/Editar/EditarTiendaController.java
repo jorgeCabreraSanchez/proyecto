@@ -5,23 +5,17 @@
  */
 package VISTA.Jefe.Tiendas.Editar;
 
-import DATOS.ListaCiudades;
 import DATOS.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -30,9 +24,7 @@ import javafx.scene.control.TextField;
  */
 public class EditarTiendaController implements Initializable {
 
-    Tienda tienda = ListaTiendas.getTiendaEditar();
-    ListaCiudades lc = new ListaCiudades();
-    ObservableList<MenuItem> ciudades = FXCollections.observableArrayList();
+    Tienda tiendaAntigua = ListaTiendas.getTiendaEditar();
 
     @FXML
     private TextField textID;
@@ -49,55 +41,34 @@ public class EditarTiendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ciudades();
-        cargarTienda();
+        mostrarTienda();
     }
 
-    private void cargarTienda() {
-        this.textID.setText(String.valueOf(tienda.getIdTienda()));
-        this.textCiudad.setText(tienda.getCiudad());
-        this.textDireccion.setText(tienda.getDireccion());
-    }
-
-    private void ciudades() {
-        this.menuCiudad.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                MenuItem mn = (MenuItem) e.getTarget();
-                textCiudad.setText(mn.getUserData().toString());
-            }
-        });
-
-        lc.actualizarCiudades("");
-
-        this.textCiudad.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!oldValue.equalsIgnoreCase(newValue) && !newValue.isEmpty()) {
-                actualizarCiudades(newValue);
-                menuCiudad.show(this.textCiudad, Side.BOTTOM, 0, 0);
-            } else {
-                actualizarCiudades("");
-            }
-        });
-    }
-
-    private void actualizarCiudades(String ciu) {
-        List<String> listaCiudades = lc.actualizarCiudades(ciu);
-        for (String ciudad : listaCiudades) {
-            MenuItem mn = new MenuItem(ciudad);
-            mn.setUserData(ciudad);
-            ciudades.add(mn);
-        }
-
-        this.menuCiudad.getItems().clear();
-        this.menuCiudad.getItems().addAll(ciudades);
+    private void mostrarTienda() {
+        this.textID.setText(String.valueOf(tiendaAntigua.getIdTienda()));
+        this.textCiudad.setText(tiendaAntigua.getCiudad());
+        this.textDireccion.setText(tiendaAntigua.getDireccion());
     }
 
     @FXML
     private void accionEditar(ActionEvent event) {
-         
+        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
+        stage.setUserData(true);
+        Tienda tiendaNueva = new Tienda(Integer.parseInt(this.textID.getText()), this.textCiudad.getText(), this.textDireccion.getText());
+        if (!tiendaAntigua.igual(tiendaNueva)) {
+            ListaTiendas.editarTienda(tiendaAntigua, tiendaNueva);
+        } else {
+           stage.setUserData(false); 
+        }
+
+        stage.close();
     }
 
     @FXML
     private void accionCancelar(ActionEvent event) {
+        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
+        stage.close();
+        stage.setUserData(false);
     }
 
 }

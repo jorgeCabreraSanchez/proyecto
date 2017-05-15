@@ -110,25 +110,46 @@ public class ListaTiendas {
 
     }
 
-    public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
+    public static void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
-            String sentencia = "Update tiendas set ";
-            
+            String sentencia = "Update tiendas set IDTienda = ?, direccion = ?, Ciudad = ? where IDTienda = ?";
+            PreparedStatement ps = connect.prepareStatement(sentencia);
+            ps.setInt(1, nuevaTienda.getIdTienda());
+            ps.setString(2, nuevaTienda.getDireccion());
+            ps.setString(3, nuevaTienda.getCiudad());
+            ps.setInt(4, antiguaTienda.getIdTienda());
+            ps.executeUpdate();
             /* En la lista de tiendas modifico la tienda */
             boolean seguir = true;
-            Iterator<Tienda> it = ListaTiendas.tiendas.iterator();
+            Iterator<Tienda> it = tiendas.iterator();
             while (it.hasNext() && seguir == true) {
-                Tienda tienda = it.next();
-                if (tienda == antiguaTienda) {
-                    tienda = nuevaTienda;
+                Tienda tienda = it.next();                
+                if (tienda.igual(antiguaTienda)) {
+                    tiendas.remove(tienda);
+                    tiendas.add(nuevaTienda);
                     seguir = false;
                 }
             }
 
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido modificar la Tienda", Alert.AlertType.ERROR);
+            
         }
 
+    }
+    
+    public static void nuevaTienda(Tienda tienda){
+        try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
+        String sentencia = "Insert into tiendas values(?,?,?)";        
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, tienda.getIdTienda());
+        ps.setString(2, tienda.getDireccion());
+        ps.setString(3, tienda.getCiudad());
+        ps.executeUpdate();
+        tiendas.add(tienda);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.INFORMATION);
+        }
     }
 
     private boolean empiezaPor(String palabra1, String empieza) {

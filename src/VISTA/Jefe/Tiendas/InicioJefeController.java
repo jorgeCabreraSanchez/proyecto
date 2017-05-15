@@ -5,7 +5,6 @@
  */
 package VISTA.Jefe.Tiendas;
 
-import DATOS.ListaCiudades;
 import DATOS.ListaTiendas;
 import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
@@ -16,10 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +48,7 @@ public class InicioJefeController implements Initializable {
     {
         ls.cargarTiendas();
     }
-    ListaCiudades lc = new ListaCiudades();
+
     ObservableList<MenuItem> ciudadesHayTienda = FXCollections.observableArrayList();
     ObservableList<MenuItem> direcciones = FXCollections.observableArrayList();
     ObservableList<Tienda> tiendas = FXCollections.observableArrayList(ls.getTiendas());
@@ -259,9 +256,12 @@ public class InicioJefeController implements Initializable {
             stage.initModality((Modality.APPLICATION_MODAL));
             stage.setScene(new Scene(root));
             stage.show();
-            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+            System.out.println("viene");
+            if ((boolean) stage.getUserData()) {
+                actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+                System.out.println("entra");
+            }
         }
-
     }
 
     @FXML
@@ -282,9 +282,12 @@ public class InicioJefeController implements Initializable {
     }
 
     @FXML
-    private void accionNuevo(ActionEvent event) {
+    private void accionNuevo(ActionEvent event) throws IOException {
         desclickarContextMenu();
-
+        Parent root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
         actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
     }
 

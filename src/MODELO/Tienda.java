@@ -56,11 +56,24 @@ public class Tienda {
         direccion.set(value);
     }
 
+    public boolean igual(Tienda nueva) {
+        boolean respuesta = true;
+        if (this.ciudad.get().equalsIgnoreCase(nueva.getCiudad())) {
+            respuesta = false;
+        }
+        if (this.idTienda.get() == nueva.getIdTienda()) {
+            respuesta = false;
+        }
+        if (this.direccion.get().equalsIgnoreCase(nueva.getDireccion())) {
+            respuesta = false;
+        }
+        
+        return respuesta;
+    }
+
     @Override
     public String toString() {
-        return "Tienda{" + "idTienda=" + idTienda.getValue() + ", ciudad=" + ciudad.getValue()+ ", direccion=" + direccion.getValue() + '}';
+        return "Tienda{" + "idTienda=" + idTienda.getValue() + ", ciudad=" + ciudad.getValue() + ", direccion=" + direccion.getValue() + '}';
     }
-    
-    
 
 }
