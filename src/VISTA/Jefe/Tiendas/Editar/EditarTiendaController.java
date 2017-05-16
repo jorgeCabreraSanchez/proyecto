@@ -5,7 +5,7 @@
  */
 package VISTA.Jefe.Tiendas.Editar;
 
-import DATOS.ListaTiendas;
+import DATOS.GestionTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  */
 public class EditarTiendaController implements Initializable {
 
-    Tienda tiendaAntigua = ListaTiendas.getTiendaEditar();
+    Tienda tiendaAntigua = GestionTiendas.getTiendaEditar();
 
     @FXML
     private TextField textID;
@@ -56,7 +56,7 @@ public class EditarTiendaController implements Initializable {
         stage.setUserData(true);
         Tienda tiendaNueva = new Tienda(Integer.parseInt(this.textID.getText()), this.textCiudad.getText(), this.textDireccion.getText());
         if (!tiendaAntigua.igual(tiendaNueva)) {
-            ListaTiendas.editarTienda(tiendaAntigua, tiendaNueva);
+            GestionTiendas.editarTienda(tiendaAntigua, tiendaNueva);
         } else {
            stage.setUserData(false); 
         }

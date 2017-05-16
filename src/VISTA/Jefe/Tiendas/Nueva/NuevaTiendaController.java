@@ -5,7 +5,7 @@
  */
 package VISTA.Jefe.Tiendas.Nueva;
 
-import DATOS.ListaTiendas;
+import DATOS.GestionTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,7 +65,7 @@ public class NuevaTiendaController implements Initializable {
             String direccion = this.textDireccion.getText();
             String ciudad = this.textCiudad.getText();
             Tienda tienda = comprobarDatos(id, direccion, ciudad);
-            ListaTiendas.nuevaTienda(tienda);
+            GestionTiendas.nuevaTienda(tienda);
         } catch (NumberFormatException ex) {
             this.problemas.setText("La id solo puede contener números");
         }

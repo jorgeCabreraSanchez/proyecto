@@ -5,7 +5,7 @@
  */
 package VISTA.Jefe.Tiendas;
 
-import DATOS.ListaTiendas;
+import DATOS.GestionTiendas;
 import MODELO.Tienda;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
@@ -43,7 +43,7 @@ import javafx.stage.WindowEvent;
 
 public class InicioJefeController implements Initializable {
 
-    ListaTiendas ls = new ListaTiendas();
+    GestionTiendas ls = new GestionTiendas();
 
     {
         ls.cargarTiendas();

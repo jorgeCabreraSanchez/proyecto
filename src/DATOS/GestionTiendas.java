@@ -23,57 +23,10 @@ import javafx.scene.control.Alert;
  *
  * @author Jorge Cabrera
  */
-public class ListaTiendas {
+public class GestionTiendas {
 
-    private static List<String> ciudadesHayTienda = new ArrayList<>();
-    private static List<Tienda> tiendas = new ArrayList<>();
-    private static List<String> direcciones = new ArrayList<>();
-    private static List<Tienda> tiendasMostrar = new ArrayList<>();
-    private static Tienda tiendaEditar = new Tienda();
+    public GestionTiendas() {
 
-    public ListaTiendas() {
-
-    }
-
-    public static Tienda getTiendaEditar() {
-        return tiendaEditar;
-    }
-
-    public void setTiendaEditar(Tienda tiendaEditar) {
-        ListaTiendas.tiendaEditar = tiendaEditar;
-    }
-
-    public List<String> getDirecciones() {
-        return this.direcciones;
-    }
-
-    public List<String> getCiudadesHayTienda() {
-        return this.ciudadesHayTienda;
-    }
-
-    public List<Tienda> getTiendas() {
-        return tiendasMostrar;
-    }
-
-    public List<Tienda> getTiendas(String ciu, String dire) {
-        this.tiendasMostrar.clear();
-        this.ciudadesHayTienda.clear();
-        this.direcciones.clear();
-
-        for (Tienda tienda : tiendas) {
-            String ciudad = tienda.getCiudad();
-            String direccion = tienda.getDireccion();
-            if (empiezaPor(ciudad, ciu) && empiezaPor(direccion, dire)) {
-                this.tiendasMostrar.add(tienda);
-                if (!ciudadesHayTienda.contains(ciudad)) {
-                    this.ciudadesHayTienda.add(ciudad);
-                }
-                if (!direcciones.contains(direccion)) {
-                    this.direcciones.add(direccion);
-                }
-            }
-        }
-        return this.tiendasMostrar;
     }
 
     public void cargarTiendas() {
@@ -123,7 +76,7 @@ public class ListaTiendas {
             boolean seguir = true;
             Iterator<Tienda> it = tiendas.iterator();
             while (it.hasNext() && seguir == true) {
-                Tienda tienda = it.next();                
+                Tienda tienda = it.next();
                 if (tienda.igual(antiguaTienda)) {
                     tienda = nuevaTienda;
                     tiendas.remove(tienda);
@@ -134,40 +87,25 @@ public class ListaTiendas {
 
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido modificar la Tienda", Alert.AlertType.ERROR);
-            
+
         }
 
     }
-    
-    public static void nuevaTienda(Tienda tienda){
+
+    public static void nuevaTienda(Tienda tienda) {
         try (Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root")) {
-        String sentencia = "Insert into tiendas values(?,?,?)";        
-        PreparedStatement ps = connect.prepareStatement(sentencia);
-        ps.setInt(1, tienda.getIdTienda());
-        ps.setString(2, tienda.getDireccion());
-        ps.setString(3, tienda.getCiudad());
-        ps.executeUpdate();
-        tiendas.add(tienda);
+            String sentencia = "Insert into tiendas values(?,?,?)";
+            PreparedStatement ps = connect.prepareStatement(sentencia);
+            ps.setInt(1, tienda.getIdTienda());
+            ps.setString(2, tienda.getDireccion());
+            ps.setString(3, tienda.getCiudad());
+            ps.executeUpdate();
+            tiendas.add(tienda);
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.INFORMATION);
         }
     }
 
-    private boolean empiezaPor(String palabra1, String empieza) {
-        if (empieza.equalsIgnoreCase("")) {
-            return true;
-        }
-        int longitud = empieza.length();
-        if (longitud > palabra1.length()) {
-            return false;
-        }
-        String palabra = palabra1.substring(0, longitud);
-
-        if (palabra.equalsIgnoreCase(empieza)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
 }
