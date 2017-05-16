@@ -125,6 +125,7 @@ public class ListaTiendas {
             while (it.hasNext() && seguir == true) {
                 Tienda tienda = it.next();                
                 if (tienda.igual(antiguaTienda)) {
+                    tienda = nuevaTienda;
                     tiendas.remove(tienda);
                     tiendas.add(nuevaTienda);
                     seguir = false;

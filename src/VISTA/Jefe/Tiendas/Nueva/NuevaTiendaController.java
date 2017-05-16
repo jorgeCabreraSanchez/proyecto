@@ -61,31 +61,53 @@ public class NuevaTiendaController implements Initializable {
     private void accionNuevo(ActionEvent event) {
         this.problemas.setText("");
         try {
-            Integer id = Integer.parseInt(this.textID.getText());
+            String id = this.textID.getText();
             String direccion = this.textDireccion.getText();
             String ciudad = this.textCiudad.getText();
-            if (id == null) {
-
-            }
-            if (ciudad == null) {
-
-            }
-            if (direccion == null) {
-
-            }
-            Tienda tienda = new Tienda();
-            tienda.setIdTienda(id);
-            tienda.setDireccion(direccion);
-            tienda.setCiudad(ciudad);
+            Tienda tienda = comprobarDatos(id, direccion, ciudad);
             ListaTiendas.nuevaTienda(tienda);
         } catch (NumberFormatException ex) {
             this.problemas.setText("La id solo puede contener números");
         }
 
-    }
-    
-    private void comprobarDatos(String id1,String direccion,String ciudad){
+        
         
     }
 
+    private Tienda comprobarDatos(String id1, String direccion, String ciudad) {
+        Integer id = 0;
+        if (!id1.isEmpty() && !direccion.isEmpty() && !ciudad.isEmpty()) {
+
+            this.labelID.setText("ID:");
+            this.labelID.setStyle("-fx-text-fill: black");
+            id = Integer.parseInt(id1);
+
+            this.labelCiudad.setText("Ciudad:");
+            this.labelID.setStyle("-fx-text-fill: black");
+
+            this.labelDireccion.setText("Direccion:");
+            this.labelID.setStyle("-fx-text-fill: black");
+
+            Tienda tienda = new Tienda();
+            tienda.setIdTienda(id);
+            tienda.setDireccion(direccion);
+            tienda.setCiudad(ciudad);
+            return tienda;
+        }
+        
+        if (id1.isEmpty()) {
+            this.labelID.setText("ID*:");
+            this.labelID.setStyle("-fx-text-fill: #ff0000");
+        }
+
+        if (ciudad.isEmpty()) {
+            this.labelCiudad.setText("Ciudad*:");
+            this.labelID.setStyle("-fx-text-fill: #ff0000");
+        }
+        if (direccion.isEmpty()) {
+            this.labelDireccion.setText("Direccion*:");
+            this.labelID.setStyle("-fx-text-fill: #ff0000");
+        }
+        return null;
+    }
 }

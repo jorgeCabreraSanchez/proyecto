@@ -100,7 +100,7 @@ public class ControllerLogin implements Initializable {
                 } else if (error.equalsIgnoreCase("Encargado")) {
                     root = FXMLLoader.load(getClass().getResource("/VISTA/Encargado/InicioEncargado.fxml"));
                 } else if (error.equalsIgnoreCase("Empleado")) {
-                    root = FXMLLoader.load(getClass().getResource("/VISTA/Empleado/InicioEmpleado.fxml"));
+                    root = FXMLLoader.load(getClass().getResource("/VISTA/Empleado/InicioEmpleados.fxml"));
                 }
                 Stage stage2 = new Stage();
                 stage2.initModality(Modality.APPLICATION_MODAL);
