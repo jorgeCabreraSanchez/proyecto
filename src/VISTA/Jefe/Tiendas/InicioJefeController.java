@@ -4,16 +4,23 @@
  * and open the template in the editor.
  */
 package VISTA.Jefe.Tiendas;
+//
 
-import DATOS.GestionTiendas;
+import MODELO.Alertas;
+import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
+import VISTA.Jefe.Tiendas.Editar.EditarTiendaController;
+import VISTA.Jefe.Tiendas.Nueva.NuevaTiendaController;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.function.Predicate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,15 +50,11 @@ import javafx.stage.WindowEvent;
 
 public class InicioJefeController implements Initializable {
 
-    GestionTiendas ls = new GestionTiendas();
+    ListaTiendas lt;
 
-    {
-        ls.cargarTiendas();
-    }
-
-    ObservableList<MenuItem> ciudadesHayTienda = FXCollections.observableArrayList();
-    ObservableList<MenuItem> direcciones = FXCollections.observableArrayList();
-    ObservableList<Tienda> tiendas = FXCollections.observableArrayList(ls.getTiendas());
+    ObservableList<MenuItem> ciudadesHayTienda;
+    ObservableList<MenuItem> direcciones;
+    ObservableList<Tienda> tiendas;
 
     @FXML
     private AnchorPane fondo;
@@ -84,6 +87,15 @@ public class InicioJefeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            lt = new ListaTiendas();
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("Error BD", "Ha habido un error intentando traer las tiendas de la BD", AlertType.ERROR);
+        }
+        ciudadesHayTienda = FXCollections.observableArrayList();
+        direcciones = FXCollections.observableArrayList();
+        tiendas = FXCollections.observableArrayList(lt.getListaTiendasMostrar());
+
         tiendas();
         cerrar();
         tabla();
@@ -95,6 +107,8 @@ public class InicioJefeController implements Initializable {
         this.columnaCiudad.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
         this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
 
+        columnaID.sortTypeProperty().set(TableColumn.SortType.ASCENDING);
+        
         tabla.setTableMenuButtonVisible(true);
         tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación."));
 
@@ -131,9 +145,9 @@ public class InicioJefeController implements Initializable {
 
     private void actualizarCiudades(String ciu) {
         tiendas.clear();
-        tiendas.addAll(ls.getTiendas(ciu, ""));
+        tiendas.addAll(lt.getListaTiendasMostrar(ciu, ""));
 
-        List<String> ciudadesTienda = ls.getCiudadesHayTienda();
+        Set<String> ciudadesTienda = lt.getCiudades();
         ciudadesHayTienda.clear();
         for (String ciudad : ciudadesTienda) {
             MenuItem mn = new MenuItem(ciudad);
@@ -144,7 +158,7 @@ public class InicioJefeController implements Initializable {
         this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
 
         if (!ciu.isEmpty()) {
-            List<String> direccione = ls.getDirecciones();
+            Set<String> direccione = lt.getDirecciones();
             direcciones.clear();
             for (String direccion : direccione) {
                 MenuItem mn2 = new MenuItem(direccion);
@@ -185,9 +199,9 @@ public class InicioJefeController implements Initializable {
     private void actualizarDirecciones(String dire) {
         String ciu = this.ciudad.getText();
         this.tiendas.clear();
-        this.tiendas.addAll(ls.getTiendas(ciu, dire));
+        this.tiendas.addAll(lt.getListaTiendasMostrar(ciu, dire));
 
-        List<String> direccione = ls.getDirecciones();
+        Set<String> direccione = lt.getDirecciones();
         this.direcciones.clear();
         for (String direccion : direccione) {
             MenuItem mn2 = new MenuItem(direccion);
@@ -248,19 +262,21 @@ public class InicioJefeController implements Initializable {
     @FXML
     private void accionEditar(ActionEvent event) throws IOException {
         desclickarContextMenu();
-        Tienda tienda = this.tabla.getSelectionModel().getSelectedItem();
-        if (tienda != null) {
-            ls.setTiendaEditar(tienda);
-            Parent root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/Editar/EditarTienda.fxml"));
+        Tienda tiendaAntigua = this.tabla.getSelectionModel().getSelectedItem();
+        if (tiendaAntigua != null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Editar/EditarTienda.fxml"));
+            Parent root = loader.load();
+            EditarTiendaController controller = loader.getController();
+            controller.setTiendaAntigua(tiendaAntigua);
+            controller.setLt(lt);
+
             Stage stage = new Stage();
             stage.initModality((Modality.APPLICATION_MODAL));
             stage.setScene(new Scene(root));
             stage.show();
-            System.out.println("viene");
-            if ((boolean) stage.getUserData()) {
-                actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
-                System.out.println("entra");
-            }
+            System.out.println("Sigue");
+            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
         }
     }
 
@@ -275,7 +291,7 @@ public class InicioJefeController implements Initializable {
             check.setContentText("Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion());
             Optional<ButtonType> boton = check.showAndWait();
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
-                ls.borrarTienda(tabla.getSelectionModel().getSelectedItem());
+                lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
                 actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
             }
         }
@@ -284,7 +300,12 @@ public class InicioJefeController implements Initializable {
     @FXML
     private void accionNuevo(ActionEvent event) throws IOException {
         desclickarContextMenu();
-        Parent root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
+        NuevaTiendaController controller = loader.getController();
+
+        Parent root = loader.load();
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
@@ -298,9 +319,9 @@ public class InicioJefeController implements Initializable {
 
     private void actualizarCiuYDire(String ciu, String dire) {
         tiendas.clear();
-        this.tiendas.addAll(ls.getTiendas(ciu, dire));
+        this.tiendas.addAll(lt.getListaTiendasMostrar(ciu, dire));
 
-        List<String> ciudadesTienda = ls.getCiudadesHayTienda();
+        Set<String> ciudadesTienda = lt.getCiudades();
         ciudadesHayTienda.clear();
         for (String ciudad : ciudadesTienda) {
             MenuItem mn = new MenuItem(ciudad);
@@ -310,7 +331,7 @@ public class InicioJefeController implements Initializable {
         this.menuCiudad.getItems().clear();
         this.menuCiudad.getItems().addAll(this.ciudadesHayTienda);
 
-        List<String> direccione = ls.getDirecciones();
+        Set<String> direccione = lt.getDirecciones();
         this.direcciones.clear();
         for (String direccion : direccione) {
             MenuItem mn2 = new MenuItem(direccion);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DATOS;
+package MODELO.Listas;
 
 import MODELO.Trabajadores.Trabajadores;
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ import java.util.List;
  * @author daw
  */
 public class ListaTrabajadores {
-     static private List<Trabajadores> trabajadores = new ArrayList<>();
+     private List<Trabajadores> trabajadores = new ArrayList<>();
 
-    public static List<Trabajadores> getTrabajadores() {
+    public List<Trabajadores> getTrabajadores() {
         return trabajadores;
     }
 
-    public static void setTrabajadores(List<Trabajadores> trabajadores) {
-        ListaTrabajadores.trabajadores = trabajadores;
+    public void setTrabajadores(List<Trabajadores> trabajadores) {
+        this.trabajadores = trabajadores;
     }
     
-    public static void setTrabajadores(Trabajadores trabajador) {
-        ListaTrabajadores.trabajadores.add(trabajador);
+    public void setTrabajadores(Trabajadores trabajador) {
+        this.trabajadores.add(trabajador);
     }
     
     

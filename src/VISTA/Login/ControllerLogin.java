@@ -21,14 +21,11 @@ import javafx.util.Duration;
 import DATOS.Login;
 import MODELO.Alertas;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 
 public class ControllerLogin implements Initializable {
 
-    Login login = new Login();
-
+    Login login;
     @FXML
     private TextField fieldUsuario;
     @FXML
@@ -47,6 +44,14 @@ public class ControllerLogin implements Initializable {
     private AnchorPane fondoAtras;
     @FXML
     private AnchorPane fondoLogo;
+
+    public ControllerLogin() {
+        try {
+            this.login = new Login();
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("Conexión BD", "Ha habido un error en la BD y no se puede acceder", "Hable con el administrador de la red para solucionar el problema", Alert.AlertType.ERROR);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,15 +84,13 @@ public class ControllerLogin implements Initializable {
     }
 
     private void verificar(String id, String contraseña) throws IOException {
-        Integer id1 = null;
+        Integer id1 = 0;
         this.labelErrores.setText("");
 
         try {
             id1 = Integer.parseInt(id);
-
-            String ocurre;
             try {
-                ocurre = login.comprobar(id1, contraseña);
+                String ocurre = login.comprobar(id1, contraseña);
 
                 if (ocurre.equalsIgnoreCase("Usuario")) {
                     this.labelErrores.setText("- La ID escrita no existe.");
@@ -100,6 +103,7 @@ public class ControllerLogin implements Initializable {
 
                     Parent root = new Parent() {
                     };
+
                     if (ocurre.equalsIgnoreCase("Jefe")) {
                         root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Tiendas/InicioJefe.fxml"));
                     } else if (ocurre.equalsIgnoreCase("Encargado")) {

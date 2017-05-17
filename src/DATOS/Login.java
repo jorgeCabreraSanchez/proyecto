@@ -6,8 +6,6 @@
 package DATOS;
 
 import MODELO.Alertas;
-import MODELO.Trabajadores.Empleado;
-import MODELO.Trabajadores.Trabajadores;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,13 +20,18 @@ import javafx.scene.control.Alert;
  */
 public class Login {
 
-    public Login() {
+    private static Connection connect;
 
+    public Login() throws SQLException {
+        connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root");
+    }
+
+    public static Connection getConnect() {
+        return Login.connect;
     }
 
     public String comprobar(Integer id, String contraseña) throws IOException, SQLException {
         String devolver = "";
-        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root");
 
         String sentencia = "Select * from trabajadores where IDTrabajador = ?";
         PreparedStatement ps = connect.prepareStatement(sentencia);
@@ -37,7 +40,7 @@ public class Login {
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        String contraseñaUser = null;
+        String contraseñaUser = "";
         try {
             contraseñaUser = rs.getString(5);
         } catch (SQLException e) {
@@ -45,13 +48,12 @@ public class Login {
         }
         try {
             if (contraseña.equals(contraseñaUser)) {
-                String tipo = rs.getString(6);
-
                 sentencia = "Update trabajadores set estado = 'Conectado' where IDTrabajador = ?";
                 ps = connect.prepareStatement(sentencia);
                 ps.setInt(1, id);
                 ps.executeUpdate();
 
+                String tipo = rs.getString(6);
                 if (tipo.equalsIgnoreCase("Jefe")) {
                     devolver = "Jefe";
                 }
@@ -59,14 +61,13 @@ public class Login {
                     devolver = "Encargado";
                 }
                 if (tipo.equalsIgnoreCase("Empleado")) {
-                    Trabajadores trabajador = new Empleado(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(7), rs.getString(8), rs.getString(9));
-                    ListaTrabajadores.setTrabajadores(trabajador);
+//                    Trabajadores trabajador = new Empleado(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(7), rs.getString(8), rs.getString(9));
+//                    ListaTrabajadores.setTrabajadores(trabajador);
                     devolver = "Empleado";
                 }
-
-                /* Hacer la carga */
+            } else {
+                devolver = "Contraseña";
             }
-            devolver = "Contraseña";
         } catch (SQLException e) {
             Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se han podido cargar los datos", Alert.AlertType.ERROR);
         }

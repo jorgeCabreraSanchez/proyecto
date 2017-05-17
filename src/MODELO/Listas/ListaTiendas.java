@@ -5,10 +5,11 @@
  */
 package MODELO.Listas;
 
+import DATOS.GestionTiendas;
 import MODELO.Tienda;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -21,18 +22,22 @@ public class ListaTiendas {
     private Set<String> ciudades = new HashSet<>();
     private Set<Tienda> listaTiendas = new HashSet<>();
     private Set<Tienda> listaTiendasMostrar = new HashSet<>();
-    private Tienda t;
+
+    public ListaTiendas() throws SQLException {
+        GestionTiendas gs = new GestionTiendas();
+        this.listaTiendas = gs.cargarTiendas();
+    }
 
     public Set<String> getDirecciones() {
         return direcciones;
     }
 
     public void setDirecciones(Set<String> direcciones) {
-        ListaTiendas.direcciones = direcciones;
+        this.direcciones = direcciones;
     }
 
     public void setDirecciones(String direccion) {
-        ListaTiendas.direcciones.add(direccion);
+        this.direcciones.add(direccion);
     }
 
     public Set<String> getCiudades() {
@@ -40,11 +45,11 @@ public class ListaTiendas {
     }
 
     public void setCiudades(Set<String> ciudades) {
-        ListaTiendas.ciudades = ciudades;
+        this.ciudades = ciudades;
     }
 
     public void setCiudades(String ciudad) {
-        ListaTiendas.ciudades.add(ciudad);
+        this.ciudades.add(ciudad);
     }
 
     public Set<Tienda> getListaTiendas() {
@@ -52,11 +57,39 @@ public class ListaTiendas {
     }
 
     public void setListaTiendas(Set<Tienda> listaTiendas) {
-        ListaTiendas.listaTiendas = listaTiendas;
+        this.listaTiendas = listaTiendas;
     }
 
-    public void setListaTiendas(Tienda Tienda) {
-        ListaTiendas.listaTiendas.add(Tienda);
+    public void nuevaTienda(Tienda tienda) {
+        GestionTiendas gs = new GestionTiendas();
+        gs.nuevaTienda(tienda);
+        this.listaTiendas.add(tienda);
+    }
+
+    public void borrarTienda(Tienda tienda) {
+        GestionTiendas gs = new GestionTiendas();
+        gs.borrarTienda(tienda);
+        this.listaTiendas.remove(tienda);
+        
+    }
+
+    public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
+        GestionTiendas gs = new GestionTiendas();
+        gs.editarTienda(antiguaTienda, nuevaTienda);
+        /* Preguntar si el GestionTiendas lo pongo como atributo de la clase
+        o lo creo en cada metodo */
+        boolean seguir = true;
+        Iterator<Tienda> it = listaTiendas.iterator();
+        while (it.hasNext() && seguir == true) {
+            Tienda tienda = it.next();
+            if (tienda.igual(antiguaTienda)) {
+                System.out.println("Editar");
+//                tienda = nuevaTienda;
+//                listaTiendas.remove(tienda);
+//                listaTiendas.add(nuevaTienda);
+                seguir = false;
+            }
+        }
     }
 
     public Set<Tienda> getListaTiendasMostrar() {
@@ -85,17 +118,9 @@ public class ListaTiendas {
     }
 
     public void setListaTiendasMostrar(Set<Tienda> listaTiendasMostrar) {
-        ListaTiendas.listaTiendasMostrar = listaTiendasMostrar;
+        this.listaTiendasMostrar = listaTiendasMostrar;
     }
 
-    public Tienda getT() {
-        return t;
-    }
-
-    public void setT(Tienda t) {
-        ListaTiendas.t = t;
-    }
-    
     /*Métodos propios*/
     private boolean empiezaPor(String palabra1, String empieza) {
         if (empieza.equalsIgnoreCase("")) {

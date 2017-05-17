@@ -6,6 +6,7 @@
 package VISTA.Jefe.Tiendas.Nueva;
 
 import DATOS.GestionTiendas;
+import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +25,8 @@ import javafx.scene.control.TextField;
  */
 public class NuevaTiendaController implements Initializable {
 
+    ListaTiendas lt;
+    
     @FXML
     private Button botonCancelar;
     @FXML
@@ -65,14 +68,13 @@ public class NuevaTiendaController implements Initializable {
             String direccion = this.textDireccion.getText();
             String ciudad = this.textCiudad.getText();
             Tienda tienda = comprobarDatos(id, direccion, ciudad);
-            GestionTiendas.nuevaTienda(tienda);
+           lt.nuevaTienda(tienda);
         } catch (NumberFormatException ex) {
             this.problemas.setText("La id solo puede contener números");
-        }
-
-        
-        
+        }   
     }
+    
+    
 
     private Tienda comprobarDatos(String id1, String direccion, String ciudad) {
         Integer id = 0;
@@ -110,4 +112,15 @@ public class NuevaTiendaController implements Initializable {
         }
         return null;
     }
+
+    public ListaTiendas getLt() {
+        return lt;
+    }
+
+    public void setLt(ListaTiendas lts) {
+        this.lt = lt;
+    }
+    
+    
+    
 }

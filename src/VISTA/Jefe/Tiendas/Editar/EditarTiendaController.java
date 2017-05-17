@@ -6,6 +6,7 @@
 package VISTA.Jefe.Tiendas.Editar;
 
 import DATOS.GestionTiendas;
+import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,8 +25,10 @@ import javafx.stage.Stage;
  */
 public class EditarTiendaController implements Initializable {
 
-    Tienda tiendaAntigua = GestionTiendas.getTiendaEditar();
-
+    Tienda tiendaAntigua;
+    Tienda tiendaNueva;
+    ListaTiendas lt;
+    
     @FXML
     private TextField textID;
     @FXML
@@ -52,15 +55,11 @@ public class EditarTiendaController implements Initializable {
 
     @FXML
     private void accionEditar(ActionEvent event) {
-        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
-        stage.setUserData(true);
-        Tienda tiendaNueva = new Tienda(Integer.parseInt(this.textID.getText()), this.textCiudad.getText(), this.textDireccion.getText());
+        tiendaNueva = new Tienda(Integer.parseInt(this.textID.getText()), this.textCiudad.getText(), this.textDireccion.getText());
         if (!tiendaAntigua.igual(tiendaNueva)) {
-            GestionTiendas.editarTienda(tiendaAntigua, tiendaNueva);
-        } else {
-           stage.setUserData(false); 
-        }
-
+            lt.editarTienda(tiendaAntigua, tiendaNueva);
+        }        
+        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
         stage.close();
     }
 
@@ -68,7 +67,32 @@ public class EditarTiendaController implements Initializable {
     private void accionCancelar(ActionEvent event) {
         Stage stage = (Stage) this.botonEditar.getScene().getWindow();
         stage.close();
-        stage.setUserData(false);
     }
 
+    public Tienda getTiendaAntigua() {
+        return tiendaAntigua;
+    }
+
+    public void setTiendaAntigua(Tienda tiendaAntigua) {
+        this.tiendaAntigua = tiendaAntigua;
+    }
+
+    public Tienda getTiendaNueva() {
+        return tiendaNueva;
+    }
+
+    public void setTiendaNueva(Tienda tiendaNueva) {
+        this.tiendaNueva = tiendaNueva;
+    }
+
+    public ListaTiendas getListaTiendas() {
+        return lt;
+    }
+
+    public void setLt(ListaTiendas listaTiendas) {
+        this.lt = listaTiendas;
+    }
+    
+    
+    
 }
