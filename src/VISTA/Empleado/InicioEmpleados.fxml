@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Empleado.InicioEmpleadosController">
+   <children>
+      <Pane fx:id="foto" layoutX="36.0" layoutY="32.0" opacity="0.24" prefHeight="142.0" prefWidth="132.0" stylesheets="@Empleados.css" />
+      <Label fx:id="nombre" layoutX="30.0" layoutY="198.0" text="Nombre empleado" />
+      <Label fx:id="tipoEmpleado" layoutX="461.0" layoutY="103.0" text="Tipo empleado" />
+      <Button fx:id="botonIncidencia" layoutX="126.0" layoutY="282.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="122.0" text="Incidencias" />
+      <Button fx:id="botonCalendario" layoutX="389.0" layoutY="282.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="122.0" text="Calendario" />
+      <Label fx:id="tienda" layoutX="300.0" layoutY="103.0" text="Tienda" />
+   </children>
+</AnchorPane>

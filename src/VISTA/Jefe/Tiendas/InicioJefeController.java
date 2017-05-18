@@ -270,6 +270,7 @@ public class InicioJefeController implements Initializable {
             EditarTiendaController controller = loader.getController();
             controller.setTiendaAntigua(tiendaAntigua);
             controller.setLt(lt);
+            controller.mostrarTienda();
 
             Stage stage = new Stage();
             stage.initModality((Modality.APPLICATION_MODAL));

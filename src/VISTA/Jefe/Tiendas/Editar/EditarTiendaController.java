@@ -44,10 +44,9 @@ public class EditarTiendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mostrarTienda();
     }
 
-    private void mostrarTienda() {
+    public void mostrarTienda() {
         this.textID.setText(String.valueOf(tiendaAntigua.getIdTienda()));
         this.textCiudad.setText(tiendaAntigua.getCiudad());
         this.textDireccion.setText(tiendaAntigua.getDireccion());

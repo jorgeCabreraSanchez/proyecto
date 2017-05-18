@@ -22,9 +22,10 @@ public class ListaTiendas {
     private Set<String> ciudades = new HashSet<>();
     private Set<Tienda> listaTiendas = new HashSet<>();
     private Set<Tienda> listaTiendasMostrar = new HashSet<>();
+    private GestionTiendas gs;
 
     public ListaTiendas() throws SQLException {
-        GestionTiendas gs = new GestionTiendas();
+        gs = new GestionTiendas();
         this.listaTiendas = gs.cargarTiendas();
     }
 
@@ -61,20 +62,17 @@ public class ListaTiendas {
     }
 
     public void nuevaTienda(Tienda tienda) {
-        GestionTiendas gs = new GestionTiendas();
         gs.nuevaTienda(tienda);
         this.listaTiendas.add(tienda);
     }
 
     public void borrarTienda(Tienda tienda) {
-        GestionTiendas gs = new GestionTiendas();
         gs.borrarTienda(tienda);
         this.listaTiendas.remove(tienda);
-        
+
     }
 
     public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
-        GestionTiendas gs = new GestionTiendas();
         gs.editarTienda(antiguaTienda, nuevaTienda);
         /* Preguntar si el GestionTiendas lo pongo como atributo de la clase
         o lo creo en cada metodo */

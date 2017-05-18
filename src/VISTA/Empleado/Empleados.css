@@ -1,0 +1,7 @@
+#foto{
+    -fx-background-image: url("images/usuario.jpg"); 
+    -fx-background-size: stretch;
+    -fx-alignment: BOTTOM_CENTER;
+}
+
+
