@@ -108,7 +108,7 @@ public class InicioJefeController implements Initializable {
         this.columnaDireccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
 
         columnaID.sortTypeProperty().set(TableColumn.SortType.ASCENDING);
-        
+
         tabla.setTableMenuButtonVisible(true);
         tabla.setPlaceholder(new Label("No se encontro ninguna tienda en esa ubicación."));
 
@@ -275,8 +275,7 @@ public class InicioJefeController implements Initializable {
             Stage stage = new Stage();
             stage.initModality((Modality.APPLICATION_MODAL));
             stage.setScene(new Scene(root));
-            stage.show();
-            System.out.println("Sigue");
+            stage.showAndWait();
             actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
         }
     }
@@ -292,7 +291,11 @@ public class InicioJefeController implements Initializable {
             check.setContentText("Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion());
             Optional<ButtonType> boton = check.showAndWait();
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
-                lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
+                try {
+                    lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
+                } catch (SQLException e) {
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido", AlertType.ERROR);
+                }
                 actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
             }
         }

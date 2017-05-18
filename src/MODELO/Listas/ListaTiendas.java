@@ -61,30 +61,26 @@ public class ListaTiendas {
         this.listaTiendas = listaTiendas;
     }
 
-    public void nuevaTienda(Tienda tienda) {
+    public void nuevaTienda(Tienda tienda) throws SQLException {
         gs.nuevaTienda(tienda);
         this.listaTiendas.add(tienda);
     }
 
-    public void borrarTienda(Tienda tienda) {
+    public void borrarTienda(Tienda tienda) throws SQLException {
         gs.borrarTienda(tienda);
         this.listaTiendas.remove(tienda);
-
     }
 
-    public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
-        gs.editarTienda(antiguaTienda, nuevaTienda);
+    public void editarTienda(Integer antiguaTiendaID, Tienda nuevaTienda) throws SQLException {
+        gs.editarTienda(antiguaTiendaID, nuevaTienda);
         /* Preguntar si el GestionTiendas lo pongo como atributo de la clase
         o lo creo en cada metodo */
         boolean seguir = true;
         Iterator<Tienda> it = listaTiendas.iterator();
         while (it.hasNext() && seguir == true) {
             Tienda tienda = it.next();
-            if (tienda.igual(antiguaTienda)) {
-                System.out.println("Editar");
-//                tienda = nuevaTienda;
-//                listaTiendas.remove(tienda);
-//                listaTiendas.add(nuevaTienda);
+            if (tienda.getIdTienda() == antiguaTiendaID) {
+                tienda.cogerDatos(nuevaTienda);
                 seguir = false;
             }
         }

@@ -6,17 +6,21 @@
 package VISTA.Jefe.Tiendas.Nueva;
 
 import DATOS.GestionTiendas;
+import MODELO.Alertas;
 import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,7 +30,7 @@ import javafx.scene.control.TextField;
 public class NuevaTiendaController implements Initializable {
 
     ListaTiendas lt;
-    
+
     @FXML
     private Button botonCancelar;
     @FXML
@@ -58,59 +62,71 @@ public class NuevaTiendaController implements Initializable {
 
     @FXML
     private void accionCancelar(ActionEvent event) {
+        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     private void accionNuevo(ActionEvent event) {
         this.problemas.setText("");
         try {
-            String id = this.textID.getText();
-            String direccion = this.textDireccion.getText();
-            String ciudad = this.textCiudad.getText();
-            Tienda tienda = comprobarDatos(id, direccion, ciudad);
-           lt.nuevaTienda(tienda);
-        } catch (NumberFormatException ex) {
-            this.problemas.setText("La id solo puede contener números");
-        }   
-    }
-    
-    
-
-    private Tienda comprobarDatos(String id1, String direccion, String ciudad) {
-        Integer id = 0;
-        if (!id1.isEmpty() && !direccion.isEmpty() && !ciudad.isEmpty()) {
-
-            this.labelID.setText("ID:");
-            this.labelID.setStyle("-fx-text-fill: black");
-            id = Integer.parseInt(id1);
-
-            this.labelCiudad.setText("Ciudad:");
-            this.labelID.setStyle("-fx-text-fill: black");
-
-            this.labelDireccion.setText("Direccion:");
-            this.labelID.setStyle("-fx-text-fill: black");
-
-            Tienda tienda = new Tienda();
-            tienda.setIdTienda(id);
-            tienda.setDireccion(direccion);
-            tienda.setCiudad(ciudad);
-            return tienda;
+            Tienda tienda = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+            try {
+                lt.nuevaTienda(tienda);
+                Alertas.generarAlerta("Tienda", "Tienda creada sucessfully", Alert.AlertType.INFORMATION);
+                Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+                stage.close();
+            } catch (SQLException e) {
+                Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.ERROR);
+            }
+        } catch (NullPointerException e) {
+            /* Comprobar datos puede no devolver una tienda */
+            System.out.println("Devuelve null");
         }
-        
-        if (id1.isEmpty()) {
-            this.labelID.setText("ID*:");
-            this.labelID.setStyle("-fx-text-fill: #ff0000");
+
+    }
+
+    private Tienda comprobarDatos(String id1, String ciudad, String direccion) {
+        Tienda tienda = null;
+        boolean seguir = true;
+        Integer id = 0;
+        try {
+            id = Integer.parseInt(id1);
+        } catch (NumberFormatException e) {
+            this.problemas.setText("- El id solo debe contener números");
+            seguir = false;
         }
 
         if (ciudad.isEmpty()) {
-            this.labelCiudad.setText("Ciudad*:");
+            this.labelCiudad.setText("Ciudad*");
+            this.labelCiudad.setStyle("-fx-text-fill: #ff0000");
+            seguir = false;
+        } else {
+            this.labelCiudad.setText("Ciudad:");
+            this.labelCiudad.setStyle("-fx-text-fill: black");
+        }
+        if (id1.isEmpty()) {
+            this.labelID.setText("ID*:");
             this.labelID.setStyle("-fx-text-fill: #ff0000");
+            seguir = false;
+        } else {
+            this.labelID.setText("ID:");
+            this.labelID.setStyle("-fx-text-fill: black");
         }
         if (direccion.isEmpty()) {
             this.labelDireccion.setText("Direccion*:");
-            this.labelID.setStyle("-fx-text-fill: #ff0000");
+            this.labelDireccion.setStyle("-fx-text-fill: #ff0000");
+            seguir = false;
+        } else {
+            this.labelDireccion.setText("Direccion:");
+            this.labelDireccion.setStyle("-fx-text-fill: black");
         }
-        return null;
+        if (seguir) {
+            tienda.setIdTienda(id);
+            tienda.setCiudad(ciudad);
+            tienda.setDireccion(direccion);
+        }
+        return tienda;
     }
 
     public ListaTiendas getLt() {
@@ -120,7 +136,5 @@ public class NuevaTiendaController implements Initializable {
     public void setLt(ListaTiendas lts) {
         this.lt = lt;
     }
-    
-    
-    
+
 }

@@ -18,9 +18,9 @@ import javafx.beans.property.StringProperty;
  */
 public class Tienda {
 
-    private final IntegerProperty idTienda = new SimpleIntegerProperty();
-    private final StringProperty ciudad = new SimpleStringProperty();
-    private final StringProperty direccion = new SimpleStringProperty();
+    private IntegerProperty idTienda = new SimpleIntegerProperty();
+    private StringProperty ciudad = new SimpleStringProperty();
+    private StringProperty direccion = new SimpleStringProperty();
 
     public Tienda() {
 
@@ -56,6 +56,12 @@ public class Tienda {
         direccion.set(value);
     }
 
+    public void cogerDatos(Tienda tienda){
+        this.setIdTienda(tienda.getIdTienda());
+        this.setCiudad(tienda.getCiudad());
+        this.setDireccion(tienda.getDireccion());
+    }
+    
     public boolean igual(Tienda nueva) {
         boolean respuesta = true;
         if (this.ciudad.get().equalsIgnoreCase(nueva.getCiudad())) {

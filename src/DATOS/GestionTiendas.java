@@ -45,45 +45,31 @@ public class GestionTiendas {
         return tiendas;
     }
 
-    public void borrarTienda(Tienda tienda) {
-        try {
-            String sentencia = "Delete from tiendas where idTienda = ?";
-            PreparedStatement ps = connect.prepareStatement(sentencia);
-            ps.setInt(1, tienda.getIdTienda());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "No se ha podido borrar la tienda", "No se ha podido borrar la tienda debido a que esta contiene empleados, y los empleados siempre tienen que estar asignados a una tienda", Alert.AlertType.ERROR);
-        }
-
+    public void borrarTienda(Tienda tienda) throws SQLException {
+        String sentencia = "Delete from tiendas where idTienda = ?";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, tienda.getIdTienda());
+        ps.executeUpdate();
+        /*Alertas.generarAlerta("BD", "No se ha podido borrar la tienda", "No se ha podido borrar la tienda debido a que esta contiene empleados, y los empleados siempre tienen que estar asignados a una tienda", Alert.AlertType.ERROR); */
     }
 
-    public void editarTienda(Tienda antiguaTienda, Tienda nuevaTienda) {
-        try {
-            String sentencia = "Update tiendas set IDTienda = ?, direccion = ?, Ciudad = ? where IDTienda = ?";
-            PreparedStatement ps = connect.prepareStatement(sentencia);
-            ps.setInt(1, nuevaTienda.getIdTienda());
-            ps.setString(2, nuevaTienda.getDireccion());
-            ps.setString(3, nuevaTienda.getCiudad());
-            ps.setInt(4, antiguaTienda.getIdTienda());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "No se ha podido modificar la Tienda", Alert.AlertType.ERROR);
-
-        }
-
+    public void editarTienda(Integer antiguaTiendaID, Tienda nuevaTienda) throws SQLException {
+        String sentencia = "Update tiendas set IDTienda = ?, direccion = ?, Ciudad = ? where IDTienda = ?";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, nuevaTienda.getIdTienda());
+        ps.setString(2, nuevaTienda.getDireccion());
+        ps.setString(3, nuevaTienda.getCiudad());
+        ps.setInt(4, antiguaTiendaID);
+        ps.executeUpdate(); 
     }
 
-    public void nuevaTienda(Tienda tienda) {
-        try {
+    public void nuevaTienda(Tienda tienda) throws SQLException {
             String sentencia = "Insert into tiendas values(?,?,?)";
             PreparedStatement ps = connect.prepareStatement(sentencia);
             ps.setInt(1, tienda.getIdTienda());
             ps.setString(2, tienda.getDireccion());
             ps.setString(3, tienda.getCiudad());
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.INFORMATION);
-        }
+            ps.executeUpdate();               
     }
 
 }
