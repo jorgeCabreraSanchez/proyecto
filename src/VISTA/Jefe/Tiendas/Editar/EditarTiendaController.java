@@ -67,8 +67,9 @@ public class EditarTiendaController implements Initializable {
     @FXML
     private void accionEditar(ActionEvent event) {
         this.textoAviso.setText("");
-        try {
-            tiendaNueva = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+
+        tiendaNueva = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+        if (tiendaNueva != null) {
             if (!tiendaAntigua.igual(tiendaNueva)) {
                 try {
                     lt.editarTienda(tiendaAntigua.getIdTienda(), tiendaNueva);
@@ -81,10 +82,8 @@ public class EditarTiendaController implements Initializable {
             } else {
                 this.textoAviso.setText("- No se ha modificado ningún dato.");
             }
-
-        } catch (NullPointerException e) {
-            /* Comprobar datos puede no devolver una tienda */
         }
+
     }
 
     private Tienda comprobarDatos(String id1, String ciudad, String direccion) {

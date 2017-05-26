@@ -11,12 +11,14 @@ import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,6 +32,7 @@ import javafx.stage.Stage;
 public class NuevaTiendaController implements Initializable {
 
     ListaTiendas lt;
+    Button boton = new Button();
 
     @FXML
     private Button botonCancelar;
@@ -54,36 +57,42 @@ public class NuevaTiendaController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        this.botonCancelar.setUserData("Cancelar");
+        this.botonNuevo.setUserData("Nuevo");
     }
 
     @FXML
     private void accionCancelar(ActionEvent event) {
         Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+        boton = this.botonCancelar;
         stage.close();
     }
 
     @FXML
     private void accionNuevo(ActionEvent event) {
         this.problemas.setText("");
-        try {
-            Tienda tienda = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+        Tienda tienda = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+        if (tienda != null) {
             try {
                 lt.nuevaTienda(tienda);
                 Alertas.generarAlerta("Tienda", "Tienda creada sucessfully", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+                boton = this.botonNuevo;
                 stage.close();
             } catch (SQLException e) {
                 Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.ERROR);
             }
-        } catch (NullPointerException e) {
-            /* Comprobar datos puede no devolver una tienda */
-            System.out.println("Devuelve null");
         }
 
+    }
+    
+    public Button getButton(){
+        return this.boton;
     }
 
     private Tienda comprobarDatos(String id1, String ciudad, String direccion) {
@@ -122,6 +131,7 @@ public class NuevaTiendaController implements Initializable {
             this.labelDireccion.setStyle("-fx-text-fill: black");
         }
         if (seguir) {
+            tienda = new Tienda();
             tienda.setIdTienda(id);
             tienda.setCiudad(ciudad);
             tienda.setDireccion(direccion);
@@ -133,7 +143,7 @@ public class NuevaTiendaController implements Initializable {
         return lt;
     }
 
-    public void setLt(ListaTiendas lts) {
+    public void setLt(ListaTiendas lt) {
         this.lt = lt;
     }
 

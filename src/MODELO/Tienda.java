@@ -6,8 +6,6 @@
 package MODELO;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -64,13 +62,13 @@ public class Tienda {
     
     public boolean igual(Tienda nueva) {
         boolean respuesta = true;
-        if (this.ciudad.get().equalsIgnoreCase(nueva.getCiudad())) {
+        if (!this.ciudad.get().equals(nueva.getCiudad())) {
             respuesta = false;
         }
-        if (this.idTienda.get() == nueva.getIdTienda()) {
+        if (this.idTienda.get() != nueva.getIdTienda()) {
             respuesta = false;
         }
-        if (this.direccion.get().equalsIgnoreCase(nueva.getDireccion())) {
+        if (!this.direccion.get().equals(nueva.getDireccion())) {
             respuesta = false;
         }
         

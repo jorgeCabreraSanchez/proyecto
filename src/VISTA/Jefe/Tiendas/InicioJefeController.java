@@ -281,15 +281,28 @@ public class InicioJefeController implements Initializable {
     }
 
     @FXML
+    private void accionNuevo(ActionEvent event) throws IOException {
+        desclickarContextMenu();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
+        Parent root = loader.load();
+        NuevaTiendaController controller = loader.getController();
+        controller.setLt(lt);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+        if (controller.getButton().getUserData().toString().equalsIgnoreCase("nuevo")) {
+            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+        }
+    }
+
+    @FXML
     private void accionBorrar(ActionEvent event) {
         desclickarContextMenu();
         Tienda tienda = tabla.getSelectionModel().getSelectedItem();
         if (tienda != null) {
-            Alert check = new Alert(AlertType.CONFIRMATION);
-            check.setTitle("Tiendas");
-            check.setHeaderText("Esta seguro que desea borra la tienda?");
-            check.setContentText("Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion());
-            Optional<ButtonType> boton = check.showAndWait();
+            Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la tienda?", "Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion(), AlertType.INFORMATION);
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
                 try {
                     lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
@@ -299,21 +312,6 @@ public class InicioJefeController implements Initializable {
                 actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
             }
         }
-    }
-
-    @FXML
-    private void accionNuevo(ActionEvent event) throws IOException {
-        desclickarContextMenu();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
-        NuevaTiendaController controller = loader.getController();
-
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
     }
 
     @FXML

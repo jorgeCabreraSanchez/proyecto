@@ -5,7 +5,9 @@
  */
 package MODELO;
 
+import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -13,19 +15,19 @@ import javafx.scene.control.Alert;
  */
 public class Alertas {
 
-    static public void generarAlerta(String title,String header, Alert.AlertType alert) {
+    static public Optional<ButtonType> generarAlerta(String title,String header, Alert.AlertType alert) {
         Alert alerta = new Alert(alert);
         alerta.setTitle(title);
         alerta.setHeaderText(header);
-        alerta.showAndWait();
+        return alerta.showAndWait();
     }
 
-     static public void generarAlerta(String title, String header,String content, Alert.AlertType alert) {
+     static public Optional<ButtonType> generarAlerta(String title, String header,String content, Alert.AlertType alert) {
         Alert alerta = new Alert(alert);
         alerta.setTitle(title);
         alerta.setHeaderText(header);
         alerta.setContentText(content);
-        alerta.showAndWait();
+        return alerta.showAndWait();
     }
     
 }
