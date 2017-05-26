@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Jefe.Tiendas;
+package VISTA.Jefe.Inicio;
 //
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
-import VISTA.Jefe.Tiendas.Editar.EditarTiendaController;
-import VISTA.Jefe.Tiendas.Nueva.NuevaTiendaController;
+import VISTA.Tienda.Which.TiendaWhichController;
+import VISTA.Tiendas.Editar.EditarTiendaController;
+import VISTA.Tiendas.Nueva.NuevaTiendaController;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -260,40 +263,50 @@ public class InicioJefeController implements Initializable {
     }
 
     @FXML
-    private void accionEditar(ActionEvent event) throws IOException {
+    private void accionEditar(ActionEvent event) {
         desclickarContextMenu();
         Tienda tiendaAntigua = this.tabla.getSelectionModel().getSelectedItem();
         if (tiendaAntigua != null) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Editar/EditarTienda.fxml"));
-            Parent root = loader.load();
-            EditarTiendaController controller = loader.getController();
-            controller.setTiendaAntigua(tiendaAntigua);
-            controller.setLt(lt);
-            controller.mostrarTienda();
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/VISTA/Tiendas/Editar/EditarTienda.fxml"));
+                Parent root = loader.load();
+                EditarTiendaController controller = loader.getController();
+                controller.setTiendaAntigua(tiendaAntigua);
+                controller.setLt(lt);
+                controller.mostrarTienda();
 
-            Stage stage = new Stage();
-            stage.initModality((Modality.APPLICATION_MODAL));
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+                Stage stage = new Stage();
+                stage.initModality((Modality.APPLICATION_MODAL));
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+                if (controller.getBoton().equalsIgnoreCase("editar")) {
+                    actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+                }
+            } catch (IOException ex) {
+                Alertas.generarAlerta("Ventanas", "No se ha podido abrir la edición de la tienda elegida, lo sentimos", AlertType.ERROR);
+            }
         }
     }
 
     @FXML
-    private void accionNuevo(ActionEvent event) throws IOException {
-        desclickarContextMenu();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/VISTA/Jefe/Tiendas/Nueva/NuevaTienda.fxml"));
-        Parent root = loader.load();
-        NuevaTiendaController controller = loader.getController();
-        controller.setLt(lt);
+    private void accionNuevo(ActionEvent event) {
+        try {
+            desclickarContextMenu();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tiendas/Nueva/NuevaTienda.fxml"));
+            Parent root = loader.load();
+            NuevaTiendaController controller = loader.getController();
+            controller.setLt(lt);
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
-        if (controller.getButton().getUserData().toString().equalsIgnoreCase("nuevo")) {
-            actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            if (controller.getBoton().equalsIgnoreCase("nuevo")) {
+                actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
+            }
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventanas", "No se ha podido abrir la creacion de tiendas, lo sentimos", AlertType.ERROR);
         }
     }
 
@@ -302,21 +315,41 @@ public class InicioJefeController implements Initializable {
         desclickarContextMenu();
         Tienda tienda = tabla.getSelectionModel().getSelectedItem();
         if (tienda != null) {
-            Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la tienda?", "Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion(), AlertType.INFORMATION);
+            Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la tienda?", "Información de la tienda: \n  ID: " + tienda.getIdTienda() + "   Ciudad: " + tienda.getCiudad() + "   Dirección: " + tienda.getDireccion(), AlertType.CONFIRMATION);
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
                 try {
                     lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
+                    actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
                 } catch (SQLException e) {
                     Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido", AlertType.ERROR);
                 }
-                actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
             }
         }
     }
 
     @FXML
     private void accionVer(ActionEvent event) {
-        desclickarContextMenu();
+        try {
+            desclickarContextMenu();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
+            Parent root = loader.load();
+            TiendaWhichController controller = loader.getController();
+
+            if (this.tabla.getSelectionModel().getSelectedItem() != null) {
+                controller.setIDTienda(this.tabla.getSelectionModel().getSelectedItem().getIdTienda());
+
+                Stage stageNuevo = new Stage();
+                stageNuevo.setScene(new Scene(root));
+                stageNuevo.show();
+
+                Stage stageActual = (Stage) this.buttonNuevo.getScene().getWindow();
+                stageActual.close();
+            }
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos", AlertType.ERROR);
+        }
+
     }
 
     private void actualizarCiuYDire(String ciu, String dire) {

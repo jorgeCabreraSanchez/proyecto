@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Jefe.Tiendas.Nueva;
+package VISTA.Tiendas.Editar;
 
 import DATOS.GestionTiendas;
 import MODELO.Alertas;
@@ -11,14 +11,12 @@ import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -29,80 +27,75 @@ import javafx.stage.Stage;
  *
  * @author Jorge Cabrera
  */
-public class NuevaTiendaController implements Initializable {
+public class EditarTiendaController implements Initializable {
 
+    Tienda tiendaAntigua;
+    Tienda tiendaNueva;
     ListaTiendas lt;
-    Button boton = new Button();
+    String boton = "cancelar";
 
     @FXML
-    private Button botonCancelar;
-    @FXML
-    private TextField textDireccion;
+    private TextField textID;
     @FXML
     private TextField textCiudad;
     @FXML
     private ContextMenu menuCiudad;
     @FXML
-    private TextField textID;
+    private TextField textDireccion;
     @FXML
-    private Button botonNuevo;
+    private Button botonEditar;
     @FXML
-    private Label problemas;
+    private Button botonCancelar;
     @FXML
-    private Label labelDireccion;
+    private Label textoAviso;
+    @FXML
+    private Label labelID;
     @FXML
     private Label labelCiudad;
     @FXML
-    private Label labelID;
+    private Label labelDireccion;
 
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.botonCancelar.setUserData("Cancelar");
-        this.botonNuevo.setUserData("Nuevo");
+    }
+
+    public void mostrarTienda() {
+        this.textID.setText(String.valueOf(tiendaAntigua.getIdTienda()));
+        this.textCiudad.setText(tiendaAntigua.getCiudad());
+        this.textDireccion.setText(tiendaAntigua.getDireccion());
     }
 
     @FXML
-    private void accionCancelar(ActionEvent event) {
-        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
-        boton = this.botonCancelar;
-        stage.close();
-    }
+    private void accionEditar(ActionEvent event) {
+        this.textoAviso.setText("");
 
-    @FXML
-    private void accionNuevo(ActionEvent event) {
-        this.problemas.setText("");
-        Tienda tienda = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
-        if (tienda != null) {
-            try {
-                lt.nuevaTienda(tienda);
-                Alertas.generarAlerta("Tienda", "Tienda creada sucessfully", Alert.AlertType.INFORMATION);
-                Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
-                boton = this.botonNuevo;
-                stage.close();
-            } catch (SQLException e) {
-                Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.ERROR);
+        tiendaNueva = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+        if (tiendaNueva != null) {
+            if (!tiendaAntigua.igual(tiendaNueva)) {
+                try {
+                    lt.editarTienda(tiendaAntigua.getIdTienda(), tiendaNueva);
+                    Alertas.generarAlerta("Tienda", "Tienda modificada sucessfully", Alert.AlertType.INFORMATION);
+                    Stage stage = (Stage) this.botonEditar.getScene().getWindow();
+                    boton = "Editar";
+                    stage.close();
+                } catch (SQLException e) {
+                    Alertas.generarAlerta("BD", "Esa id ya esta asignada a una tienda, ponga otra", Alert.AlertType.ERROR);
+                }
+            } else {
+                this.textoAviso.setText("- No se ha modificado ningún dato.");
             }
         }
 
     }
-    
-    public Button getButton(){
-        return this.boton;
-    }
 
     private Tienda comprobarDatos(String id1, String ciudad, String direccion) {
-        Tienda tienda = null;
+        Tienda tienda = new Tienda();
         boolean seguir = true;
         Integer id = 0;
         try {
             id = Integer.parseInt(id1);
         } catch (NumberFormatException e) {
-            this.problemas.setText("- El id solo debe contener números");
+            this.textoAviso.setText("- El id solo debe contener números");
             seguir = false;
         }
 
@@ -131,20 +124,48 @@ public class NuevaTiendaController implements Initializable {
             this.labelDireccion.setStyle("-fx-text-fill: black");
         }
         if (seguir) {
-            tienda = new Tienda();
             tienda.setIdTienda(id);
             tienda.setCiudad(ciudad);
             tienda.setDireccion(direccion);
+            return tienda;
         }
-        return tienda;
+        return null;
     }
 
-    public ListaTiendas getLt() {
+    @FXML
+    private void accionCancelar(ActionEvent event
+    ) {
+        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
+        boton = "cancelar";
+        stage.close();
+    }
+    
+    public String getBoton(){
+        return this.boton;
+    }
+
+    public Tienda getTiendaAntigua() {
+        return tiendaAntigua;
+    }
+
+    public void setTiendaAntigua(Tienda tiendaAntigua) {
+        this.tiendaAntigua = tiendaAntigua;
+    }
+
+    public Tienda getTiendaNueva() {
+        return tiendaNueva;
+    }
+
+    public void setTiendaNueva(Tienda tiendaNueva) {
+        this.tiendaNueva = tiendaNueva;
+    }
+
+    public ListaTiendas getListaTiendas() {
         return lt;
     }
 
-    public void setLt(ListaTiendas lt) {
-        this.lt = lt;
+    public void setLt(ListaTiendas listaTiendas) {
+        this.lt = listaTiendas;
     }
 
 }

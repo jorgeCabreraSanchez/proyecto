@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Jefe.Tiendas.Editar;
+package VISTA.Tiendas.Nueva;
 
 import DATOS.GestionTiendas;
 import MODELO.Alertas;
@@ -11,12 +11,14 @@ import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,73 +29,78 @@ import javafx.stage.Stage;
  *
  * @author Jorge Cabrera
  */
-public class EditarTiendaController implements Initializable {
+public class NuevaTiendaController implements Initializable {
 
-    Tienda tiendaAntigua;
-    Tienda tiendaNueva;
     ListaTiendas lt;
+    String boton = "cancelar";
 
     @FXML
-    private TextField textID;
+    private Button botonCancelar;
+    @FXML
+    private TextField textDireccion;
     @FXML
     private TextField textCiudad;
     @FXML
     private ContextMenu menuCiudad;
     @FXML
-    private TextField textDireccion;
+    private TextField textID;
     @FXML
-    private Button botonEditar;
+    private Button botonNuevo;
     @FXML
-    private Button botonCancelar;
+    private Label problemas;
     @FXML
-    private Label textoAviso;
-    @FXML
-    private Label labelID;
+    private Label labelDireccion;
     @FXML
     private Label labelCiudad;
     @FXML
-    private Label labelDireccion;
+    private Label labelID;
 
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
-
-    public void mostrarTienda() {
-        this.textID.setText(String.valueOf(tiendaAntigua.getIdTienda()));
-        this.textCiudad.setText(tiendaAntigua.getCiudad());
-        this.textDireccion.setText(tiendaAntigua.getDireccion());
+        
     }
 
     @FXML
-    private void accionEditar(ActionEvent event) {
-        this.textoAviso.setText("");
+    private void accionCancelar(ActionEvent event) {
+        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+        stage.close();
+    }
 
-        tiendaNueva = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
-        if (tiendaNueva != null) {
-            if (!tiendaAntigua.igual(tiendaNueva)) {
-                try {
-                    lt.editarTienda(tiendaAntigua.getIdTienda(), tiendaNueva);
-                    Alertas.generarAlerta("Tienda", "Tienda modificada sucessfully", Alert.AlertType.INFORMATION);
-                    Stage stage = (Stage) this.botonEditar.getScene().getWindow();
-                    stage.close();
-                } catch (SQLException e) {
-                    Alertas.generarAlerta("BD", "No se ha podido modificar la Tienda", Alert.AlertType.ERROR);
-                }
-            } else {
-                this.textoAviso.setText("- No se ha modificado ningún dato.");
+    @FXML
+    private void accionNuevo(ActionEvent event) {
+        this.problemas.setText("");
+        Tienda tienda = comprobarDatos(this.textID.getText(), this.textCiudad.getText(), this.textDireccion.getText());
+        if (tienda != null) {
+            try {
+                lt.nuevaTienda(tienda);
+                Alertas.generarAlerta("Tienda", "Tienda creada sucessfully", Alert.AlertType.INFORMATION);
+                Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+                boton = "Nuevo";
+                stage.close();
+            } catch (SQLException e) {
+                Alertas.generarAlerta("BD", "Esa id esta asignada a una tienda, ponga otra diferente", Alert.AlertType.ERROR);
             }
         }
 
     }
+    
+    public String getBoton(){
+        return this.boton;
+    }
 
     private Tienda comprobarDatos(String id1, String ciudad, String direccion) {
-        Tienda tienda = new Tienda();
+        Tienda tienda = null;
         boolean seguir = true;
         Integer id = 0;
         try {
             id = Integer.parseInt(id1);
         } catch (NumberFormatException e) {
-            this.textoAviso.setText("- El id solo debe contener números");
+            this.problemas.setText("- El id solo debe contener números");
             seguir = false;
         }
 
@@ -122,43 +129,20 @@ public class EditarTiendaController implements Initializable {
             this.labelDireccion.setStyle("-fx-text-fill: black");
         }
         if (seguir) {
+            tienda = new Tienda();
             tienda.setIdTienda(id);
             tienda.setCiudad(ciudad);
             tienda.setDireccion(direccion);
-            return tienda;
         }
-        return null;
+        return tienda;
     }
 
-    @FXML
-    private void accionCancelar(ActionEvent event
-    ) {
-        Stage stage = (Stage) this.botonEditar.getScene().getWindow();
-        stage.close();
-    }
-
-    public Tienda getTiendaAntigua() {
-        return tiendaAntigua;
-    }
-
-    public void setTiendaAntigua(Tienda tiendaAntigua) {
-        this.tiendaAntigua = tiendaAntigua;
-    }
-
-    public Tienda getTiendaNueva() {
-        return tiendaNueva;
-    }
-
-    public void setTiendaNueva(Tienda tiendaNueva) {
-        this.tiendaNueva = tiendaNueva;
-    }
-
-    public ListaTiendas getListaTiendas() {
+    public ListaTiendas getLt() {
         return lt;
     }
 
-    public void setLt(ListaTiendas listaTiendas) {
-        this.lt = listaTiendas;
+    public void setLt(ListaTiendas lt) {
+        this.lt = lt;
     }
 
 }

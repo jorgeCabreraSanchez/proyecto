@@ -1,4 +1,4 @@
-package VISTA.Empleado;
+package VISTA.Empleado.Inicio;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

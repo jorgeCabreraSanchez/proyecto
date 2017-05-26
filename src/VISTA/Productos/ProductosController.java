@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Encargado;
+package VISTA.Productos;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author Jorge Cabrera
  */
-public class InicioEncargadoController implements Initializable {
+public class ProductosController implements Initializable {
 
     /**
      * Initializes the controller class.

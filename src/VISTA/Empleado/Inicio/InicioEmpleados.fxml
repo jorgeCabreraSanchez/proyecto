@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Empleado.InicioEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Empleado.Inicio.InicioEmpleadosController">
    <children>
       <Pane fx:id="foto" layoutX="36.0" layoutY="32.0" opacity="0.24" prefHeight="142.0" prefWidth="132.0" stylesheets="@Empleados.css" />
       <Label fx:id="nombre" layoutX="30.0" layoutY="198.0" text="Nombre empleado" />

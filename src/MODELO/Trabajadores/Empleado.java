@@ -11,14 +11,62 @@ import MODELO.Trabajadores.Trabajadores;
  *
  * @author jorge
  */
-public class Empleado extends Trabajadores{
-    
-    public Empleado(int id, String nombre, String apellido1, String contraseña, int iDTienda, String horario, String estado) {
-        super(id, nombre, apellido1, contraseña, iDTienda, horario, estado);
+public class Empleado extends Trabajadores {
+
+    private int idTienda;
+    private String horario;
+    private int incidencias;
+
+    public Empleado(int idTienda, String horario, int incidencias, String nombre, int id, String apellido1, String contraseña, String estado) {
+        super(nombre, id, apellido1, contraseña, estado);
+        this.idTienda = idTienda;
+        this.horario = horario;
+        this.incidencias = incidencias;
     }
 
-    public Empleado(int id, String nombre, String apellido1, String apellido2, String contraseña, int iDTienda, String horario, String estado) {
-        super(id, nombre, apellido1, apellido2, contraseña, iDTienda, horario, estado);
+    /* Este lo uso para mostrar en lista Trabajadores */
+    public Empleado(String horario, int incidencias, int id, String nombre, String apellido1, String apellido2, String estado) {
+        super(id, nombre, apellido1, apellido2, estado);
+        this.horario = horario;
+        this.incidencias = incidencias;
+    }
+
+    public Empleado(int idTienda, String horario, int incidencias, int id, String nombre, String apellido1, String estado) {
+        super(id, nombre, apellido1, estado);
+        this.idTienda = idTienda;
+        this.horario = horario;
+        this.incidencias = incidencias;
+    }
+
+    public Empleado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
+        super(nombre, apellido1, apellido2, contraseña, estado, id);
+        this.idTienda = idTienda;
+        this.horario = horario;
+        this.incidencias = incidencias;
+    }
+
+    public int getIdTienda() {
+        return idTienda;
+    }
+
+    public void setIdTienda(int idTienda) {
+        this.idTienda = idTienda;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public int getIncidencias() {
+        return incidencias;
+    }
+
+    public void setIncidencias(int incidencias) {
+        this.incidencias = incidencias;
     }
 
     public int getId() {
@@ -61,22 +109,6 @@ public class Empleado extends Trabajadores{
         this.contraseña = contraseña;
     }
 
-    public int getIdTienda() {
-        return idTienda;
-    }
-
-    public void setIdTienda(int idTienda) {
-        this.idTienda = idTienda;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -84,13 +116,8 @@ public class Empleado extends Trabajadores{
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
+
 
     
 
-     
-    
-    
-    
 }

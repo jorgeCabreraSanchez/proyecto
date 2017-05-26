@@ -49,7 +49,7 @@ public class GestionTiendas {
         String sentencia = "Delete from tiendas where idTienda = ?";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, tienda.getIdTienda());
-        ps.executeUpdate();
+        ps.executeUpdate();        
         /*Alertas.generarAlerta("BD", "No se ha podido borrar la tienda", "No se ha podido borrar la tienda debido a que esta contiene empleados, y los empleados siempre tienen que estar asignados a una tienda", Alert.AlertType.ERROR); */
     }
 

@@ -16,32 +16,41 @@ public abstract class Trabajadores {
     protected String apellido1;
     protected String apellido2;
     protected String contraseña;
-    protected int idTienda;
-    protected String horario;
     protected String estado;
 
     public Trabajadores() {
 
     }
 
-    public Trabajadores(int id, String nombre, String apellido1, String contraseña, int iDTienda, String horario, String estado) {
+    public Trabajadores(String nombre, int id, String apellido1, String contraseña, String estado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.contraseña = contraseña;
-        this.idTienda = iDTienda;
-        this.horario = horario;
         this.estado = estado;
     }
 
-    public Trabajadores(int id, String nombre, String apellido1, String apellido2, String contraseña, int iDTienda, String horario, String estado) {
+    public Trabajadores(int id, String nombre, String apellido1, String apellido2, String estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.estado = estado;
+    }
+
+    public Trabajadores(int id, String nombre, String apellido1, String estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.estado = estado;
+    }
+
+    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
         this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.contraseña = contraseña;
-        this.idTienda = iDTienda;
-        this.horario = horario;
         this.estado = estado;
     }
 
@@ -85,22 +94,6 @@ public abstract class Trabajadores {
         this.contraseña = contraseña;
     }
 
-    public int getIdTienda() {
-        return idTienda;
-    }
-
-    public void setIdTienda(int idTienda) {
-        this.idTienda = idTienda;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -108,17 +101,5 @@ public abstract class Trabajadores {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-
-    
-
-   
-
-    
-    
-   
-
-
 
 }

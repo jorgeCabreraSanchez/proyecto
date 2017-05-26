@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Tienda.Which.TiendaWhichController">
+    <stylesheets>
+        <URL value="@TiendaWhich.css" />
+    </stylesheets>
+   <children>
+      <Button fx:id="buttonProductos" layoutX="98.0" layoutY="136.0" mnemonicParsing="false" onAction="#abrirProductos" prefHeight="115.0" prefWidth="135.0" text="Productos" />
+      <Button fx:id="buttonTrabajadores" layoutX="351.0" layoutY="143.0" mnemonicParsing="false" onAction="#abrirTrabajadores" prefHeight="115.0" prefWidth="135.0" text="Trabajadores" />
+      <Button fx:id="buttonVolver" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
+   </children>
+</AnchorPane>
