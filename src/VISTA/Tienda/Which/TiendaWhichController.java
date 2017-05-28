@@ -6,9 +6,11 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
+import VISTA.Trabajadores.TrabajadoresController;
 import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,12 +70,19 @@ public class TiendaWhichController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/VISTA/Trabajadores/Trabajadores.fxml"));
             Parent root = loader.load();
+            TrabajadoresController controller = loader.getController();
+            controller.setIDTienda(this.idTienda);
+            try {
+                controller.mostrarTrabajadores();
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
+                Stage stageNuevo = new Stage();
+                stageNuevo.setScene(new Scene(root));
+                stageNuevo.show();
 
-            cerrarVentanaActual();
+                cerrarVentanaActual();
+            } catch (SQLException ex) {
+                Alertas.generarAlerta("BD", "No se puede visualizar los trabajadores" , Alert.AlertType.ERROR);
+            }
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajadores", "No se puede visualizar los trabajadores de esta tienda", Alert.AlertType.ERROR);
         }

@@ -5,29 +5,79 @@
  */
 package MODELO.Listas;
 
+import DATOS.GestionTrabajadores;
 import MODELO.Trabajadores.Trabajadores;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author daw
  */
 public class ListaTrabajadores {
-     private List<Trabajadores> trabajadores = new ArrayList<>();
 
-    public List<Trabajadores> getTrabajadores() {
+    private Set<Trabajadores> trabajadores = new HashSet<>();
+    private Set<Trabajadores> trabajadoresMostrar = new HashSet<>();
+
+    public ListaTrabajadores(int idTienda) throws SQLException {
+        GestionTrabajadores gs = new GestionTrabajadores();
+        trabajadores = gs.trabajadoresEnLaTienda(idTienda);
+        trabajadoresMostrar.addAll(trabajadores);
+    }
+
+    public Set<Trabajadores> getTrabajadores() {
         return trabajadores;
     }
 
-    public void setTrabajadores(List<Trabajadores> trabajadores) {
+    public void setTrabajadores(Set<Trabajadores> trabajadores) {
         this.trabajadores = trabajadores;
     }
-    
-    public void setTrabajadores(Trabajadores trabajador) {
+
+    public void setTrabajador(Trabajadores trabajador) {
         this.trabajadores.add(trabajador);
     }
-    
-    
-     
+
+    public Set<Trabajadores> getTrabajadores(String nom, String ape, String tamaño) {
+        Set<Trabajadores> lista = new HashSet<>();
+        Set<Trabajadores> listaCoger = new HashSet<>();
+        if (tamaño.equalsIgnoreCase("largo")) {
+            listaCoger = this.trabajadoresMostrar;
+        } else {
+            listaCoger = this.trabajadores;
+            this.trabajadoresMostrar.clear();
+            this.trabajadoresMostrar.addAll(this.trabajadores);
+        }
+        
+        for (Trabajadores trabajador : listaCoger) {
+            if (empiezaPor(trabajador.getNombre(), nom) && empiezaPor(trabajador.getApellido1(), ape)) {
+                lista.add(trabajador);                
+            }
+        }
+        
+        if (tamaño.equalsIgnoreCase("largo")) {
+            this.trabajadoresMostrar.clear();
+            this.trabajadoresMostrar.addAll(lista);
+        }
+        return lista;
+    }
+
+    private boolean empiezaPor(String palabra1, String empieza) {
+        if (empieza.equalsIgnoreCase("")) {
+            return true;
+        }
+        int longitud = empieza.length();
+        if (longitud > palabra1.length()) {
+            return false;
+        }
+        String palabra = palabra1.substring(0, longitud);
+
+        if (palabra.equalsIgnoreCase(empieza)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

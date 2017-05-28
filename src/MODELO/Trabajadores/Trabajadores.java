@@ -101,5 +101,7 @@ public abstract class Trabajadores {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
+   
 
 }
