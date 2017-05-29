@@ -38,14 +38,29 @@ public class GestionTrabajadores {
         while (rs.next()) {
             Trabajadores trabajador;
             if (rs.getString(5).equalsIgnoreCase("Empleado")) {
-                trabajador = new Empleado(rs.getString(6), rs.getInt(8), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(7));
+                trabajador = new Empleado(rs.getString(7), rs.getInt(9), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(8),rs.getInt(6));
             } else {
-                trabajador = new Encargado(rs.getString(6), rs.getInt(8), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(7));
+                trabajador = new Encargado(rs.getString(7), rs.getInt(9), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(8),rs.getInt(6));
             }
             trabajadores.add(trabajador);
         }
 
         return trabajadores;
+    }
+
+    public void borrarTrabajador(int idTrabajador) throws SQLException {
+        String sentencia = "delete from trabajadores where idTrabajador = ?";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, idTrabajador);
+        ps.executeUpdate();
+    }
+
+    public void modificarTrabajador(int idTrabajador, String campo, String nuevo) throws SQLException {
+        String sentencia = "Update trabajadores set " +  campo + " = ? where idTrabajador = ?";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setString(1, nuevo);
+        ps.setInt(2, idTrabajador);
+        ps.executeUpdate();
     }
 
 }

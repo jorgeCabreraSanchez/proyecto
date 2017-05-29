@@ -5,9 +5,11 @@ package VISTA.Empleado.Inicio;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
+import MODELO.Alertas;
 import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Trabajadores.TrabajadoresController;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,11 +19,17 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -29,6 +37,9 @@ import javafx.scene.layout.Pane;
  * @author daw
  */
 public class InicioEmpleadosController implements Initializable {
+
+    Trabajadores trabajador;
+    int idTienda;
 
     @FXML
     private Pane foto;
@@ -42,37 +53,43 @@ public class InicioEmpleadosController implements Initializable {
     private Button botonCalendario;
     @FXML
     private Label tienda;
+    @FXML
+    private Button buttonVolver;
 
-    /**
-     * Initializes the controller class.
-     */
-    Connection  conn;
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    }
+
+    @FXML
+    private void volver(ActionEvent event) {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "root");
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Trabajadores/Trabajadores.fxml"));
+            Parent root = loader.load(); 
+            TrabajadoresController controller = loader.getController();
+            controller.setIDTienda(this.idTienda);
+            controller.mostrarTrabajadores();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            Stage stageActual = (Stage) this.tienda.getScene().getWindow();
+            stageActual.close();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Lista Trabajadores", "No se ha podido volver a la lista de usuarios", Alert.AlertType.ERROR);
         } catch (SQLException ex) {
-            Logger.getLogger(InicioEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
+            Alertas.generarAlerta("BD", "No se ha podido volver a la lista de usuarios", Alert.AlertType.ERROR);
         }
-        
-        
-        String sentencia = "select nombre, apellido1, apellido2 from trabajadores where IDTrabajador = ?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sentencia);
-            /*Empleado emple = (Empleado) ListaTrabajadores.getTrabajadores().get(0);
-            ps.setInt(1,emple.getId()); 
-            ResultSet rs = ps.executeQuery(); 
-            
-            rs.next();
-            nombre.setText(sentencia);rs.getString(1);*/
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(InicioEmpleadosController.class.getName()).log(Level.SEVERE, null, ex);
-            
-            
-        }
-    }    
+    }
     
+    public void modoJefe(){
+        this.buttonVolver.setVisible(true);
+    }
+
+    public void setTrabajador(Trabajadores trabajador,int idTienda) {
+        this.trabajador = trabajador;
+        this.idTienda = idTienda;
+    }
+
 }

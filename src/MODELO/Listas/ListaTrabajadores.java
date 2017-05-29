@@ -9,6 +9,7 @@ import DATOS.GestionTrabajadores;
 import MODELO.Trabajadores.Trabajadores;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -20,9 +21,10 @@ public class ListaTrabajadores {
 
     private Set<Trabajadores> trabajadores = new HashSet<>();
     private Set<Trabajadores> trabajadoresMostrar = new HashSet<>();
+    private GestionTrabajadores gs;
 
     public ListaTrabajadores(int idTienda) throws SQLException {
-        GestionTrabajadores gs = new GestionTrabajadores();
+        gs = new GestionTrabajadores();
         trabajadores = gs.trabajadoresEnLaTienda(idTienda);
         trabajadoresMostrar.addAll(trabajadores);
     }
@@ -46,21 +48,36 @@ public class ListaTrabajadores {
             listaCoger = this.trabajadoresMostrar;
         } else {
             listaCoger = this.trabajadores;
-            this.trabajadoresMostrar.clear();
-            this.trabajadoresMostrar.addAll(this.trabajadores);
         }
-        
+
         for (Trabajadores trabajador : listaCoger) {
             if (empiezaPor(trabajador.getNombre(), nom) && empiezaPor(trabajador.getApellido1(), ape)) {
-                lista.add(trabajador);                
+                lista.add(trabajador);
             }
         }
-        
-        if (tamaño.equalsIgnoreCase("largo")) {
-            this.trabajadoresMostrar.clear();
-            this.trabajadoresMostrar.addAll(lista);
-        }
+        this.trabajadoresMostrar.clear();
+        this.trabajadoresMostrar.addAll(lista);
+
         return lista;
+    }
+
+    public void editarTrabajador(int idTrabajador, String campo,String nuevo) throws SQLException {
+        gs.modificarTrabajador(idTrabajador,campo,nuevo);
+    }
+
+    public void eliminarTrabajador(int idTrabajador) throws SQLException {
+        this.gs.borrarTrabajador(idTrabajador);
+        boolean seguir = true;
+
+        Iterator<Trabajadores> it = this.trabajadores.iterator();
+        while (it.hasNext() && seguir) {
+            Trabajadores trabajador = it.next();
+            if (trabajador.getId() == idTrabajador) {
+                this.trabajadores.remove(trabajador);
+                this.trabajadoresMostrar.remove(trabajador);
+                seguir = false;
+            }
+        }
     }
 
     private boolean empiezaPor(String palabra1, String empieza) {

@@ -321,7 +321,7 @@ public class InicioJefeController implements Initializable {
                     lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
                     actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
                 } catch (SQLException e) {
-                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido", AlertType.ERROR);
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido","Compruebe que la tienda no contenga trabajadores, de lo contrario no le dejara borrarla.", AlertType.ERROR);
                 }
             }
         }

@@ -5,7 +5,9 @@
  */
 package MODELO.Trabajadores;
 
-import MODELO.Trabajadores.Trabajadores;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 
 /**
  *
@@ -13,112 +15,56 @@ import MODELO.Trabajadores.Trabajadores;
  */
 public class Encargado extends Trabajadores {
 
-    private int idTienda;
-    private String horario;
-    private int incidencias;
+    private IntegerProperty idTienda = new SimpleIntegerProperty();    
+    private IntegerProperty incidencias = new SimpleIntegerProperty();
 
     public Encargado(int idTienda, String horario, int incidencias, String nombre, int id, String apellido1, String contraseña, String estado) {
-        super(nombre, id, apellido1, contraseña, estado);
-        this.idTienda = idTienda;
-        this.horario = horario;
-        this.incidencias = incidencias;
+        super(nombre, id, apellido1, contraseña, estado,horario);
+        this.idTienda.set(id);
+        this.incidencias.set(incidencias);
     }
-    
+
     /* Este es el que uso para mostrar en lista Trabajadores */
-    public Encargado(String horario, int incidencias, int id, String nombre, String apellido1, String apellido2, String estado) {
-        super(id, nombre, apellido1, apellido2, estado);
-        this.horario = horario;
-        this.incidencias = incidencias;
+    public Encargado(String horario, int incidencias, int id, String nombre, String apellido1, String apellido2, String estado,Integer idTienda) {
+        super(id, nombre, apellido1, apellido2, estado,horario);       
+        this.incidencias.set(incidencias);
+        this.idTienda.set(idTienda);
     }
 
     public Encargado(int idTienda, String horario, int incidencias, int id, String nombre, String apellido1, String estado) {
-        super(id, nombre, apellido1, estado);
-        this.idTienda = idTienda;
-        this.horario = horario;
-        this.incidencias = incidencias;
+        super(id, nombre, apellido1, estado,horario);
+        this.idTienda.set(id);       
+        this.incidencias.set(incidencias);
     }
 
     public Encargado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id);
-        this.idTienda = idTienda;
-        this.horario = horario;
-        this.incidencias = incidencias;
+        super(nombre, apellido1, apellido2, contraseña, estado, id,horario);
+        this.idTienda.set(id);        
+        this.incidencias.set(incidencias);
     }
-
-    public int getIdTienda() {
-        return idTienda;
-    }
-
-    public void setIdTienda(int idTienda) {
-        this.idTienda = idTienda;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
+   
 
     public int getIncidencias() {
+        return incidencias.get();
+    }
+
+    public void setIncidencias(int value) {
+        incidencias.set(value);
+    }
+
+    public IntegerProperty incidenciasProperty() {
         return incidencias;
     }
 
-    public void setIncidencias(int incidencias) {
-        this.incidencias = incidencias;
+    public int getIdTienda() {
+        return idTienda.get();
     }
 
-    public int getId() {
-        return id;
+    public void setIdTienda(int value) {
+        idTienda.set(value);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public IntegerProperty idTiendaProperty() {
+        return idTienda;
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido1() {
-        return apellido1;
-    }
-
-    public void setApellido1(String apellido1) {
-        this.apellido1 = apellido1;
-    }
-
-    public String getApellido2() {
-        return apellido2;
-    }
-
-    public void setApellido2(String apellido2) {
-        this.apellido2 = apellido2;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-
-
-
-
 }
