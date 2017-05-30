@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -15,56 +16,131 @@
    <children>
       <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="459.0" prefWidth="545.0">
          <children>
-            <Text layoutX="35.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" wrappingWidth="46.966796875">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Text>
-            <Text layoutX="242.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" wrappingWidth="59.966796875">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Text>
-            <TextField fx:id="ciudad" layoutX="82.0" layoutY="36.0" onMousePressed="#ciudadesClick" prefHeight="25.0" prefWidth="142.0">
-               <contextMenu>
-                  <ContextMenu fx:id="menuCiudad" autoHide="false" consumeAutoHidingEvents="false" hideOnEscape="false" />
-               </contextMenu>
-            </TextField>
-            <TextField fx:id="direccion" layoutX="302.0" layoutY="36.0" onMousePressed="#direccionClick" prefHeight="25.0" prefWidth="206.0">
-               <contextMenu>
-                  <ContextMenu fx:id="menuDireccion">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu></TextField>
             <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" onMouseReleased="#nadaClick" prefHeight="281.0" prefWidth="470.0">
               <columns>
                 <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="columnaCiudad" prefWidth="141.0" text="Ciudad" />
                   <TableColumn fx:id="columnaDireccion" prefWidth="253.0" text="Dirección" />
               </columns>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </TableView>
             <Button fx:id="buttonEditar" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionEditar" prefHeight="25.0" prefWidth="51.0" text="Editar">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
             <Button fx:id="buttonBorrar" layoutX="247.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionBorrar" text="Borrar">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
             <Button fx:id="buttonNuevo" layoutX="457.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
-            <Button fx:id="buttonVer" layoutX="482.0" layoutY="68.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
+            <Button fx:id="buttonVer" layoutX="472.0" layoutY="66.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
+            <AnchorPane fx:id="fondito" layoutY="14.0" prefHeight="41.0" prefWidth="545.0">
+               <children>
+                  <Text fill="WHITE" layoutX="39.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" wrappingWidth="46.966796875">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="243.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dirección:" wrappingWidth="59.966796875">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="ciudad" layoutX="86.0" layoutY="8.0" onMousePressed="#ciudadesClick" prefHeight="25.0" prefWidth="142.0">
+                     <contextMenu>
+                        <ContextMenu fx:id="menuCiudad" autoHide="false" consumeAutoHidingEvents="false" hideOnEscape="false" />
+                     </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="direccion" layoutX="303.0" layoutY="8.0" onMousePressed="#direccionClick" prefHeight="25.0" prefWidth="206.0">
+                     <contextMenu>
+                        <ContextMenu fx:id="menuDireccion">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </TextField>
+               </children>
+            </AnchorPane>
          </children></AnchorPane>
    </children>
 </AnchorPane>

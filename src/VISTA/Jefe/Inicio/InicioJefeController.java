@@ -87,6 +87,8 @@ public class InicioJefeController implements Initializable {
     private Button buttonNuevo;
     @FXML
     private Button buttonVer;
+    @FXML
+    private AnchorPane fondito;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

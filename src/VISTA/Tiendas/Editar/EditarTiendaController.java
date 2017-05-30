@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -54,6 +55,10 @@ public class EditarTiendaController implements Initializable {
     private Label labelCiudad;
     @FXML
     private Label labelDireccion;
+    @FXML
+    private AnchorPane fondo;
+    @FXML
+    private AnchorPane fondo1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

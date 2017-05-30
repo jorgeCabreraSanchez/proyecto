@@ -44,6 +44,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import static javafx.scene.input.KeyCode.T;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -87,6 +88,10 @@ public class TrabajadoresController implements Initializable {
     private ContextMenu menuNombre;
     @FXML
     private ContextMenu menuApellido1;
+    @FXML
+    private AnchorPane fondo;
+    @FXML
+    private AnchorPane fondito;
 
     /**
      * Initializes the controller class.
@@ -259,42 +264,42 @@ public class TrabajadoresController implements Initializable {
         columnaIncidencias.setCellValueFactory(new PropertyValueFactory<>("incidencias"));
 
         columnaidTienda.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
-        columnaidTienda.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());        
-        columnaidTienda.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, Integer>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "idTienda", t.getNewValue());
-                        if (trabajador instanceof Empleado) {
-                            Empleado empleado = (Empleado) trabajador;
-                            empleado.setIdTienda(Integer.parseInt(t.getNewValue()));
-                        } else {
-                            Encargado encargado = (Encargado) trabajador;
-                            encargado.setIdTienda(Integer.parseInt(t.getNewValue()));
-                        }
-
-                        actualizarTrabajador("largo");
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El idTienda no puede estar vacío", Alert.AlertType.INFORMATION);
-                    if (trabajador instanceof Empleado) {
-                            Empleado empleado = (Empleado) trabajador;
-                            empleado.setIdTienda(Integer.parseInt(t.getOldValue()));
-                        } else {
-                            Encargado encargado = (Encargado) trabajador;
-                            encargado.setIdTienda(Integer.parseInt(t.getOldValue()));
-                        }
-                    actualizarTrabajador("largo");
-                }
-
-            }
-
-        }); 
+//        columnaidTienda.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());        
+//        columnaidTienda.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, Integer>>() {
+//            @Override
+//            public void handle(CellEditEvent<Trabajadores, String> t) {
+//                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()));
+//                if (!t.getNewValue().isEmpty()) {
+//                    try {
+//                        lt.editarTrabajador(trabajador.getId(), "idTienda", t.getNewValue());
+//                        if (trabajador instanceof Empleado) {
+//                            Empleado empleado = (Empleado) trabajador;
+//                            empleado.setIdTienda(Integer.parseInt(t.getNewValue()));
+//                        } else {
+//                            Encargado encargado = (Encargado) trabajador;
+//                            encargado.setIdTienda(Integer.parseInt(t.getNewValue()));
+//                        }
+//
+//                        actualizarTrabajador("largo");
+//                    } catch (SQLException ex) {
+//                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//                    }
+//                } else {
+//                    Alertas.generarAlerta("BD", "El idTienda no puede estar vacío", Alert.AlertType.INFORMATION);
+//                    if (trabajador instanceof Empleado) {
+//                            Empleado empleado = (Empleado) trabajador;
+//                            empleado.setIdTienda(Integer.parseInt(t.getOldValue()));
+//                        } else {
+//                            Encargado encargado = (Encargado) trabajador;
+//                            encargado.setIdTienda(Integer.parseInt(t.getOldValue()));
+//                        }
+//                    actualizarTrabajador("largo");
+//                }
+//
+//            }
+//
+//        }); 
     }
 
     private void nombreModificado() {

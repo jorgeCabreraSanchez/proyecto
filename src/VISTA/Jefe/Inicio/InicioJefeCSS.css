@@ -1,4 +1,7 @@
-/*#fondo{
-   -fx-background-image: url("images/fotoHuerto.jpg");
-    -fx-background-size: stretch;
-}*/
+#fondo{
+    -fx-background-image:url("../../../images/fondojefe.jpg");
+    
+}
+#fondito{
+    -fx-background-color: rgba(0,0,0,0.43);
+}

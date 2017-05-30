@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -13,53 +14,115 @@
         <URL value="@Trabajadores.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="tabla" editable="true" layoutX="21.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="779.0" tableMenuButtonVisible="true">
-        <columns>
-          <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
-          <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />
-            <TableColumn fx:id="columnaApellido1" prefWidth="98.0" text="Apellido1" />
-            <TableColumn fx:id="columnaApellido2" prefWidth="103.0" text="Apellido2" />
-            <TableColumn fx:id="columnaPuesto" prefWidth="66.0" text="Puesto" />
-            <TableColumn fx:id="columnaHorario" prefWidth="77.0" text="Horario" />
-            <TableColumn fx:id="columnaEstado" prefWidth="105.0" text="Estado" />
-            <TableColumn fx:id="columnaIncidencias" prefWidth="75.0" text="Incidencias" />
-            <TableColumn fx:id="columnaidTienda" prefWidth="75.0" text="idTienda" />
-        </columns>
-      </TableView>
-      <Label layoutX="96.0" layoutY="46.0" text="Nombre:">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="334.0" layoutY="46.0" text="Apellido1:">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textfieldNombre" layoutX="157.0" layoutY="42.0" onMousePressed="#nombreClickado">
-         <contextMenu>
-            <ContextMenu fx:id="menuNombre" />
-         </contextMenu>
-      </TextField>
-      <TextField fx:id="textfieldApellido1" layoutX="401.0" layoutY="42.0" onMousePressed="#apellido1Clickado" prefHeight="25.0" prefWidth="175.0">
-         <contextMenu>
-            <ContextMenu fx:id="menuApellido1" />
-         </contextMenu>
-      </TextField>
-      <Button layoutX="28.0" layoutY="367.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button layoutX="218.0" layoutY="367.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button layoutX="401.0" layoutY="367.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+      <AnchorPane fx:id="fondo" prefHeight="423.0" prefWidth="863.0" stylesheets="@Trabajadores.css">
+         <children>
+            <Button layoutX="756.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button layoutX="403.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button layoutX="40.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <effect>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <TableView fx:id="tabla" editable="true" layoutX="40.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="779.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
+                <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />
+                  <TableColumn fx:id="columnaApellido1" prefWidth="98.0" text="Apellido1" />
+                  <TableColumn fx:id="columnaApellido2" prefWidth="103.0" text="Apellido2" />
+                  <TableColumn fx:id="columnaPuesto" prefWidth="66.0" text="Puesto" />
+                  <TableColumn fx:id="columnaHorario" prefWidth="77.0" text="Horario" />
+                  <TableColumn fx:id="columnaEstado" prefWidth="105.0" text="Estado" />
+                  <TableColumn fx:id="columnaIncidencias" prefWidth="75.0" text="Incidencias" />
+                  <TableColumn fx:id="columnaidTienda" prefWidth="75.0" text="idTienda" />
+              </columns>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TableView>
+            <AnchorPane fx:id="fondito" layoutY="23.0" prefHeight="45.0" prefWidth="1016.0">
+               <children>
+                  <TextField fx:id="textfieldNombre" layoutX="234.0" layoutY="8.0" onMousePressed="#nombreClickado">
+                     <contextMenu>
+                        <ContextMenu fx:id="menuNombre" />
+                     </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </TextField>
+                  <TextField fx:id="textfieldApellido1" layoutX="533.0" layoutY="9.0" onMousePressed="#apellido1Clickado" prefHeight="25.0" prefWidth="175.0">
+                     <contextMenu>
+                        <ContextMenu fx:id="menuApellido1" />
+                     </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </TextField>
+                  <Label layoutX="174.0" layoutY="14.0" text="Nombre:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="468.0" layoutY="13.0" text="Apellido1:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
