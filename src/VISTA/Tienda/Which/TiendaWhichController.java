@@ -6,6 +6,7 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
+import VISTA.Productos.ProductosController;
 import VISTA.Trabajadores.TrabajadoresController;
 import java.awt.Dialog;
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class TiendaWhichController implements Initializable {
     private Button buttonTrabajadores;
     @FXML
     private Button buttonVolver;
+    @FXML
+    private Button buttonIncidencias;
 
     /**
      * Initializes the controller class.
@@ -53,6 +56,9 @@ public class TiendaWhichController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
             Parent root = loader.load();
+            ProductosController controller = loader.getController();
+            controller.setIDTienda(idTienda);
+            controller.mostrarTrabajadores();
 
             Stage stageNuevo = new Stage();
             stageNuevo.setScene(new Scene(root));
@@ -60,7 +66,9 @@ public class TiendaWhichController implements Initializable {
 
             cerrarVentanaActual();
         } catch (IOException ex) {
-            Alertas.generarAlerta("Productos", "No se puede visualizar los productos de esta tienda", Alert.AlertType.ERROR);
+            Alertas.generarAlerta("Ventana", "No se puede visualizar los productos de esta tienda", Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido visualizar los productos de esta tienda", Alert.AlertType.ERROR);
         }
     }
 
@@ -81,7 +89,7 @@ public class TiendaWhichController implements Initializable {
 
                 cerrarVentanaActual();
             } catch (SQLException ex) {
-                Alertas.generarAlerta("BD", "No se puede visualizar los trabajadores" , Alert.AlertType.ERROR);
+                Alertas.generarAlerta("BD", "No se puede visualizar los trabajadores", "Error code: " + String.valueOf(ex.getErrorCode()) + "\n Message: " + ex.getMessage(), Alert.AlertType.ERROR);
             }
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajadores", "No se puede visualizar los trabajadores de esta tienda", Alert.AlertType.ERROR);
@@ -116,6 +124,10 @@ public class TiendaWhichController implements Initializable {
 
     public void setIDTienda(Integer idTienda) {
         this.idTienda = idTienda;
+    }
+
+    @FXML
+    private void abrirIncidencias(ActionEvent event) {
     }
 
 }

@@ -11,54 +11,51 @@
 
 <AnchorPane id="AnchorPane" fx:id="fondoAtras" prefHeight="299.0" prefWidth="476.0" stylesheets="@CssLogin.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Login.ControllerLogin">
     <children>
-      <AnchorPane fx:id="fondoHuerto" opacity="0.83" prefHeight="303.0" prefWidth="476.0" />
-      <AnchorPane fx:id="fondoLogo" layoutX="97.0" prefHeight="108.0" prefWidth="284.0" />
-      <AnchorPane fx:id="fondoLogin" layoutX="97.0" layoutY="-173.0" prefHeight="173.0" prefWidth="284.0">
-         <children>
-            <TextField fx:id="fieldUsuario" layoutX="78.0" layoutY="24.0" promptText="ID">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect></TextField>
-            <Button fx:id="buttonLogin" disable="true" layoutX="128.0" layoutY="141.0" mnemonicParsing="false" onAction="#login" text="Login">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="buttonCancelar" layoutX="191.0" layoutY="141.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
-            <Label layoutX="46.0" layoutY="28.0" text="ID:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-              <Label fx:id="labelErrores" alignment="TOP_LEFT" layoutX="9.0" layoutY="112.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="239.0" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="fieldPassword" layoutX="78.0" layoutY="74.0" promptText="Password">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect></PasswordField>
-            <Label layoutX="18.0" layoutY="78.0" text="Password:" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+        <AnchorPane fx:id="fondoHuerto" opacity="0.83" prefHeight="303.0" prefWidth="476.0" />
+        <AnchorPane fx:id="fondoLogo" layoutX="97.0" prefHeight="108.0" prefWidth="284.0" />
+        <AnchorPane fx:id="fondoLogin" layoutX="97.0" layoutY="-173.0" prefHeight="173.0" prefWidth="284.0">
+            <children>
+                <TextField fx:id="fieldUsuario" layoutX="78.0" layoutY="24.0" promptText="ID">
+                    <effect>
+                        <Lighting>
+                            <bumpInput>
+                                <Shadow />
+                            </bumpInput>                     
+                        </Lighting>
+                    </effect>
+                </TextField>
+                <PasswordField fx:id="fieldPassword" layoutX="78.0" layoutY="74.0" promptText="Password">
+                    <effect>
+                        <Lighting>
+                            <bumpInput>
+                                <Shadow />
+                            </bumpInput>
+                        </Lighting>
+                    </effect>
+                </PasswordField>
+                <Button fx:id="buttonLogin" disable="true" layoutX="128.0" layoutY="141.0" mnemonicParsing="false" onAction="#login" text="Login">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button fx:id="buttonCancelar" layoutX="191.0" layoutY="141.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+                <Label layoutX="46.0" layoutY="28.0" text="ID:" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Label fx:id="labelErrores" alignment="TOP_LEFT" layoutX="9.0" layoutY="112.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="239.0" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            
+                <Label layoutX="18.0" layoutY="78.0" text="Password:" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

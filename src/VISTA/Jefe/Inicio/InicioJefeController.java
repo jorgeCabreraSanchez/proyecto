@@ -349,7 +349,7 @@ public class InicioJefeController implements Initializable {
                 stageActual.close();
             }
         } catch (IOException ex) {
-            Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos", AlertType.ERROR);
+            Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos",ex.getLocalizedMessage(), AlertType.ERROR);
         }
 
     }

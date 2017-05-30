@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,8 +8,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Productos.ProductosController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Productos.ProductosController">
     <stylesheets>
-        <URL value="@Productos.css"/>
+        <URL value="@Productos.css" />
     </stylesheets>
+   <children>
+      <TableView fx:id="tabla" layoutX="106.0" layoutY="107.0" prefHeight="200.0" prefWidth="388.0">
+        <columns>
+          <TableColumn fx:id="columnaidProducto" prefWidth="75.0" text="idProducto" />
+          <TableColumn fx:id="columnaNombre" prefWidth="106.0" text="Nombre" />
+            <TableColumn fx:id="columnaDescripcion" prefWidth="206.0" text="Descripción" />
+        </columns>
+      </TableView>
+      <Text layoutX="173.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <TextField fx:id="textfieldNombre" layoutX="234.0" layoutY="52.0">
+         <contextMenu>
+            <ContextMenu fx:id="contextMenuNombre">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </TextField>
+   </children>
 </AnchorPane>

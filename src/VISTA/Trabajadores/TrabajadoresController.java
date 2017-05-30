@@ -110,12 +110,12 @@ public class TrabajadoresController implements Initializable {
 
     private void tabla() throws SQLException {
         lt = new ListaTrabajadores(this.idTienda);
-        this.tabla.setEditable(true);
-        columnaID.setCellValueFactory(new PropertyValueFactory<>("id"));
+                
         this.tabla.setItems(listaTrabajadores);
         tabla.setPlaceholder(new Label("No se ha encontrado ningún trabajador."));
-        this.tabla.sort();
-
+        
+        
+        columnaID.setCellValueFactory(new PropertyValueFactory<>("id"));
 //        columnaID.setCellFactory(TextFieldTableCellT<arbajadores>forTableColumn());
 //        columnaID.setOnEditCommit(
 //                (CellEditEvent<Trabajadores, Integer> t) -> {
