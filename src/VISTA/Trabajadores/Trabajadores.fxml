@@ -14,7 +14,7 @@
         <URL value="@Trabajadores.css" />
     </stylesheets>
    <children>
-      <AnchorPane fx:id="fondo" prefHeight="423.0" prefWidth="863.0" stylesheets="@Trabajadores.css">
+      <AnchorPane fx:id="fondo" prefHeight="423.0" prefWidth="877.0" stylesheets="@Trabajadores.css">
          <children>
             <Button layoutX="756.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
                <font>
@@ -55,7 +55,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <TableView fx:id="tabla" editable="true" layoutX="40.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="779.0" tableMenuButtonVisible="true">
+            <TableView fx:id="tabla" editable="true" layoutX="91.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="779.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
                 <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />

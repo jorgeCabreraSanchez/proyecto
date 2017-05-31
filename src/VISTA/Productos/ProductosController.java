@@ -14,8 +14,11 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -60,17 +63,43 @@ public class ProductosController implements Initializable {
     public void mostrarTrabajadores() throws SQLException {
         cargarListas();
         tabla();
-
     }
 
     private void cargarListas() throws SQLException {
         lp = new ListaProductos(this.idTienda);
         Set<Producto> lista = lp.getProductos();
         productos = FXCollections.observableArrayList(lista);
-        cargarContextMenu(lista);
+        cargarContextMenu();
     }
 
-    private void cargarContextMenu(Set<Producto> lista) {
+    private void cargarContextMenu() {
+        this.contextMenuNombre.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                MenuItem mn = (MenuItem) e.getTarget();
+                textfieldNombre.setText(mn.getUserData().toString());
+            }
+        });
+
+        this.textfieldNombre.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                String tamaño = "largo";
+                if (oldValue.length() > newValue.length()){
+                    tamaño = "corto";
+                } 
+                actualizarTrabajadores(newValue,tamaño);
+                contextMenuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
+            } else {
+                actualizarCiudades("");
+                menuCiudad.hide();
+                this.direccion.setDisable(true);
+            }
+        });
+
+        actualizarTrabajadores("");
+    }
+
+    private void actualizarTrabajadores(String nombre,String tamaño) {
+        Set<Producto> lista = lp.getProductos(nombre,tamaño);
         menuProductos = FXCollections.observableArrayList();
         Iterator<Producto> it = lista.iterator();
         while (it.hasNext()) {
@@ -79,6 +108,11 @@ public class ProductosController implements Initializable {
             m.setUserData(nombre);
             menuProductos.add(m);
         }
+        this.contextMenuNombre.getItems().setAll(menuProductos);
+    }
+
+    private void mantenerActualizadoContextMenu() {
+
     }
 
     private void tabla() {

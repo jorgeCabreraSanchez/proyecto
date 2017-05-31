@@ -35,5 +35,16 @@ public class ListaProductos {
         return this.productosMostrar;
     }
     
+    public Set<Producto> getProductos(String nombre,String tamaño){
+        Set<Producto> lista = new HashSet<>();
+        Set<Producto> listaCoger = new HashSet<>();
+        if(tamaño.equalsIgnoreCase("largo")){
+            listaCoger = productosMostrar;
+        } else {
+            
+        }
+        this.productos.iterator();
+    }
+    
     
 }
