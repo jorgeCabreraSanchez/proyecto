@@ -22,7 +22,7 @@ public class Empleado extends Trabajadores {
 
     public Empleado(int idTienda, String horario, int incidencias, String nombre, int id, String apellido1, String contraseña, String estado) {
         super(nombre, id, apellido1, contraseña, estado, horario);
-        this.idTienda.set(id);        
+        this.idTienda.set(idTienda);        
         this.incidencias.set(incidencias);
     }
 
@@ -30,18 +30,18 @@ public class Empleado extends Trabajadores {
     public Empleado(String horario, int incidencias, int id, String nombre, String apellido1, String apellido2, String estado,Integer idTienda) {
         super(id, nombre, apellido1, apellido2, estado, horario);       
         this.incidencias.set(incidencias);
-        this.idTienda.set(id);
+        this.idTienda.set(idTienda);
     }
 
     public Empleado(int idTienda, String horario, int incidencias, int id, String nombre, String apellido1, String estado) {
         super(id, nombre, apellido1, estado, horario);
-        this.idTienda.set(id);        
+        this.idTienda.set(idTienda);        
         this.incidencias.set(incidencias);
     }
 
     public Empleado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
         super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
-        this.idTienda.set(id);        
+        this.idTienda.set(idTienda);        
         this.incidencias.set(incidencias);
     }
 

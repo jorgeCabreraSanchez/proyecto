@@ -63,5 +63,8 @@ public class Producto {
         return idProducto;
     }
     
+    public String toString(){
+        return this.nombre.get();
+    }
     
 }

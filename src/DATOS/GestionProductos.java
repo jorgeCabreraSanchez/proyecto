@@ -6,9 +6,6 @@
 package DATOS;
 
 import MODELO.Producto;
-import MODELO.Trabajadores.Empleado;
-import MODELO.Trabajadores.Encargado;
-import MODELO.Trabajadores.Trabajadores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,18 +38,22 @@ public class GestionProductos {
         }
 
         return productos;
+    }    
+    
+    public void nuevoProductoEnTienda(int idTienda,int idProducto) throws SQLException{
+        String sentencia = "insert into catalogo values(?,?);";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, idTienda);
+        ps.setInt(2,idProducto);
+        ps.executeUpdate();
     }
     
-    public void modificarProductoEnTienda(){
-        
-    }
-    
-    public void nuevoProductoEnTienda(){
-        
-    }
-    
-    public void eliminarProductoEnTienda(){
-        
+    public void eliminarProductoEnTienda(int idTienda,int idProducto) throws SQLException{
+        String sentencia = "Delete from catalogo where tiendas_idTienda = ? and productos_idProductos = ?;";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, idTienda);
+        ps.setInt(2,idProducto);
+        ps.executeUpdate();
     }
 
     public Set<Producto> todosLosProductos() throws SQLException {
@@ -69,15 +70,15 @@ public class GestionProductos {
         return productos;
     }
     
-    public void nuevoProducto(){
+    public void nuevoProducto(Producto producto){
         
     }
     
-    public void modificarProducto(){
+    public void modificarProducto(int idProducto,Producto producto){
         
     }
     
-    public void eliminarProducto(){
+    public void eliminarProducto(int idProducto){
         
     }
             

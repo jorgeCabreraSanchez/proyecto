@@ -16,7 +16,7 @@
    <children>
       <AnchorPane fx:id="fondo" prefHeight="423.0" prefWidth="877.0" stylesheets="@Trabajadores.css">
          <children>
-            <Button layoutX="756.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+            <Button layoutX="615.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -31,7 +31,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <Button layoutX="403.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
+            <Button layoutX="427.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -43,7 +43,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <Button layoutX="40.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
+            <Button layoutX="233.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -78,7 +78,7 @@
                   </Lighting>
                </effect>
             </TableView>
-            <AnchorPane fx:id="fondito" layoutY="23.0" prefHeight="45.0" prefWidth="1016.0">
+            <AnchorPane fx:id="fondito" layoutY="21.0" prefHeight="45.0" prefWidth="933.0">
                <children>
                   <TextField fx:id="textfieldNombre" layoutX="234.0" layoutY="8.0" onMousePressed="#nombreClickado">
                      <contextMenu>
@@ -122,6 +122,7 @@
                   </Label>
                </children>
             </AnchorPane>
+            <Button fx:id="buttonVolver" layoutX="22.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVolver" text="volver" />
          </children>
       </AnchorPane>
    </children>

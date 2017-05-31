@@ -7,28 +7,33 @@ package MODELO.Incidencia;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  *
  * @author Jorge Cabrera
  */
-public abstract class Incidencias {
+public class IncidenciaTienda extends Incidencia {
 
-    protected final IntegerProperty idIncidencia = new SimpleIntegerProperty();
-    protected final StringProperty titulo = new SimpleStringProperty();
-    protected final StringProperty descripcion = new SimpleStringProperty();
-    protected final StringProperty fecha = new SimpleStringProperty();
+    private final IntegerProperty idTienda = new SimpleIntegerProperty();
 
-    public Incidencias(int idIncidencias,String titulo,String descripcion,String fecha) {
-        this.idIncidencia.set(idIncidencias);
-        this.titulo.set(titulo);
-        this.descripcion.set(descripcion);
-        this.fecha.set(fecha);
+    public IncidenciaTienda(int idIncidencia,int idTienda, String titulo, String descripcion, String fecha) {
+        super(idIncidencia, titulo, descripcion, fecha);
+        this.idIncidencia.set(idTienda);
     }
 
-    
+    public int getIdTienda() {
+        return idTienda.get();
+    }
+
+    public void setIdTienda(int value) {
+        idTienda.set(value);
+    }
+
+    public IntegerProperty idTiendaProperty() {
+        return idTienda;
+    }
+
     public String getFecha() {
         return fecha.get();
     }
@@ -40,7 +45,7 @@ public abstract class Incidencias {
     public StringProperty fechaProperty() {
         return fecha;
     }
-    
+
     public String getDescripcion() {
         return descripcion.get();
     }
@@ -52,7 +57,7 @@ public abstract class Incidencias {
     public StringProperty descripcionProperty() {
         return descripcion;
     }
-    
+
     public String getTitulo() {
         return titulo.get();
     }
@@ -64,7 +69,7 @@ public abstract class Incidencias {
     public StringProperty tituloProperty() {
         return titulo;
     }
-    
+
     public int getIdIncidencia() {
         return idIncidencia.get();
     }
@@ -76,7 +81,5 @@ public abstract class Incidencias {
     public IntegerProperty idIncidenciaProperty() {
         return idIncidencia;
     }
-        
-    
-    
+
 }

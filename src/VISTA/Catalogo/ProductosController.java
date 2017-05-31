@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Productos;
+package VISTA.Catalogo;
 
+import MODELO.Alertas;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
+import VISTA.Catalogo.NuevoProducto.NuevoProductoController;
+import VISTA.Tienda.Which.TiendaWhichController;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -17,8 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -26,6 +35,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -51,6 +62,10 @@ public class ProductosController implements Initializable {
     private TextField textfieldNombre;
     @FXML
     private ContextMenu contextMenuNombre;
+    @FXML
+    private Button botonNuevo;
+    @FXML
+    private Button buttonVolver;
 
     /**
      * Initializes the controller class.
@@ -60,15 +75,14 @@ public class ProductosController implements Initializable {
         // TODO
     }
 
-    public void mostrarTrabajadores() throws SQLException {
+    public void mostrarProductos() throws SQLException {
         cargarListas();
         tabla();
     }
 
     private void cargarListas() throws SQLException {
         lp = new ListaProductos(this.idTienda);
-        Set<Producto> lista = lp.getProductos();
-        productos = FXCollections.observableArrayList(lista);
+        productos = FXCollections.observableArrayList();
         cargarContextMenu();
     }
 
@@ -83,24 +97,27 @@ public class ProductosController implements Initializable {
         this.textfieldNombre.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isEmpty()) {
                 String tamaño = "largo";
-                if (oldValue.length() > newValue.length()){
+                if (oldValue.length() > newValue.length()) {
                     tamaño = "corto";
-                } 
-                actualizarTrabajadores(newValue,tamaño);
+                }
+                actualizarTrabajadores(newValue, tamaño);
                 contextMenuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
             } else {
-                actualizarCiudades("");
-                menuCiudad.hide();
-                this.direccion.setDisable(true);
+                actualizarTrabajadores(newValue, "corto");
+                contextMenuNombre.hide();
             }
         });
 
-        actualizarTrabajadores("");
+        actualizarTrabajadores("", "corto");
     }
 
-    private void actualizarTrabajadores(String nombre,String tamaño) {
-        Set<Producto> lista = lp.getProductos(nombre,tamaño);
+    private void actualizarTrabajadores(String nombre1, String tamaño) {
+        Set<Producto> lista = lp.getProductos(nombre1, tamaño);
+        this.productos.clear();
+        this.productos.addAll(lista);
+
         menuProductos = FXCollections.observableArrayList();
+
         Iterator<Producto> it = lista.iterator();
         while (it.hasNext()) {
             String nombre = it.next().getNombre();
@@ -109,10 +126,6 @@ public class ProductosController implements Initializable {
             menuProductos.add(m);
         }
         this.contextMenuNombre.getItems().setAll(menuProductos);
-    }
-
-    private void mantenerActualizadoContextMenu() {
-
     }
 
     private void tabla() {
@@ -126,6 +139,67 @@ public class ProductosController implements Initializable {
 
     public void setIDTienda(int idTienda) {
         this.idTienda = idTienda;
+    }
+
+    @FXML
+    private void desclickar(MouseEvent event) {
+        if (this.contextMenuNombre.isShowing()) {
+            this.contextMenuNombre.hide();
+        }
+    }
+
+    @FXML
+    private void clickarNombre(MouseEvent event) {
+        if (this.contextMenuNombre.isShowing()) {
+            this.contextMenuNombre.hide();
+        } else {
+            this.contextMenuNombre.show(this.textfieldNombre, Side.BOTTOM, 0, 0);
+        }
+    }
+
+    @FXML
+    private void accionNuevo(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Catalogo/NuevoProducto/NuevoProducto.fxml"));
+            Parent root = loader.load();
+            NuevoProductoController controller = loader.getController();
+            controller.setDatos(this.idTienda,this.lp);
+            controller.rellenarTablas();
+
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.show();
+
+            Stage stage = (Stage) this.botonNuevo.getScene().getWindow();
+            stage.close();
+
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Añadir Producto", "No se ha podido mostrar la ventana para añadir nuevos productos", Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido mostrar la ventana para añadir nuevos productos", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void accionVolver(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
+            Parent root = loader.load();
+            TiendaWhichController controller = loader.getController();
+            controller.setIDTienda(this.idTienda);
+
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.show();
+
+            Stage stage = (Stage) this.botonNuevo.getScene().getWindow();
+            stage.close();
+
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana de ver Tienda", Alert.AlertType.ERROR);
+        } 
     }
 
 }

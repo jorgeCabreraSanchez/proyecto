@@ -14,41 +14,21 @@ import javafx.beans.property.StringProperty;
  *
  * @author Jorge Cabrera
  */
-public class IncidenciasTrabajadores extends Incidencias {
+public abstract class Incidencia {
 
-    private final IntegerProperty idTrabajador = new SimpleIntegerProperty();
-    private final StringProperty tipo = new SimpleStringProperty();
+    protected final IntegerProperty idIncidencia = new SimpleIntegerProperty();
+    protected final StringProperty titulo = new SimpleStringProperty();
+    protected final StringProperty descripcion = new SimpleStringProperty();
+    protected final StringProperty fecha = new SimpleStringProperty();
 
-    public IncidenciasTrabajadores(int idIncidencias,int idTrabajador, String titulo, String descripcion,String tipo, String fecha) {
-        super(idIncidencias, titulo, descripcion, fecha);
-        this.idIncidencia.set(idTrabajador);
-        this.tipo.set(tipo);
+    public Incidencia(int idIncidencia,String titulo,String descripcion,String fecha) {
+        this.idIncidencia.set(idIncidencia);
+        this.titulo.set(titulo);
+        this.descripcion.set(descripcion);
+        this.fecha.set(fecha);
     }
 
-    public String getTipo() {
-        return tipo.get();
-    }
-
-    public void setTipo(String value) {
-        tipo.set(value);
-    }
-
-    public StringProperty TipoProperty() {
-        return tipo;
-    }
-
-    public int getIdTrabajador() {
-        return idTrabajador.get();
-    }
-
-    public void setIdTrabajador(int value) {
-        idTrabajador.set(value);
-    }
-
-    public IntegerProperty idTrabajadorProperty() {
-        return idTrabajador;
-    }
-
+    
     public String getFecha() {
         return fecha.get();
     }
@@ -60,7 +40,7 @@ public class IncidenciasTrabajadores extends Incidencias {
     public StringProperty fechaProperty() {
         return fecha;
     }
-
+    
     public String getDescripcion() {
         return descripcion.get();
     }
@@ -72,7 +52,7 @@ public class IncidenciasTrabajadores extends Incidencias {
     public StringProperty descripcionProperty() {
         return descripcion;
     }
-
+    
     public String getTitulo() {
         return titulo.get();
     }
@@ -84,7 +64,7 @@ public class IncidenciasTrabajadores extends Incidencias {
     public StringProperty tituloProperty() {
         return titulo;
     }
-
+    
     public int getIdIncidencia() {
         return idIncidencia.get();
     }
@@ -96,5 +76,7 @@ public class IncidenciasTrabajadores extends Incidencias {
     public IntegerProperty idIncidenciaProperty() {
         return idIncidencia;
     }
-
+        
+    
+    
 }

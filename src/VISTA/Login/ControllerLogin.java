@@ -117,7 +117,11 @@ public class ControllerLogin implements Initializable {
                     stage2.show();
                 }
             } catch (SQLException ex) {
-                Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se puede acceder.", "Hable con el administrador de la BD para solucionar este problema.", Alert.AlertType.ERROR);
+                if (ex.getErrorCode() == 1062) {
+                    Alertas.generarAlerta("BD", "El usuario ya se ha logueado hoy", Alert.AlertType.INFORMATION);
+                } else {
+                    Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se puede acceder.", "Hable con el administrador de la BD para solucionar este problema.", Alert.AlertType.ERROR);
+                }
             }
         } catch (NumberFormatException e) {
             this.labelErrores.setText("- El ID solo puede contener números");

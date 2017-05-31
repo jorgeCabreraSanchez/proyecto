@@ -7,31 +7,46 @@ package MODELO.Incidencia;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  *
  * @author Jorge Cabrera
  */
-public class IncidenciasTiendas extends Incidencias {
+public class IncidenciaTrabajador extends Incidencia {
 
-    private final IntegerProperty idTienda = new SimpleIntegerProperty();
+    private final IntegerProperty idTrabajador = new SimpleIntegerProperty();
+    private final StringProperty tipo = new SimpleStringProperty();
 
-    public IncidenciasTiendas(int idIncidencias,int idTienda, String titulo, String descripcion, String fecha) {
+    public IncidenciaTrabajador(int idIncidencias,int idTrabajador, String titulo, String descripcion,String tipo, String fecha) {
         super(idIncidencias, titulo, descripcion, fecha);
-        this.idIncidencia.set(idTienda);
+        this.idIncidencia.set(idTrabajador);
+        this.tipo.set(tipo);
     }
 
-    public int getIdTienda() {
-        return idTienda.get();
+    public String getTipo() {
+        return tipo.get();
     }
 
-    public void setIdTienda(int value) {
-        idTienda.set(value);
+    public void setTipo(String value) {
+        tipo.set(value);
     }
 
-    public IntegerProperty idTiendaProperty() {
-        return idTienda;
+    public StringProperty TipoProperty() {
+        return tipo;
+    }
+
+    public int getIdTrabajador() {
+        return idTrabajador.get();
+    }
+
+    public void setIdTrabajador(int value) {
+        idTrabajador.set(value);
+    }
+
+    public IntegerProperty idTrabajadorProperty() {
+        return idTrabajador;
     }
 
     public String getFecha() {

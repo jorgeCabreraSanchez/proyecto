@@ -5,14 +5,16 @@
  */
 package DATOS;
 
-import MODELO.Alertas;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.scene.control.Alert;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -46,30 +48,33 @@ public class Login {
         } catch (SQLException e) {
             devolver = "Usuario";
         }
-        try {
-            if (contraseña.equals(contraseñaUser)) {
-                sentencia = "Update trabajadores set estado = 'Conectado' where IDTrabajador = ?";
+
+        if (contraseña.equals(contraseñaUser)) {
+            if (!rs.getString(6).equalsIgnoreCase("jefe")) {
+                
+                sentencia = "insert into fichaje(idTrabajador,Dia,Entrada) values (?,?,?);";
                 ps = connect.prepareStatement(sentencia);
                 ps.setInt(1, id);
-                ps.executeUpdate();
+                ps.setDate(2, Date.valueOf(LocalDate.now()));
+                ps.setTime(3, Time.valueOf(LocalTime.now()));
 
-                String tipo = rs.getString(6);
-                if (tipo.equalsIgnoreCase("Jefe")) {
-                    devolver = "Jefe";
-                }
-                if (tipo.equalsIgnoreCase("Encargado")) {
-                    devolver = "Encargado";
-                }
-                if (tipo.equalsIgnoreCase("Empleado")) {
+                ps.executeUpdate();
+            }
+
+            String tipo = rs.getString(6);
+            if (tipo.equalsIgnoreCase("Jefe")) {
+                devolver = "Jefe";
+            }
+            if (tipo.equalsIgnoreCase("Encargado")) {
+                devolver = "Encargado";
+            }
+            if (tipo.equalsIgnoreCase("Empleado")) {
 //                    Trabajadores trabajador = new Empleado(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(7), rs.getString(8), rs.getString(9));
 //                    ListaTrabajadores.setTrabajadores(trabajador);
-                    devolver = "Empleado";
-                }
-            } else {
-                devolver = "Contraseña";
+                devolver = "Empleado";
             }
-        } catch (SQLException e) {
-            Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se han podido cargar los datos", Alert.AlertType.ERROR);
+        } else {
+            devolver = "Contraseña";
         }
 
         return devolver;

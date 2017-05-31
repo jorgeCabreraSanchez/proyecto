@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Catalogo.NuevoProducto.NuevoProductoController">
+    <stylesheets>
+        <URL value="@NuevoProducto.css" />
+    </stylesheets>
+   <children>
+      <ListView fx:id="tableviewProductos" layoutX="34.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="tableviewCatalogo" layoutX="360.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="105.0" layoutY="68.0" text="Productos">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="435.0" layoutY="68.0" text="Catálogo">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonAgregar" layoutX="263.0" layoutY="188.0" mnemonicParsing="false" onAction="#accionAgregar" text="Agregar" />
+      <Button fx:id="buttonVolver" layoutX="20.0" layoutY="353.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
+      <Button fx:id="buttonEliminar" layoutX="431.0" layoutY="328.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
+   </children>
+</AnchorPane>

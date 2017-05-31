@@ -6,7 +6,8 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
-import VISTA.Productos.ProductosController;
+import VISTA.Catalogo.ProductosController;
+import VISTA.Tienda.Incidencias.IncidenciasController;
 import VISTA.Trabajadores.TrabajadoresController;
 import java.awt.Dialog;
 import java.io.IOException;
@@ -54,11 +55,12 @@ public class TiendaWhichController implements Initializable {
     private void abrirProductos(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Catalogo/Productos.fxml"));
             Parent root = loader.load();
+
             ProductosController controller = loader.getController();
             controller.setIDTienda(idTienda);
-            controller.mostrarTrabajadores();
+            controller.mostrarProductos();
 
             Stage stageNuevo = new Stage();
             stageNuevo.setScene(new Scene(root));
@@ -66,7 +68,7 @@ public class TiendaWhichController implements Initializable {
 
             cerrarVentanaActual();
         } catch (IOException ex) {
-            Alertas.generarAlerta("Ventana", "No se puede visualizar los productos de esta tienda", Alert.AlertType.ERROR);
+            Alertas.generarAlerta("Ventana", "No se puede visualizar los productos de esta tienda", ex.getLocalizedMessage(), Alert.AlertType.ERROR);
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido visualizar los productos de esta tienda", Alert.AlertType.ERROR);
         }
@@ -128,6 +130,22 @@ public class TiendaWhichController implements Initializable {
 
     @FXML
     private void abrirIncidencias(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/Incidencias.fxml"));
+            Parent root = loader.load();
+            IncidenciasController controller = loader.getController();
+            controller.setIDTienda(this.idTienda);
+
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.show();
+
+            Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
+            stage.close();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Incidencias", "No se ha podido abrir la ventana incidencias", Alert.AlertType.ERROR);
+        }
     }
 
 }
