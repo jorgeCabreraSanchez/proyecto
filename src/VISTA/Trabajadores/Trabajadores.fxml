@@ -55,7 +55,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <TableView fx:id="tabla" editable="true" layoutX="91.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="779.0" tableMenuButtonVisible="true">
+            <TableView fx:id="tabla" editable="true" layoutX="91.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="702.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
                 <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />
@@ -65,7 +65,6 @@
                   <TableColumn fx:id="columnaHorario" prefWidth="77.0" text="Horario" />
                   <TableColumn fx:id="columnaEstado" prefWidth="105.0" text="Estado" />
                   <TableColumn fx:id="columnaIncidencias" prefWidth="75.0" text="Incidencias" />
-                  <TableColumn fx:id="columnaidTienda" prefWidth="75.0" text="idTienda" />
               </columns>
                <effect>
                   <Lighting>

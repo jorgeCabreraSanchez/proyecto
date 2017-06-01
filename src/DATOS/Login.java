@@ -52,11 +52,9 @@ public class Login {
         if (contraseña.equals(contraseñaUser)) {
             if (!rs.getString(6).equalsIgnoreCase("jefe")) {
                 
-                sentencia = "insert into fichaje(idTrabajador,Dia,Entrada) values (?,?,?);";
+                sentencia = "call ficharEntrada(?);";
                 ps = connect.prepareStatement(sentencia);
                 ps.setInt(1, id);
-                ps.setDate(2, Date.valueOf(LocalDate.now()));
-                ps.setTime(3, Time.valueOf(LocalTime.now()));
 
                 ps.executeUpdate();
             }
