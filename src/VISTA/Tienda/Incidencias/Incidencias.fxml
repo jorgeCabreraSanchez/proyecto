@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import jfxtras.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,8 +9,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Incidencias.IncidenciasController">
+<AnchorPane id="AnchorPane" prefHeight="494.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Tienda.Incidencias.IncidenciasController">
     <stylesheets>
-        <URL value="@Incidencias.css"/>
+        <URL value="@Incidencias.css" />
     </stylesheets>
+   <children>
+      <Button fx:id="buttonVolver" layoutX="14.0" layoutY="455.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
+      <ScrollPane fx:id="scrollPaneIncidencias" layoutX="15.0" layoutY="146.0" prefHeight="251.0" prefWidth="559.0">
+         <content>
+            <ListView fx:id="listViewIncidencias" prefHeight="250.0" prefWidth="544.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="labelTienda" layoutX="201.0" layoutY="30.0" text="Incidencias de la Tienda Nº1">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Text layoutX="64.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="320.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <LocalDateTextField fx:id="textFieldDesde" layoutX="112.0" layoutY="87.0" promptText="dd/MM/yyyy" />
+      <LocalDateTextField fx:id="textFieldHasta" layoutX="369.0" layoutY="87.0" promptText="dd/MM/yyyy" />
+   </children>
 </AnchorPane>

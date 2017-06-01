@@ -30,6 +30,11 @@ public class Encargado extends Trabajadores {
         this.incidencias.set(incidencias);
         this.idTienda.set(idTienda);
     }
+    
+    public Encargado(int idTienda, String horario, String nombre, String apellido1,String apellido2) {
+        super(nombre, apellido1,apellido2, horario);
+        this.idTienda.set(idTienda);       
+    }
 
     public Encargado(int idTienda, String horario, int incidencias, int id, String nombre, String apellido1, String estado) {
         super(id, nombre, apellido1, estado,horario);

@@ -28,7 +28,7 @@ public class GestionProductos {
     public Set<Producto> productosEnLaTienda(int idTienda) throws SQLException {
         Set<Producto> productos = new HashSet<>();
 
-        String sentencia = "Select * from producto where idProducto in (Select Productos_idProductos from catalogo where Tiendas_idTienda = ?);";
+        String sentencia = "Select * from catalogo where idProducto in (Select catalogo_idProductos from producto where Tiendas_idTienda = ?);";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, idTienda);
         ResultSet rs = ps.executeQuery();
@@ -41,7 +41,7 @@ public class GestionProductos {
     }    
     
     public void nuevoProductoEnTienda(int idTienda,int idProducto) throws SQLException{
-        String sentencia = "insert into catalogo values(?,?);";
+        String sentencia = "insert into producto values(?,?);";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, idTienda);
         ps.setInt(2,idProducto);
@@ -49,17 +49,17 @@ public class GestionProductos {
     }
     
     public void eliminarProductoEnTienda(int idTienda,int idProducto) throws SQLException{
-        String sentencia = "Delete from catalogo where tiendas_idTienda = ? and productos_idProductos = ?;";
+        String sentencia = "Delete from producto where tiendas_idTienda = ? and productos_idProductos = ?;";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, idTienda);
         ps.setInt(2,idProducto);
         ps.executeUpdate();
     }
 
-    public Set<Producto> todosLosProductos() throws SQLException {
+    public Set<Producto> catalogo() throws SQLException {
         Set<Producto> productos = new HashSet<>();
 
-        String sentencia = "Select * from producto;";
+        String sentencia = "Select * from catalogo;";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ResultSet rs = ps.executeQuery();
 

@@ -28,12 +28,6 @@ public class ListaProductos {
         productosMostrar.addAll(productos);
     }
 
-    public ListaProductos() throws SQLException {
-        gp = new GestionProductos();
-        productos = gp.todosLosProductos();
-        productosMostrar.addAll(productos);
-    }
-
     public Set<Producto> getProductos() {
         return this.productosMostrar;
     }
@@ -60,9 +54,7 @@ public class ListaProductos {
         return this.productosMostrar;
     }
 
-    public Set<Producto> todosLosProductos() throws SQLException {
-        return gp.todosLosProductos();        
-    }
+    
 
     public void nuevoProductoEnTienda(int idTienda, int idProducto) throws SQLException {
         gp.nuevoProductoEnTienda(idTienda, idProducto);       

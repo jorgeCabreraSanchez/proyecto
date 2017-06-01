@@ -8,6 +8,7 @@ package VISTA.Trabajadores;
 import MODELO.Alertas;
 import MODELO.Listas.ListaTrabajadores;
 import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
 import MODELO.Trabajadores.Trabajadores;
 import VISTA.Empleado.Inicio.InicioEmpleadosController;
 import VISTA.Tienda.Which.TiendaWhichController;
@@ -17,6 +18,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +36,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -41,15 +45,12 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import static javafx.scene.input.KeyCode.T;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -80,21 +81,30 @@ public class TrabajadoresController implements Initializable {
     private TableColumn<Trabajadores, String> columnaEstado;
     @FXML
     private TableColumn<Trabajadores, Integer> columnaIncidencias;
-    private TableColumn<Trabajadores, Integer> columnaidTienda;
     @FXML
     private TextField textfieldNombre;
-    @FXML
-    private TextField textfieldApellido1;
-    @FXML
-    private ContextMenu menuNombre;
-    @FXML
-    private ContextMenu menuApellido1;
     @FXML
     private AnchorPane fondo;
     @FXML
     private AnchorPane fondito;
     @FXML
     private Button buttonVolver;
+    @FXML
+    private ContextMenu contextmenuNombre;
+    @FXML
+    private ContextMenu contextmenuApellido1;
+    @FXML
+    private TextField textfieldApellido1;
+    @FXML
+    private TextField Nombre;
+    @FXML
+    private TextField Apellido1;
+    @FXML
+    private TextField Apellido2;
+    @FXML
+    private ComboBox<String> Puesto;
+    @FXML
+    private ComboBox<String> Horario;
 
     /**
      * Initializes the controller class.
@@ -114,11 +124,14 @@ public class TrabajadoresController implements Initializable {
     private void tabla() throws SQLException {
         lt = new ListaTrabajadores(this.idTienda);
 
+        this.Puesto.setItems(FXCollections.observableArrayList("Encargado", "Empleado"));
+        this.Horario.setItems(FXCollections.observableArrayList("Mañana", "Tarde"));
+
         this.tabla.setItems(listaTrabajadores);
         tabla.setPlaceholder(new Label("No se ha encontrado ningún trabajador."));
 
         columnaID.setCellValueFactory(new PropertyValueFactory<>("id"));
-               
+
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaNombre.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
         columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
@@ -210,11 +223,11 @@ public class TrabajadoresController implements Initializable {
             System.out.println("Hola");
             try {
                 lt.editarTrabajador(trabajador.getId(), "Tipo", event.getNewValue());
-                
+
                 actualizarTrabajador("largo");
             } catch (SQLException ex) {
                 Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-            }        
+            }
         });
 
         columnaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
@@ -235,7 +248,7 @@ public class TrabajadoresController implements Initializable {
                     Alertas.generarAlerta("BD", "El Horario no puede estar vacío", Alert.AlertType.INFORMATION);
                     trabajador.setHorario(t.getOldValue());
                 }
-                    actualizarTrabajador("largo");
+                actualizarTrabajador("largo");
             }
 
         });
@@ -258,14 +271,13 @@ public class TrabajadoresController implements Initializable {
                     Alertas.generarAlerta("BD", "El Estado no puede estar vacío", Alert.AlertType.INFORMATION);
                     trabajador.setEstado(t.getOldValue());
                 }
-                    actualizarTrabajador("largo");
+                actualizarTrabajador("largo");
             }
 
         });
 
         columnaIncidencias.setCellValueFactory(new PropertyValueFactory<>("incidencias"));
 
-        columnaidTienda.setCellValueFactory(new PropertyValueFactory<>("idTienda"));
         columnaEstado.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
         columnaEstado.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
             @Override
@@ -283,7 +295,7 @@ public class TrabajadoresController implements Initializable {
                     Alertas.generarAlerta("BD", "El Estado no puede estar vacío", Alert.AlertType.INFORMATION);
                     trabajador.setEstado(t.getOldValue());
                 }
-                    actualizarTrabajador("largo");
+                actualizarTrabajador("largo");
             }
 
         });
@@ -291,46 +303,35 @@ public class TrabajadoresController implements Initializable {
     }
 
     private void nombreModificado() {
-        this.menuNombre.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                MenuItem mn = (MenuItem) e.getTarget();
-                textfieldNombre.setText(mn.getUserData().toString());
-            }
+        this.contextmenuNombre.setOnAction((ActionEvent e) -> {
+            MenuItem mn = (MenuItem) e.getTarget();
+            textfieldNombre.setText(mn.getUserData().toString());
         });
 
         textfieldNombre.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
+            if (newValue.isEmpty() || oldValue.length() > newValue.length()) {
                 actualizarTrabajador("corto");
-                menuNombre.hide();
-            } else if (!oldValue.equalsIgnoreCase(newValue) && oldValue.length() > newValue.length()) {
-                actualizarTrabajador("corto");
-                menuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
             } else {
                 actualizarTrabajador("largo");
-                menuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
             }
+            contextmenuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
+
         });
     }
 
     private void apellido1Modificado() {
-        this.menuApellido1.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                MenuItem mn = (MenuItem) e.getTarget();
-                textfieldApellido1.setText(mn.getUserData().toString());
-            }
+        this.contextmenuApellido1.setOnAction((ActionEvent e) -> {
+            MenuItem mn = (MenuItem) e.getTarget();
+            textfieldApellido1.setText(mn.getUserData().toString());
         });
 
-        textfieldApellido1.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
+        this.textfieldApellido1.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty() || oldValue.length() > newValue.length()) {
                 actualizarTrabajador("corto");
-                menuApellido1.hide();
-            } else if (!oldValue.equalsIgnoreCase(newValue) && oldValue.length() > newValue.length()) {
-                actualizarTrabajador("corto");
-                menuApellido1.show(textfieldApellido1, Side.BOTTOM, 0, 0);
             } else {
                 actualizarTrabajador("largo");
-                menuApellido1.show(textfieldApellido1, Side.BOTTOM, 0, 0);
             }
+            contextmenuApellido1.show(textfieldApellido1, Side.BOTTOM, 0, 0);
         });
     }
 
@@ -352,13 +353,13 @@ public class TrabajadoresController implements Initializable {
             String apellido1 = trabajador.getApellido1();
             MenuItem e2 = new MenuItem(apellido1);
             e2.setUserData(apellido1);
-            listaApellido1.add(e);
+            listaApellido1.add(e2);
 
         }
-        this.menuNombre.getItems().clear();
-        this.menuNombre.getItems().setAll(listaNombre);
-        this.menuApellido1.getItems().clear();
-        this.menuApellido1.getItems().setAll(listaApellido1);
+        this.contextmenuNombre.getItems().clear();
+        this.contextmenuNombre.getItems().setAll(listaNombre);
+        this.contextmenuApellido1.getItems().clear();
+        this.contextmenuApellido1.getItems().setAll(listaApellido1);
     }
 
     public void setIDTienda(int idTienda) {
@@ -371,25 +372,25 @@ public class TrabajadoresController implements Initializable {
 
     @FXML
     private void nombreClickado(MouseEvent event) {
-        if (this.menuNombre.isShowing()) {
-            this.menuNombre.hide();
+        if (this.contextmenuNombre.isShowing()) {
+            this.contextmenuNombre.hide();
         } else {
-            this.menuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
+            this.contextmenuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
         }
-        if (this.menuApellido1.isShowing()) {
-            this.menuApellido1.hide();
+        if (this.contextmenuApellido1.isShowing()) {
+            this.contextmenuApellido1.hide();
         }
     }
 
     @FXML
     private void apellido1Clickado(MouseEvent event) {
-        if (this.menuApellido1.isShowing()) {
-            this.menuApellido1.hide();
+        if (this.contextmenuApellido1.isShowing()) {
+            this.contextmenuApellido1.hide();
         } else {
-            this.menuApellido1.show(textfieldApellido1, Side.BOTTOM, 0, 0);
+            this.contextmenuApellido1.show(this.textfieldApellido1, Side.BOTTOM, 0, 0);
         }
-        if (this.menuNombre.isShowing()) {
-            this.menuNombre.hide();
+        if (this.contextmenuNombre.isShowing()) {
+            this.contextmenuNombre.hide();
         }
     }
 
@@ -399,10 +400,10 @@ public class TrabajadoresController implements Initializable {
     }
 
     private void desclickarContextMenu() {
-        if (this.menuNombre.isShowing()) {
-            this.menuNombre.hide();
-        } else if (this.menuApellido1.isShowing()) {
-            this.menuApellido1.hide();
+        if (this.contextmenuNombre.isShowing()) {
+            this.contextmenuNombre.hide();
+        } else if (this.contextmenuApellido1.isShowing()) {
+            this.contextmenuApellido1.hide();
         }
     }
 
@@ -431,13 +432,73 @@ public class TrabajadoresController implements Initializable {
         }
     }
 
-    private void accionEditar(ActionEvent event) {
-        desclickarContextMenu();
-    }
-
     @FXML
     private void accionNuevo(ActionEvent event) {
         desclickarContextMenu();
+
+        if (verificarDatos()) {
+            Trabajadores trabajador;
+            if (this.Puesto.getValue().equalsIgnoreCase("Empleado")) {
+                trabajador = new Empleado(this.idTienda, this.Horario.getValue(),
+                        this.Nombre.getText(), this.Apellido1.getText(), this.Apellido2.getText());
+            } else {
+                trabajador = new Encargado(this.idTienda, this.Horario.getValue(),
+                        this.Nombre.getText(), this.Apellido1.getText(), this.Apellido2.getText());
+            }
+            try {
+                lt.nuevoTrabajador(trabajador);
+                lt.traerTrabajadores(idTienda);
+                actualizarTrabajador("corto");
+
+                this.Nombre.clear();
+                this.Apellido1.clear();
+                this.Apellido2.clear();
+                this.Puesto.setValue(this.Puesto.getPromptText());
+                this.Horario.setValue(this.Horario.getPromptText());
+            } catch (SQLException ex) {
+                Alertas.generarAlerta("BD", "No se ha podido inserter el trabajador", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    private boolean verificarDatos() {
+        boolean devolver = true;
+        if (this.Nombre.getText().isEmpty()) {
+            devolver = false;
+            this.Nombre.setStyle("-fx-border-color: red;");
+        } else {
+            this.Nombre.setStyle("-fx-border-color: none;");
+        }
+
+        if (this.Apellido1.getText().isEmpty()) {
+            devolver = false;
+            this.Apellido1.setStyle("-fx-border-color: red;");
+        } else {
+            this.Apellido1.setStyle("-fx-border-color: none;");
+        }
+
+        if (this.Apellido2.getText().isEmpty()) {
+            devolver = false;
+            this.Apellido2.setStyle("-fx-border-color: red;");
+        } else {
+            this.Apellido2.setStyle("-fx-border-color: none;");
+        }
+
+        if (this.Puesto.getSelectionModel().getSelectedItem() == null) {
+            devolver = false;
+            this.Puesto.setStyle("-fx-border-color: red;");
+        } else {
+            this.Puesto.setStyle("-fx-border-color: none;");
+        }
+
+        if (this.Horario.getSelectionModel().getSelectedItem() == null) {
+            devolver = false;
+            this.Horario.setStyle("-fx-border-color: red;");
+        } else {
+            this.Horario.setStyle("-fx-border-color: none;");
+        }
+
+        return devolver;
     }
 
     @FXML

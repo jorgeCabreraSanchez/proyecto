@@ -5,10 +5,11 @@
  */
 package MODELO.Incidencia;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+
 
 /**
  *
@@ -16,67 +17,70 @@ import javafx.beans.property.StringProperty;
  */
 public abstract class Incidencia {
 
-    protected final IntegerProperty idIncidencia = new SimpleIntegerProperty();
-    protected final StringProperty titulo = new SimpleStringProperty();
-    protected final StringProperty descripcion = new SimpleStringProperty();
-    protected final StringProperty fecha = new SimpleStringProperty();
+    protected Integer idIncidencia;
+    protected String titulo;
+    protected String descripcion;
+    protected Date fecha;
 
-    public Incidencia(int idIncidencia,String titulo,String descripcion,String fecha) {
-        this.idIncidencia.set(idIncidencia);
-        this.titulo.set(titulo);
-        this.descripcion.set(descripcion);
-        this.fecha.set(fecha);
+    public Incidencia(Integer idIncidencia, String titulo, String descripcion, Date fecha) {
+        this.idIncidencia = idIncidencia;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
     }
-
     
-    public String getFecha() {
-        return fecha.get();
+    public Incidencia(Integer idIncidencia, String titulo, String descripcion, LocalDate fecha) {
+        this.idIncidencia = idIncidencia;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fecha = Date.valueOf(fecha);
+    }
+    
+        public Incidencia(Integer idIncidencia, String titulo, String descripcion) {
+        this.idIncidencia = idIncidencia;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
     }
 
-    public void setFecha(String value) {
-        fecha.set(value);
+    public Integer getIdIncidencia() {
+        return idIncidencia;
     }
 
-    public StringProperty fechaProperty() {
+    public void setIdIncidencia(Integer idIncidencia) {
+        this.idIncidencia = idIncidencia;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Date getFecha() {
         return fecha;
     }
     
-    public String getDescripcion() {
-        return descripcion.get();
+    public String getFechaFormateada() {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return formato.format((TemporalAccessor) this.fecha);
     }
 
-    public void setDescripcion(String value) {
-        descripcion.set(value);
-    }
-
-    public StringProperty descripcionProperty() {
-        return descripcion;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
     
-    public String getTitulo() {
-        return titulo.get();
+    public void setFecha(LocalDate fecha) {
+        this.fecha = Date.valueOf(fecha);
     }
 
-    public void setTitulo(String value) {
-        titulo.set(value);
-    }
-
-    public StringProperty tituloProperty() {
-        return titulo;
-    }
-    
-    public int getIdIncidencia() {
-        return idIncidencia.get();
-    }
-
-    public void setIdIncidencia(int value) {
-        idIncidencia.set(value);
-    }
-
-    public IntegerProperty idIncidenciaProperty() {
-        return idIncidencia;
-    }
-        
-    
-    
 }

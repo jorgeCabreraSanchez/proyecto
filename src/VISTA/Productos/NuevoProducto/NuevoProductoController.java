@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Catalogo.NuevoProducto;
+package VISTA.Productos.NuevoProducto;
 
 import MODELO.Alertas;
+import MODELO.Listas.ListaCatalogo;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
-import VISTA.Catalogo.ProductosController;
+import VISTA.Productos.ProductosController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +28,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 
@@ -61,9 +60,10 @@ public class NuevoProductoController implements Initializable {
     }
 
     public void rellenarTablas() throws SQLException {
+        ListaCatalogo lc = new ListaCatalogo();
         this.tableviewCatalogo.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tableviewProductos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.tableviewProductos.setItems(FXCollections.observableArrayList(lp.todosLosProductos()));
+        this.tableviewProductos.setItems(FXCollections.observableArrayList(lc.catalogo()));
         this.tableviewCatalogo.setItems(FXCollections.observableArrayList(lp.getProductos()));
     }
 
@@ -116,7 +116,7 @@ public class NuevoProductoController implements Initializable {
     private void accionVolver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Catalogo/Productos.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
             Parent root = loader.load();
             ProductosController controller = loader.getController();
             controller.setIDTienda(this.idTienda);

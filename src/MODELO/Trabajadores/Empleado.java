@@ -38,6 +38,11 @@ public class Empleado extends Trabajadores {
         this.idTienda.set(idTienda);        
         this.incidencias.set(incidencias);
     }
+    
+    public Empleado(int idTienda, String horario, String nombre, String apellido1,String apellido2) {
+        super(nombre, apellido1,apellido2, horario);
+        this.idTienda.set(idTienda);       
+    }
 
     public Empleado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
         super(nombre, apellido1, apellido2, contraseña, estado, id, horario);

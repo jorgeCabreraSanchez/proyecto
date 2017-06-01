@@ -6,7 +6,7 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
-import VISTA.Catalogo.ProductosController;
+import VISTA.Productos.ProductosController;
 import VISTA.Tienda.Incidencias.IncidenciasController;
 import VISTA.Trabajadores.TrabajadoresController;
 import java.awt.Dialog;
@@ -55,7 +55,7 @@ public class TiendaWhichController implements Initializable {
     private void abrirProductos(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Catalogo/Productos.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
             Parent root = loader.load();
 
             ProductosController controller = loader.getController();
@@ -136,7 +136,8 @@ public class TiendaWhichController implements Initializable {
             Parent root = loader.load();
             IncidenciasController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
-
+            controller.rellenarTabla();
+            
             Stage stageNuevo = new Stage();
             stageNuevo.setScene(new Scene(root));
             stageNuevo.show();
@@ -145,6 +146,8 @@ public class TiendaWhichController implements Initializable {
             stage.close();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Incidencias", "No se ha podido abrir la ventana incidencias", Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido visualizar las incidencias de la tienda","Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(),Alert.AlertType.ERROR);
         }
     }
 

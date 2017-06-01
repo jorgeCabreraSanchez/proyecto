@@ -37,6 +37,13 @@ public abstract class Trabajadores {
         this.horario.set(horario);
     }
     
+    public Trabajadores(String nombre, String apellido1, String apellido2,String horario) {
+        this.nombre.set(nombre);
+        this.apellido1.set(apellido1);
+        this.apellido2.set(apellido2);
+        this.horario.set(horario);
+    }
+    
     public Trabajadores(int id, String nombre, String apellido1, String apellido2, String estado,String horario) {
         this.id.set(id);
         this.nombre.set(nombre);

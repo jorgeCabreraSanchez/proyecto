@@ -38,9 +38,9 @@ public class GestionTrabajadores {
         while (rs.next()) {
             Trabajadores trabajador;
             if (rs.getString(5).equalsIgnoreCase("Empleado")) {
-                trabajador = new Empleado(rs.getString(7), rs.getInt(9), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(8),rs.getInt(6));
+                trabajador = new Empleado(rs.getString(6), rs.getInt(8), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(7),idTienda);
             } else {
-                trabajador = new Encargado(rs.getString(7), rs.getInt(9), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(8),rs.getInt(6));
+                trabajador = new Encargado(rs.getString(6), rs.getInt(8), rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(7),idTienda);
             }
             trabajadores.add(trabajador);
         }
@@ -62,5 +62,27 @@ public class GestionTrabajadores {
         ps.setInt(2, idTrabajador);
         ps.executeUpdate();
     }
-
+    
+    public void nuevoTrabajador(Trabajadores trabajador) throws SQLException{
+        String tipo;
+        Integer idTienda;
+        if(trabajador instanceof Empleado){
+            tipo = "Empleado";
+            Empleado empleado = (Empleado) trabajador;
+            idTienda = empleado.getIdTienda();
+        } else {
+            tipo = "Encargado";
+            Encargado encargado = (Encargado) trabajador;
+            idTienda = encargado.getIdTienda();
+        }
+        String sentencia = "Insert into trabajadores values (null,?,?,?,'',?,?,?,'Desconectado')";
+        PreparedStatement ps = connect.prepareStatement(sentencia);        
+        ps.setString(1, trabajador.getNombre());
+        ps.setString(2, trabajador.getApellido1());
+        ps.setString(3, trabajador.getApellido2());
+        ps.setString(4, tipo);
+        ps.setInt(5, idTienda);
+        ps.setString(6, trabajador.getHorario());
+        ps.executeUpdate();
+    }
 }

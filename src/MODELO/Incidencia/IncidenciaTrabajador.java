@@ -5,10 +5,7 @@
  */
 package MODELO.Incidencia;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import java.sql.Date;
 
 /**
  *
@@ -16,85 +13,58 @@ import javafx.beans.property.StringProperty;
  */
 public class IncidenciaTrabajador extends Incidencia {
 
-    private final IntegerProperty idTrabajador = new SimpleIntegerProperty();
-    private final StringProperty tipo = new SimpleStringProperty();
+    private Integer idTrabajador;
+    private String tipo;
 
-    public IncidenciaTrabajador(int idIncidencias,int idTrabajador, String titulo, String descripcion,String tipo, String fecha) {
-        super(idIncidencias, titulo, descripcion, fecha);
-        this.idIncidencia.set(idTrabajador);
-        this.tipo.set(tipo);
+    public IncidenciaTrabajador(Integer idIncidencia, String titulo, String descripcion, Date fecha) {
+        super(idIncidencia, titulo, descripcion, fecha);
     }
 
-    public String getTipo() {
-        return tipo.get();
+    public IncidenciaTrabajador(Integer idTrabajador, String tipo, Integer idIncidencia, String titulo, String descripcion, Date fecha) {
+        super(idIncidencia, titulo, descripcion, fecha);
+        this.idTrabajador = idTrabajador;
+        this.tipo = tipo;
     }
 
-    public void setTipo(String value) {
-        tipo.set(value);
+    public IncidenciaTrabajador(String tipo, Integer idIncidencia, String titulo, String descripcion, Date fecha) {
+        super(idIncidencia, titulo, descripcion, fecha);
+        this.tipo = tipo;
+    }
+        
+
+        public Integer getIdIncidencia() {
+        return idIncidencia;
     }
 
-    public StringProperty TipoProperty() {
-        return tipo;
-    }
-
-    public int getIdTrabajador() {
-        return idTrabajador.get();
-    }
-
-    public void setIdTrabajador(int value) {
-        idTrabajador.set(value);
-    }
-
-    public IntegerProperty idTrabajadorProperty() {
-        return idTrabajador;
-    }
-
-    public String getFecha() {
-        return fecha.get();
-    }
-
-    public void setFecha(String value) {
-        fecha.set(value);
-    }
-
-    public StringProperty fechaProperty() {
-        return fecha;
-    }
-
-    public String getDescripcion() {
-        return descripcion.get();
-    }
-
-    public void setDescripcion(String value) {
-        descripcion.set(value);
-    }
-
-    public StringProperty descripcionProperty() {
-        return descripcion;
+    public void setIdIncidencia(Integer idIncidencia) {
+        this.idIncidencia = idIncidencia;
     }
 
     public String getTitulo() {
-        return titulo.get();
-    }
-
-    public void setTitulo(String value) {
-        titulo.set(value);
-    }
-
-    public StringProperty tituloProperty() {
         return titulo;
     }
 
-    public int getIdIncidencia() {
-        return idIncidencia.get();
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public void setIdIncidencia(int value) {
-        idIncidencia.set(value);
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public IntegerProperty idIncidenciaProperty() {
-        return idIncidencia;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
+
+    
 
 }

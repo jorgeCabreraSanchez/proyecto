@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Catalogo;
+package VISTA.Productos;
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
-import VISTA.Catalogo.NuevoProducto.NuevoProductoController;
+import VISTA.Productos.NuevoProducto.NuevoProductoController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
 import java.net.URL;
@@ -66,6 +66,8 @@ public class ProductosController implements Initializable {
     private Button botonNuevo;
     @FXML
     private Button buttonVolver;
+    @FXML
+    private Label labelTitulo;
 
     /**
      * Initializes the controller class.
@@ -76,6 +78,7 @@ public class ProductosController implements Initializable {
     }
 
     public void mostrarProductos() throws SQLException {
+        this.labelTitulo.setText("Productos de la Tienda Nº"+this.idTienda);
         cargarListas();
         tabla();
     }
@@ -161,7 +164,7 @@ public class ProductosController implements Initializable {
     private void accionNuevo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Catalogo/NuevoProducto/NuevoProducto.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Productos/NuevoProducto/NuevoProducto.fxml"));
             Parent root = loader.load();
             NuevoProductoController controller = loader.getController();
             controller.setDatos(this.idTienda,this.lp);

@@ -20,11 +20,15 @@ public class ListaTrabajadores {
 
     private Set<Trabajadores> trabajadores = new HashSet<>();
     private Set<Trabajadores> trabajadoresMostrar = new HashSet<>();
-    private GestionTrabajadores gs;
+    private GestionTrabajadores gt;
 
     public ListaTrabajadores(int idTienda) throws SQLException {
-        gs = new GestionTrabajadores();
-        trabajadores = gs.trabajadoresEnLaTienda(idTienda);
+        gt = new GestionTrabajadores();
+        traerTrabajadores(idTienda);
+    }
+    
+    public void traerTrabajadores(int idTienda) throws SQLException{
+        trabajadores = gt.trabajadoresEnLaTienda(idTienda);
         trabajadoresMostrar.addAll(trabajadores);
     }
 
@@ -61,11 +65,12 @@ public class ListaTrabajadores {
     }
 
     public void editarTrabajador(int idTrabajador, String campo,String nuevo) throws SQLException {
-        gs.modificarTrabajador(idTrabajador,campo,nuevo);
+        gt.modificarTrabajador(idTrabajador,campo,nuevo);
     }
+    
 
     public void eliminarTrabajador(int idTrabajador) throws SQLException {
-        this.gs.borrarTrabajador(idTrabajador);
+        this.gt.borrarTrabajador(idTrabajador);
         boolean seguir = true;
 
         Iterator<Trabajadores> it = this.trabajadores.iterator();
@@ -79,6 +84,11 @@ public class ListaTrabajadores {
         }
     }
 
+    
+    public void nuevoTrabajador(Trabajadores trabajador) throws SQLException{
+      gt.nuevoTrabajador(trabajador);
+    }
+    
     private boolean empiezaPor(String palabra1, String empieza) {
         if (empieza.equalsIgnoreCase("")) {
             return true;
@@ -95,5 +105,6 @@ public class ListaTrabajadores {
             return false;
         }
     }
+       
 
 }
