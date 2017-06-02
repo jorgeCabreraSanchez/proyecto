@@ -35,7 +35,10 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Text>
-      <DatePicker fx:id="textFieldDesde" layoutX="114.0" layoutY="87.0" onAction="#introducirFecha" />
-      <DatePicker fx:id="textFieldHasta" layoutX="364.0" layoutY="87.0" onAction="#introducirFecha" />
+      <DatePicker fx:id="datePickerDesde" editable="false" layoutX="114.0" layoutY="87.0" onAction="#introducirFecha" />
+      <DatePicker fx:id="datePickerHasta" editable="false" layoutX="364.0" layoutY="87.0" onAction="#introducirFecha" />
+      <Button fx:id="buttonNuevo" layoutX="114.0" layoutY="415.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nueva" />
+      <Button fx:id="buttonEliminar" layoutX="423.0" layoutY="415.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
+      <Button fx:id="buttonEditar" layoutX="267.0" layoutY="415.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" />
    </children>
 </AnchorPane>

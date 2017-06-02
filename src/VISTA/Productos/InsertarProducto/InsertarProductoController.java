@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Productos.NuevoProducto;
+package VISTA.Productos.InsertarProducto;
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaCatalogo;
@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author Jorge Cabrera
  */
-public class NuevoProductoController implements Initializable {
+public class InsertarProductoController implements Initializable {
 
     int idTienda;
     ListaProductos lp;

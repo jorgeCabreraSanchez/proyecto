@@ -102,7 +102,7 @@ public class TiendaWhichController implements Initializable {
     private void accionVolver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Jefe/Inicio/InicioJefe.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
             Parent root = loader.load();
 
             Stage stageNuevo = new Stage();

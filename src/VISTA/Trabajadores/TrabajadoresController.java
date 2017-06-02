@@ -10,7 +10,7 @@ import MODELO.Listas.ListaTrabajadores;
 import MODELO.Trabajadores.Empleado;
 import MODELO.Trabajadores.Encargado;
 import MODELO.Trabajadores.Trabajadores;
-import VISTA.Empleado.Inicio.InicioEmpleadosController;
+import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
 import java.net.URL;
@@ -18,8 +18,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -414,9 +412,9 @@ public class TrabajadoresController implements Initializable {
             Trabajadores trabajador = this.tabla.getSelectionModel().getSelectedItem();
             if (trabajador != null) {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/VISTA/Empleado/Inicio/InicioEmpleados.fxml"));
+                loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
                 Parent root = loader.load();
-                InicioEmpleadosController controller = loader.getController();
+                PerfilController controller = loader.getController();
                 controller.setTrabajador(trabajador, this.idTienda);
                 controller.modoJefe();
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Jefe.Inicio;
+package VISTA.Tiendas;
 //
 
 import MODELO.Alertas;
@@ -47,7 +47,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class InicioJefeController implements Initializable {
+public class TiendasController implements Initializable {
 
     ListaTiendas lt;
 
@@ -337,13 +337,12 @@ public class InicioJefeController implements Initializable {
 
             if (this.tabla.getSelectionModel().getSelectedItem() != null) {
                 controller.setIDTienda(this.tabla.getSelectionModel().getSelectedItem().getIdTienda());
+                
+                Stage stage = (Stage) this.buttonNuevo.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
 
-                Stage stageNuevo = new Stage();
-                stageNuevo.setScene(new Scene(root));
-                stageNuevo.show();
-
-                Stage stageActual = (Stage) this.buttonNuevo.getScene().getWindow();
-                stageActual.close();
+                
             }
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos",ex.getLocalizedMessage(), AlertType.ERROR);

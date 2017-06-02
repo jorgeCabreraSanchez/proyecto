@@ -105,11 +105,11 @@ public class ControllerLogin implements Initializable {
                     };
 
                     if (ocurre.equalsIgnoreCase("Jefe")) {
-                        root = FXMLLoader.load(getClass().getResource("/VISTA/Jefe/Inicio/InicioJefe.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
                     } else if (ocurre.equalsIgnoreCase("Encargado")) {
                         root = FXMLLoader.load(getClass().getResource("/VISTA/Encargado/Inicio/InicioEncargado.fxml"));
                     } else if (ocurre.equalsIgnoreCase("Empleado")) {
-                        root = FXMLLoader.load(getClass().getResource("/VISTA/Empleado/Inicio/InicioEmpleados.fxml"));
+                        root = FXMLLoader.load(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
                     }
                     Stage stage2 = new Stage();
                     stage2.initModality(Modality.APPLICATION_MODAL);

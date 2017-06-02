@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Empleado.Inicio.InicioEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Perfil.PerfilController">
    <children>
       <AnchorPane fx:id="fondo1" layoutY="-1.0" prefHeight="500.0" prefWidth="629.0" stylesheets="@Empleados.css">
          <children>
@@ -19,7 +19,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -33,7 +32,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -56,7 +54,7 @@
                      </font></Label>
                </children>
             </AnchorPane>
-            <Pane fx:id="foto" layoutX="51.0" layoutY="24.0" prefHeight="142.0" prefWidth="132.0" stylesheets="@Empleados.css" />
+            <Pane fx:id="foto" layoutX="51.0" layoutY="24.0" prefHeight="142.0" prefWidth="132.0" stylesheets="@Perfil.css" />
          </children>
       </AnchorPane>
       <Button fx:id="buttonVolver" layoutX="10.0" layoutY="451.0" mnemonicParsing="false" onAction="#volver" text="&lt;--" visible="false">

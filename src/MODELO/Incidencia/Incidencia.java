@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 
-
 /**
  *
  * @author Jorge Cabrera
@@ -28,18 +27,24 @@ public abstract class Incidencia {
         this.descripcion = descripcion;
         this.fecha = fecha;
     }
-    
+
     public Incidencia(Integer idIncidencia, String titulo, String descripcion, LocalDate fecha) {
         this.idIncidencia = idIncidencia;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fecha = Date.valueOf(fecha);
     }
-    
-        public Incidencia(Integer idIncidencia, String titulo, String descripcion) {
+
+    public Incidencia(Integer idIncidencia, String titulo, String descripcion) {
         this.idIncidencia = idIncidencia;
         this.titulo = titulo;
         this.descripcion = descripcion;
+    }
+
+    public Incidencia(String titulo, String descripcion, LocalDate fecha) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.fecha = Date.valueOf(fecha);
     }
 
     public Integer getIdIncidencia() {
@@ -69,7 +74,7 @@ public abstract class Incidencia {
     public Date getFecha() {
         return fecha;
     }
-    
+
     public String getFechaFormateada() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return formato.format((TemporalAccessor) this.fecha);
@@ -78,7 +83,7 @@ public abstract class Incidencia {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
     public void setFecha(LocalDate fecha) {
         this.fecha = Date.valueOf(fecha);
     }

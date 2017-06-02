@@ -32,6 +32,10 @@ public class IncidenciaTienda extends Incidencia {
     public IncidenciaTienda(Integer idIncidencia, String titulo, String descripcion, Date fecha) {
         super(idIncidencia, titulo, descripcion, fecha);
     }
+    
+      public IncidenciaTienda(String titulo, String descripcion, LocalDate fecha) {
+        super(titulo,descripcion,fecha);
+    }
 
     public Integer getIdTienda() {
         return idTienda;
@@ -71,7 +75,7 @@ public class IncidenciaTienda extends Incidencia {
     
     public String getFechaFormateada() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return formato.format((TemporalAccessor) this.fecha);
+        return formato.format(this.fecha.toLocalDate());
     }
 
     public void setFecha(Date fecha) {
@@ -83,7 +87,7 @@ public class IncidenciaTienda extends Incidencia {
     }
 
     public String toString() {
-        return "IDIncidencia: " + this.idIncidencia + "  Fecha: " + getFecha() + "  Título:  " + this.titulo + " \n Descripción: "
+        return "IDIncidencia: " + this.idIncidencia + "  Fecha: " + getFechaFormateada() + "  Título:  " + this.titulo + " \n Descripción: "
                 + this.descripcion;
     }
 }

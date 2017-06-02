@@ -1,4 +1,4 @@
-package VISTA.Empleado.Inicio;
+package VISTA.Perfil;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author daw
  */
-public class InicioEmpleadosController implements Initializable {
+public class PerfilController implements Initializable {
 
     Trabajadores trabajador;
     int idTienda;

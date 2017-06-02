@@ -8,7 +8,7 @@ package VISTA.Productos;
 import MODELO.Alertas;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
-import VISTA.Productos.NuevoProducto.NuevoProductoController;
+import VISTA.Productos.InsertarProducto.InsertarProductoController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
 import java.net.URL;
@@ -164,9 +164,9 @@ public class ProductosController implements Initializable {
     private void accionNuevo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Productos/NuevoProducto/NuevoProducto.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Productos/InsertarProducto/InsertarProducto.fxml"));
             Parent root = loader.load();
-            NuevoProductoController controller = loader.getController();
+            InsertarProductoController controller = loader.getController();
             controller.setDatos(this.idTienda,this.lp);
             controller.rellenarTablas();
 

@@ -6,17 +6,23 @@
 package VISTA.Tienda.Incidencias;
 
 import MODELO.Alertas;
+import MODELO.Incidencia.Incidencia;
 import MODELO.Incidencia.IncidenciaTienda;
 import MODELO.Listas.ListaIncidenciasTienda;
+import VISTA.Tienda.Incidencias.NuevaEditar.NuevaEditarIncidenciaController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.awt.Event;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,13 +33,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.scene.control.LocalDateTextField;
 
@@ -56,16 +65,21 @@ public class IncidenciasController implements Initializable {
     @FXML
     private Label labelTienda;
     @FXML
-    private DatePicker textFieldDesde;
+    private DatePicker datePickerDesde;
     @FXML
-    private DatePicker textFieldHasta;
+    private DatePicker datePickerHasta;
+    @FXML
+    private Button buttonNuevo;
+    @FXML
+    private Button buttonEliminar;
+    @FXML
+    private Button buttonEditar;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     public void setIDTienda(int idTienda) {
@@ -73,32 +87,25 @@ public class IncidenciasController implements Initializable {
     }
 
     public void rellenarTabla() throws SQLException {
-        lit = new ListaIncidenciasTienda(this.idTienda);
+        this.lit = new ListaIncidenciasTienda(this.idTienda);
         this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias()));
-//        fechas();
     }
 
-//    private void fechas() {
-//        this.textFieldDesde.SETD(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//        this.textFieldHasta.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-//    }
-//        //        this.textFieldDesde.addEventHandler(EventType.ROOT, new EventHandler<javafx.event.Event>() {
-//        //            @Override
-//        //            public void handle(javafx.event.Event event) {
-//        //                actualizarIncidencias();
-//        //            }
-//        //        });
-//        //
-//        //        this.textFieldHasta.addEventHandler(EventType<ActionEvent>, new EventHandler<javafx.event.ActionEvent>() {
-//        //            @Override
-//        //            public void handle(ActionEvent event) {
-//        //            }
-//        //        });
-//        //
-//        //    }
-
     private void actualizarIncidencias() {
-        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(this.textFieldDesde.getValue(), this.textFieldHasta.getValue())));
+        LocalDate fechaEntrada;
+        LocalDate fechaSalida;
+        if (this.datePickerDesde.getValue() == null) {
+            fechaEntrada = LocalDate.MIN;
+        } else {
+            fechaEntrada = this.datePickerDesde.getValue();
+        }
+        if (this.datePickerHasta.getValue() == null) {
+            fechaSalida = LocalDate.now();
+        } else {
+            fechaSalida = this.datePickerHasta.getValue();
+
+        }
+        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(fechaEntrada, fechaSalida)));
     }
 
     @FXML
@@ -122,12 +129,81 @@ public class IncidenciasController implements Initializable {
         }
     }
 
-
     @FXML
     private void introducirFecha(ActionEvent event) {
-        System.out.println("probando");
         actualizarIncidencias();
     }
 
+    @FXML
+    private void accionNuevo(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/NuevaEditar/NuevaEditarIncidencia.fxml"));
+            Parent root = loader.load();
+            NuevaEditarIncidenciaController controller = loader.getController();
+            controller.botonNuevo();
+            
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.initModality(Modality.APPLICATION_MODAL);
+            stageNuevo.showAndWait();
+
+            IncidenciaTienda incidencia = controller.cogerIncidencia();
+            if (incidencia != null) {
+                incidencia.setIdTienda(this.idTienda);
+                this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
+                actualizarIncidencias();
+            }
+
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Nueva Incidencia", "No se ha podido abrir la ventana nueva incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido crear la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void accionEliminar(ActionEvent event) {
+       IncidenciaTienda incidencia = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+               if (incidencia != null) {
+            Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la Incidencia?", "Información de la Incidencia:  ID: " + incidencia.getIdIncidencia() + "   Titulo: " + incidencia.getTitulo() + " \n  Descripción: " + incidencia.getDescripcion(), AlertType.CONFIRMATION);
+            if (boton.get().getText().equalsIgnoreCase("aceptar")) {
+                try {
+                    lit.borrarIncidencia(incidencia.getIdIncidencia());
+                    actualizarIncidencias();
+                } catch (SQLException e) {
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la incidencia y no se ha podido","Error: "+e.getErrorCode()+ " "+ e.getLocalizedMessage(), AlertType.ERROR);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void accionEditar(ActionEvent event) {
+               try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/NuevaEditar/NuevaEditarIncidencia.fxml"));
+            Parent root = loader.load();
+            NuevaEditarIncidenciaController controller = loader.getController();
+            controller.botonEditar();
+            
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.initModality(Modality.APPLICATION_MODAL);
+            stageNuevo.showAndWait();
+
+            IncidenciaTienda incidencia = controller.cogerIncidencia();
+            if (incidencia != null) {
+                incidencia.setIdTienda(this.idTienda);
+                this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.editarIncidencia(incidencia)));
+                actualizarIncidencias();
+            }
+
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Editar Incidencia", "No se ha podido abrir la ventana editar incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido modificar la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+        }
+    }
 
 }

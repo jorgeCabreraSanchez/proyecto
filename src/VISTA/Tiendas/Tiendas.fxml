@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Jefe.Inicio.InicioJefeController">
+<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tiendas.TiendasController">
     <stylesheets>
-        <URL value="@InicioJefeCSS.css" />
+        <URL value="@Tiendas.css" />
     </stylesheets>
    <children>
       <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="459.0" prefWidth="545.0">
@@ -28,7 +28,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -43,7 +42,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -58,7 +56,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -73,7 +70,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -88,7 +84,6 @@
                         <Shadow />
                      </bumpInput>
                      <light>
-                        <Light.Distant />
                      </light>
                   </Lighting>
                </effect>
@@ -115,7 +110,6 @@
                               <Shadow />
                            </bumpInput>
                            <light>
-                              <Light.Distant />
                            </light>
                         </Lighting>
                      </effect>
@@ -134,7 +128,6 @@
                               <Shadow />
                            </bumpInput>
                            <light>
-                              <Light.Distant />
                            </light>
                         </Lighting>
                      </effect>
