@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="494.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Tienda.Incidencias.IncidenciasController">
+<AnchorPane id="AnchorPane" prefHeight="494.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Incidencias.IncidenciasController">
     <stylesheets>
         <URL value="@Incidencias.css" />
     </stylesheets>
@@ -35,7 +35,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Text>
-      <LocalDateTextField fx:id="textFieldDesde" layoutX="112.0" layoutY="87.0" promptText="dd/MM/yyyy" />
-      <LocalDateTextField fx:id="textFieldHasta" layoutX="369.0" layoutY="87.0" promptText="dd/MM/yyyy" />
+      <DatePicker fx:id="textFieldDesde" layoutX="114.0" layoutY="87.0" onAction="#introducirFecha" />
+      <DatePicker fx:id="textFieldHasta" layoutX="364.0" layoutY="87.0" onAction="#introducirFecha" />
    </children>
 </AnchorPane>

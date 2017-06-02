@@ -19,6 +19,7 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -54,9 +56,9 @@ public class IncidenciasController implements Initializable {
     @FXML
     private Label labelTienda;
     @FXML
-    private LocalDateTextField textFieldDesde;
+    private DatePicker textFieldDesde;
     @FXML
-    private LocalDateTextField textFieldHasta;
+    private DatePicker textFieldHasta;
 
     /**
      * Initializes the controller class.
@@ -73,28 +75,32 @@ public class IncidenciasController implements Initializable {
     public void rellenarTabla() throws SQLException {
         lit = new ListaIncidenciasTienda(this.idTienda);
         this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias()));
-        fechas();
+//        fechas();
     }
 
-    private void fechas() {
-        this.textFieldDesde.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        this.textFieldHasta.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        
-        this.textFieldDesde.addEventHandler(EventType<ActionEvent>, (event) -> {
-            actualizarIncidencias();
-        });
-        
-        this.textFieldHasta.addEventHandler(EventType.ROOT, (event) -> {
-            actualizarIncidencias();
-        });
+//    private void fechas() {
+//        this.textFieldDesde.SETD(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//        this.textFieldHasta.setDateTimeFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//    }
+//        //        this.textFieldDesde.addEventHandler(EventType.ROOT, new EventHandler<javafx.event.Event>() {
+//        //            @Override
+//        //            public void handle(javafx.event.Event event) {
+//        //                actualizarIncidencias();
+//        //            }
+//        //        });
+//        //
+//        //        this.textFieldHasta.addEventHandler(EventType<ActionEvent>, new EventHandler<javafx.event.ActionEvent>() {
+//        //            @Override
+//        //            public void handle(ActionEvent event) {
+//        //            }
+//        //        });
+//        //
+//        //    }
 
+    private void actualizarIncidencias() {
+        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(this.textFieldDesde.getValue(), this.textFieldHasta.getValue())));
     }
 
-    private void actualizarIncidencias(){
-        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(this.textFieldDesde.getLocalDate(),this.textFieldHasta.getLocalDate())));
-    }
-    
-    
     @FXML
     private void accionVolver(ActionEvent event) {
         try {
@@ -116,6 +122,12 @@ public class IncidenciasController implements Initializable {
         }
     }
 
+
+    @FXML
+    private void introducirFecha(ActionEvent event) {
+        System.out.println("probando");
+        actualizarIncidencias();
+    }
 
 
 }
