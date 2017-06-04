@@ -9,6 +9,8 @@ package VISTA.Tiendas;
 import MODELO.Alertas;
 import MODELO.Listas.ListaTiendas;
 import MODELO.Tienda;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import VISTA.Tiendas.Editar.EditarTiendaController;
 import VISTA.Tiendas.Nueva.NuevaTiendaController;
@@ -36,6 +38,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -52,6 +55,7 @@ import javafx.stage.WindowEvent;
 public class TiendasController implements Initializable {
 
     ListaTiendas lt;
+    Trabajadores trabajador;
 
     ObservableList<MenuItem> ciudadesHayTienda;
     ObservableList<MenuItem> direcciones;
@@ -89,6 +93,8 @@ public class TiendasController implements Initializable {
     private AnchorPane fondito;
     @FXML
     private ImageView imagen;
+    @FXML
+    private MenuButton menu;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,7 +109,7 @@ public class TiendasController implements Initializable {
 
         tiendas();
         cerrar();
-        tabla();               
+        tabla();
     }
 
     private void tabla() {
@@ -266,6 +272,12 @@ public class TiendasController implements Initializable {
     }
 
     @FXML
+    private void desclickar() {
+        desclickarContextMenu();
+        this.menu.show();
+    }
+
+    @FXML
     private void accionEditar(ActionEvent event) {
         desclickarContextMenu();
         Tienda tiendaAntigua = this.tabla.getSelectionModel().getSelectedItem();
@@ -280,7 +292,7 @@ public class TiendasController implements Initializable {
                 controller.mostrarTienda();
 
                 Stage stage = new Stage();
-                stage.initModality((Modality.APPLICATION_MODAL));
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
                 if (controller.getBoton().equalsIgnoreCase("editar")) {
@@ -303,6 +315,7 @@ public class TiendasController implements Initializable {
             controller.setLt(lt);
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
             if (controller.getBoton().equalsIgnoreCase("nuevo")) {
@@ -324,7 +337,7 @@ public class TiendasController implements Initializable {
                     lt.borrarTienda(tabla.getSelectionModel().getSelectedItem());
                     actualizarCiuYDire(this.ciudad.getText(), this.direccion.getText());
                 } catch (SQLException e) {
-                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido","Compruebe que la tienda no contenga trabajadores, de lo contrario no le dejara borrarla.", AlertType.ERROR);
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la tienda y no se ha podido", "Compruebe que la tienda no contenga trabajadores, de lo contrario no le dejara borrarla.", AlertType.ERROR);
                 }
             }
         }
@@ -340,16 +353,15 @@ public class TiendasController implements Initializable {
             TiendaWhichController controller = loader.getController();
 
             if (this.tabla.getSelectionModel().getSelectedItem() != null) {
-                controller.setIDTienda(this.tabla.getSelectionModel().getSelectedItem().getIdTienda());
-                
+                controller.setTrabajador(this.tabla.getSelectionModel().getSelectedItem().getIdTienda(), this.trabajador);
+
                 Stage stage = (Stage) this.buttonNuevo.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
 
-                
             }
         } catch (IOException ex) {
-            Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos",ex.getLocalizedMessage(), AlertType.ERROR);
+            Alertas.generarAlerta("Ventanas", "No se ha podido visualizar la tienda elegida, lo sentimos", ex.getLocalizedMessage(), AlertType.ERROR);
         }
 
     }
@@ -377,5 +389,31 @@ public class TiendasController implements Initializable {
         }
         this.menuDireccion.getItems().clear();
         this.menuDireccion.getItems().addAll(this.direcciones);
+    }
+
+    public void setTrabajador(Trabajadores trabajador) {
+        this.trabajador = trabajador;
+    }
+
+    @FXML
+    private void perfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+            Parent root = loader.load();
+            PerfilController controller = loader.getController();
+            controller.setDatos(this.trabajador);
+
+            Stage stage = (Stage) this.base.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Perfil", "Ahora mismo no se puede mostrar el perfil, intentelo más tarde.", AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        PerfilController.cerrarSesion(this.trabajador, (Stage) this.base.getScene().getWindow());
     }
 }

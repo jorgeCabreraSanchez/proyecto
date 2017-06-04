@@ -128,20 +128,37 @@ public class GestionTrabajadores {
         ps.executeUpdate();
     }
 
-    public void desconectar(int idTrabajador, String tipo) throws SQLException {
+    public static void desconectar(int idTrabajador, String tipo) throws SQLException {
         String sentencia = "Update trabajadores set estado = 'Desconectado' where idTrabajador = ?;";
-        PreparedStatement ps = connect.prepareStatement(sentencia);
+        PreparedStatement ps = Login.getConnect().prepareStatement(sentencia);
         ps.setInt(1, idTrabajador);
         ps.executeUpdate();
 
         if (!tipo.equalsIgnoreCase("Jefe")) {
             sentencia = "update fichaje set Salida = ? where idTrabajador = ? and Dia = ?;";
-            ps = connect.prepareStatement(sentencia);
+            ps = Login.getConnect().prepareStatement(sentencia);
             ps.setTime(1, Time.valueOf(LocalTime.now()));
             ps.setInt(2, idTrabajador);
             ps.setDate(3, Date.valueOf(LocalDate.now()));
 
             ps.executeUpdate();
         }
+    }
+
+    public Trabajadores trabajadorCompleto(int idTrabajador) throws SQLException {
+        String sentencia = "Select * from trabajadores where idTrabajador = ?;";
+        PreparedStatement ps = this.connect.prepareStatement(sentencia);
+        ps.setInt(1, idTrabajador);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        Trabajadores trabajador;
+        String tipo = rs.getString(6);
+        if (tipo.equalsIgnoreCase("Encargado")) {
+            trabajador = new Encargado(rs.getInt(7), rs.getString(8), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(9), rs.getInt(1));
+        } else {
+            trabajador = new Empleado(rs.getInt(7), rs.getString(8), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(9), rs.getInt(1));
+        }
+
+        return trabajador;
     }
 }

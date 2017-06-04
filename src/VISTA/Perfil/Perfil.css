@@ -10,5 +10,6 @@
     -fx-background-color:#000000;
 }
 #menu{    
-    -fx-background-size: stretch;    
+    -fx-background-size: stretch; 
+    -fx-background-image: url(../../images/usuario1.png);
 }

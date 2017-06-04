@@ -6,9 +6,15 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
+import MODELO.Trabajadores.Jefe;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Productos.ProductosController;
 import VISTA.Tienda.Incidencias.IncidenciasController;
 import VISTA.Tienda.Trabajadores.TrabajadoresController;
+import VISTA.Tiendas.TiendasController;
 import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +31,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -35,6 +43,8 @@ import javafx.stage.Stage;
 public class TiendaWhichController implements Initializable {
 
     private int idTienda;
+    Trabajadores trabajador;
+    
     @FXML
     private Button buttonProductos;
     @FXML
@@ -45,6 +55,8 @@ public class TiendaWhichController implements Initializable {
     private Button buttonIncidencias;
     @FXML
     private Label labelTienda;
+    @FXML
+    private AnchorPane barra;
 
     /**
      * Initializes the controller class.
@@ -83,7 +95,12 @@ public class TiendaWhichController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajadores/Trabajadores.fxml"));
             Parent root = loader.load();
             TrabajadoresController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
+            if(this.trabajador instanceof Jefe){
+              controller.setTrabajador(this.trabajador,this.idTienda);  
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
+            
             try {
                 controller.mostrarTrabajadores();
 
@@ -104,6 +121,8 @@ public class TiendaWhichController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
             Parent root = loader.load();
+            TiendasController controller = loader.getController();
+            controller.setTrabajador(this.trabajador);
 
             Stage stage = (Stage) this.buttonProductos.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -116,8 +135,22 @@ public class TiendaWhichController implements Initializable {
     public int getIDTienda() {
         return this.idTienda;
     }
+    
+    public void setTrabajador(Trabajadores trabajador){
+        this.trabajador = trabajador;
+        if(trabajador instanceof Encargado){
+            Encargado encargado = (Encargado) trabajador;
+            this.idTienda = encargado.getIdTienda();
+        } else {
+            Empleado empleado = (Empleado) trabajador;
+            this.idTienda = empleado.getIdTienda();
+        }
+        this.labelTienda.setText(this.labelTienda.getText() + this.idTienda);
+        this.buttonVolver.setVisible(false);
+    }
 
-    public void setIDTienda(Integer idTienda) {
+    public void setTrabajador(int idTienda,Trabajadores trabajador) {
+        this.trabajador = trabajador;
         this.idTienda = idTienda;
         this.labelTienda.setText(this.labelTienda.getText() + idTienda);
     }
@@ -140,6 +173,29 @@ public class TiendaWhichController implements Initializable {
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido visualizar las incidencias de la tienda", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+       @FXML
+    private void perfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+            Parent root = loader.load();
+            PerfilController controller = loader.getController();
+            controller.setDatos(this.trabajador);
+            
+            Stage stage = (Stage)this.barra.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Perfil", "Ahora mismo no se puede mostrar el perfil, intentelo más tarde.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        PerfilController.cerrarSesion(this.trabajador, (Stage) this.barra.getScene().getWindow());
+
     }
 
 }

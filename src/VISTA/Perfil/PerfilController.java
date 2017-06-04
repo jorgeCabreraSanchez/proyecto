@@ -13,6 +13,7 @@ import MODELO.Trabajadores.Jefe;
 import MODELO.Trabajadores.Trabajadores;
 import VISTA.Tienda.Which.TiendaWhichController;
 import VISTA.Perfil.Configuracion.PerfilConfiguracionController;
+import VISTA.Tiendas.TiendasController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -79,54 +80,56 @@ public class PerfilController implements Initializable {
         gs = new GestionTrabajadores();
     }
 
-    public void modoJefe(Trabajadores trabajador) {
-        this.trabajador = trabajador;
-        this.botonCatalogo.setVisible(true);
-        this.botonTiendas.setVisible(true);
-        this.textHorario.setVisible(false);
-        this.textIDTienda.setVisible(false);
-        this.menu.setMaxHeight(56);
-        this.barra.setMaxHeight(56);
-        this.textNombre.setLayoutY(19);
-        this.textPuesto.setLayoutY(19);
-        this.textPuesto.setText("Puesto: Jefe");
-        todos();
-    }
+    public void setDatos(Trabajadores trabajador) {
+        if (trabajador instanceof Jefe) {
+            this.trabajador = trabajador;
+            this.botonCatalogo.setVisible(true);
+            this.botonTiendas.setVisible(true);
+            this.textHorario.setVisible(false);
+            this.textHorario.setManaged(false);
+            this.textIDTienda.setVisible(false);
+            this.textIDTienda.setManaged(false);
+            this.menu.setMaxHeight(51);
+            this.barra.setMaxHeight(51);
+            this.textNombre.setLayoutY(16);
+            this.textPuesto.setLayoutY(16);
+            this.textPuesto.setText("Puesto: Jefe");
+        } else {
+            this.trabajador = trabajador;
+            this.botonIncidencias.setVisible(true);
+            this.botonTienda.setVisible(true);
+            datosTrabajador();
+        }
 
-    public void modoTrabajador(Trabajadores trabajador) {
-        this.trabajador = trabajador;
-        this.botonIncidencias.setVisible(true);
-        this.botonTienda.setVisible(true);
-        datosTrabajador();
         todos();
     }
 
     private void datosTrabajador() {
         String puesto;
         String idTienda;
-        if (trabajador instanceof Encargado) {
+        if (this.trabajador instanceof Encargado) {
             puesto = "Encargado";
-            Encargado encargado = (Encargado) trabajador;
+            Encargado encargado = (Encargado) this.trabajador;
             idTienda = String.valueOf(encargado.getIdTienda());
         } else {
             puesto = "Empleado";
-            Empleado empleado = (Empleado) trabajador;
+            Empleado empleado = (Empleado) this.trabajador;
             idTienda = String.valueOf(empleado.getIdTienda());
         }
         this.textPuesto.setText("Puesto: " + puesto);
-        this.textHorario.setText("Horario: " + trabajador.getHorario());
+        this.textHorario.setText("Horario: " + this.trabajador.getHorario());
         this.textIDTienda.setText("IDTienda Nº" + idTienda);
 
     }
 
     private void todos() {
-        try {
-            this.textNombre.setText("Nombre:  " + trabajador.getNombre() + " " + trabajador.getApellido1() + " " + apellido2(trabajador));
-            Image imagen = this.trabajador.getImagen();
-            this.menu.setStyle("-fx-background-image: url(imagen)");
-        } catch (IOException ex) {
-            Alertas.generarAlerta("Archivo", "No se ha podido mostrar la imagen de perfil", Alert.AlertType.ERROR);
-        }
+//        try {
+        this.textNombre.setText("Nombre:  " + trabajador.getNombre() + " " + trabajador.getApellido1() + " " + apellido2(trabajador.getApellido2()));
+//            Image imagen = this.trabajador.getImagen();
+//            this.menu.setStyle("-fx-background-image: url(imagen)");
+//        } catch (IOException ex) {
+//            Alertas.generarAlerta("Archivo", "No se ha podido mostrar la imagen de perfil", Alert.AlertType.ERROR);
+//        }
     }
 
     @FXML
@@ -156,9 +159,8 @@ public class PerfilController implements Initializable {
         }
     }
 
-    private String apellido2(Trabajadores trabajador) {
+    private String apellido2(String apellido2) {
         String devolver = "";
-        String apellido2 = trabajador.getApellido2();
         if (apellido2 != null) {
             devolver = apellido2;
         }
@@ -167,17 +169,20 @@ public class PerfilController implements Initializable {
 
     @FXML
     private void cerrarSesion(ActionEvent event) {
+        cerrarSesion(this.trabajador, (Stage) this.barra.getScene().getWindow());
+    }
+
+    public static void cerrarSesion(Trabajadores trabajador, Stage stage) {
         try {
             String tipo;
-            if (this.trabajador instanceof Jefe) {
+            if (trabajador instanceof Jefe) {
                 tipo = "Jefe";
-            } else if (this.trabajador instanceof Encargado) {
+            } else if (trabajador instanceof Encargado) {
                 tipo = "Encargado";
             } else {
                 tipo = "Empleado";
             }
-            gs.desconectar(this.trabajador.getId(), tipo);
-            Stage stage = (Stage) this.barra.getScene().getWindow();
+            GestionTrabajadores.desconectar(trabajador.getId(), tipo);
             stage.close();
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido cerrar sesion", "Error: " + ex.getErrorCode() + " " + ex.getMessage(), Alert.AlertType.ERROR);
@@ -188,17 +193,16 @@ public class PerfilController implements Initializable {
     private void accionIncidencias(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/Incidencias.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
             Parent root = loader.load();
-            PerfilConfiguracionController controller = loader.getController();
-            controller.traerDatos(trabajador, gs);
+            TiendaWhichController controller = loader.getController();
+            controller.setTrabajador(this.trabajador);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
+            Stage stage = (Stage) this.botonTienda.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Alertas.generarAlerta("Ventana Which Tienda", "No se ha podido visualizar la tienda", Alert.AlertType.ERROR);
         }
     }
 
@@ -206,17 +210,16 @@ public class PerfilController implements Initializable {
     private void accionTienda(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Perfil/Configuracion/PerfilConfiguracion.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
             Parent root = loader.load();
-            PerfilConfiguracionController controller = loader.getController();
-            controller.traerDatos(trabajador, gs);
+            TiendaWhichController controller = loader.getController();
+            controller.setTrabajador(this.trabajador);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
+            Stage stage = (Stage) this.botonTienda.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.showAndWait();
+            stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Alertas.generarAlerta("Ventana Which", "No se puede visualizar la tienda", Alert.AlertType.ERROR);
         }
     }
 
@@ -224,17 +227,16 @@ public class PerfilController implements Initializable {
     private void accionTiendas(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Perfil/Configuracion/PerfilConfiguracion.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
             Parent root = loader.load();
-            PerfilConfiguracionController controller = loader.getController();
-            controller.traerDatos(trabajador, gs);
+            TiendasController controller = loader.getController();
+            controller.setTrabajador(this.trabajador);
 
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
+            Stage stage = (Stage) this.botonTienda.getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.showAndWait();
+            stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(PerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            Alertas.generarAlerta("Ventana Tiendas", "No se han podido visualizar las tiendas", Alert.AlertType.ERROR);
         }
     }
 

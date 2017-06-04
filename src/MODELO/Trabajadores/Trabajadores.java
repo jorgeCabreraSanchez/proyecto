@@ -70,7 +70,7 @@ public abstract class Trabajadores {
         this.horario.set(horario);
     }
     
-    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id,String horario,byte[] imagen) {
+    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id,String horario) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
@@ -78,21 +78,21 @@ public abstract class Trabajadores {
         this.contraseña.set(contraseña);
         this.estado.set(estado);
         this.horario.set(horario);
-        this.imagen = imagen;
+//        this.imagen = imagen;
     }
 
-    public Image getImagen() throws IOException {
-//        try ( ObjectInputStream entrada = new ObjectInputStream())
-       
-            ByteArrayInputStream in = new ByteArrayInputStream(this.imagen);
-            BufferedImage read = ImageIO.read(in);      
-            
-            return SwingFXUtils.toFXImage(read, new WritableImage(200, 200));
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
-    }        
+//    public Image getImagen() throws IOException {
+////        try ( ObjectInputStream entrada = new ObjectInputStream())
+//       
+//            ByteArrayInputStream in = new ByteArrayInputStream(this.imagen);
+//            BufferedImage read = ImageIO.read(in);      
+//            
+//            return SwingFXUtils.toFXImage(read, new WritableImage(200, 200));
+//    }
+//
+//    public void setImagen(byte[] imagen) {
+//        this.imagen = imagen;
+//    }        
     
     public String getEstado() {
         return estado.get();

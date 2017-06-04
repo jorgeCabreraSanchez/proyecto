@@ -5,3 +5,7 @@
 .mainFxmlClass {
 
 }
+
+#barra{
+    -fx-background-color:black;
+}

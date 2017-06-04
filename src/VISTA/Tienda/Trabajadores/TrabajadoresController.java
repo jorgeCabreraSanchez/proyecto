@@ -9,9 +9,11 @@ import MODELO.Alertas;
 import MODELO.Listas.ListaTrabajadores;
 import MODELO.Trabajadores.Empleado;
 import MODELO.Trabajadores.Encargado;
+import MODELO.Trabajadores.Jefe;
 import MODELO.Trabajadores.Trabajadores;
 import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Which.TiendaWhichController;
+import VISTA.Tienda.Trabajador.TrabajadorController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,7 +26,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,6 +38,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -47,6 +49,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -60,6 +63,7 @@ public class TrabajadoresController implements Initializable {
     private int idTienda;
     private ListaTrabajadores lt;
     private ObservableList listaTrabajadores = FXCollections.observableArrayList();
+    private Trabajadores trabajador;
 
     @FXML
     private TableView<Trabajadores> tabla;
@@ -101,6 +105,16 @@ public class TrabajadoresController implements Initializable {
     private ComboBox<String> Puesto;
     @FXML
     private ComboBox<String> Horario;
+    @FXML
+    private MenuButton menu;
+    @FXML
+    private Label labelTienda;
+    @FXML
+    private Button botonNuevo;
+    @FXML
+    private Button botonEliminar;
+    @FXML
+    private AnchorPane fondoTotal;
 
     /**
      * Initializes the controller class.
@@ -313,8 +327,38 @@ public class TrabajadoresController implements Initializable {
         this.contextmenuApellido1.getItems().setAll(listaApellido1);
     }
 
-    public void setIDTienda(int idTienda) {
+    public void setTrabajador(Trabajadores trabajador, int idTienda) {
+        this.trabajador = trabajador;
         this.idTienda = idTienda;
+    }
+
+    public void setTrabajador(Trabajadores trabajador) {
+        this.trabajador = trabajador;
+        if (trabajador instanceof Encargado) {
+            Encargado encargado = (Encargado) trabajador;
+            this.idTienda = encargado.getIdTienda();
+        } else {
+            Empleado empleado = (Empleado) trabajador;
+            this.idTienda = empleado.getIdTienda();
+        }
+        this.Nombre.setVisible(false);
+        this.Nombre.setManaged(false);
+        this.Apellido1.setVisible(false);
+        this.Apellido1.setManaged(false);
+        this.Apellido2.setVisible(false);
+        this.Apellido2.setManaged(false);
+        this.Puesto.setVisible(false);
+        this.Puesto.setManaged(false);
+        this.Horario.setVisible(false);
+        this.Horario.setManaged(false);
+        this.botonNuevo.setVisible(false);
+        this.botonNuevo.setManaged(false);
+        this.botonEliminar.setVisible(false);
+        this.botonEliminar.setManaged(false);
+        this.buttonVolver.setLayoutY(391);
+        this.fondoTotal.setMaxHeight(430);
+        this.fondo.setMaxHeight(430);
+        this.labelTienda.setText(this.labelTienda.getText() + this.idTienda);
     }
 
     public int getIDTienda() {
@@ -365,21 +409,33 @@ public class TrabajadoresController implements Initializable {
             Trabajadores trabajador = this.tabla.getSelectionModel().getSelectedItem();
             if (trabajador != null) {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+                loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajador/Trabajador.fxml"));
                 Parent root = loader.load();
-                
-                PerfilController controller = loader.getController();
-                
+                TrabajadorController controller = loader.getController();
+                String tipo;
+                int idTrabajador = 0;
+                if (this.trabajador instanceof Jefe) {
+                    tipo = "Jefe";
+                } else if (this.trabajador instanceof Encargado) {
+                    tipo = "Encargado";
+                    idTrabajador = this.trabajador.getId();
+                } else {
+                    tipo = "Empleado";
+                    idTrabajador = this.trabajador.getId();
+                }
+                controller.setIDTrabajador(trabajador.getId(), idTrabajador, tipo);
 
                 Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(root));
-                stage.show();
+                stage.showAndWait();
 
-                Stage stageActual = (Stage) this.textfieldNombre.getScene().getWindow();
-                stageActual.close();
+                /* Recoger datos*/
             }
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajador", "No se ha podido visualizar el trabajador", Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se puede visualizar el Trabajador", "Error : " + ex.getErrorCode() + " " + ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -472,13 +528,23 @@ public class TrabajadoresController implements Initializable {
     }
 
     @FXML
+    private void desclickarPerfil() {
+        desclickarContextMenu();
+        this.menu.show();
+    }
+
+    @FXML
     private void accionVolver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
             Parent root = loader.load();
             TiendaWhichController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
+            if (this.trabajador instanceof Jefe) {
+                controller.setTrabajador(this.idTienda, this.trabajador);
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
 
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -486,6 +552,28 @@ public class TrabajadoresController implements Initializable {
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana de ver Tienda", Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void perfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+            Parent root = loader.load();
+            PerfilController controller = loader.getController();
+            controller.setDatos(this.trabajador);
+
+            Stage stage = (Stage) this.tabla.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Perfil", "Ahora mismo no se puede mostrar el perfil, intentelo más tarde.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        PerfilController.cerrarSesion(this.trabajador, (Stage) this.tabla.getScene().getWindow());
     }
 
 }

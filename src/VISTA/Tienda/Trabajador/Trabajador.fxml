@@ -39,17 +39,17 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="textContraseña" layoutX="169.0" layoutY="62.0" text="Contraseña: " textFill="WHITE">
+                  <Label fx:id="textContraseña" layoutX="172.0" layoutY="62.0" text="Contraseña: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="textID" layoutX="279.0" layoutY="20.0" text="ID: " textFill="WHITE">
+                  <Label fx:id="textID" layoutX="266.0" layoutY="20.0" text="ID: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nombre" layoutX="79.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="Jorge" textFill="WHITE">
+                  <Label fx:id="nombre" layoutX="79.0" layoutY="20.0" prefHeight="17.0" prefWidth="50.0" text="Jorge" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -59,12 +59,12 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="contraseña" layoutX="244.0" layoutY="62.0" prefHeight="17.0" prefWidth="31.0" text="1234" textFill="WHITE">
+                  <Label fx:id="contraseña" layoutX="245.0" layoutY="62.0" prefHeight="17.0" prefWidth="62.0" text="1234" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDTrabajador" layoutX="299.0" layoutY="20.0" prefHeight="17.0" prefWidth="14.0" text="1" textFill="WHITE">
+                  <Label fx:id="IDTrabajador" layoutX="288.0" layoutY="20.0" prefHeight="17.0" prefWidth="14.0" text="1" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -79,11 +79,28 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="textfieldNombre" layoutX="77.0" layoutY="16.0" prefHeight="25.0" prefWidth="50.0" visible="false" />
+                  <TextField fx:id="textfieldContraseña" layoutX="247.0" layoutY="58.0" prefHeight="25.0" prefWidth="78.0" visible="false" />
+                  <TextField fx:id="textFieldidTienda" layoutX="306.0" layoutY="101.0" prefHeight="25.0" prefWidth="31.0" visible="false" />
+                  <ComboBox fx:id="comboboxPuesto" layoutX="71.0" layoutY="58.0" prefHeight="25.0" prefWidth="94.0" visible="false" />
+                  <ComboBox fx:id="comboboxHorario" layoutX="169.0" layoutY="101.0" prefHeight="25.0" prefWidth="71.0" visible="false" />
+                  <Label fx:id="apellido1" layoutX="129.0" layoutY="20.0" prefHeight="17.0" prefWidth="62.0" text="Cabrera" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="apellido2" layoutX="194.0" layoutY="20.0" prefHeight="17.0" prefWidth="62.0" text="Sánchez" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textfieldApellido1" layoutX="129.0" layoutY="16.0" prefHeight="25.0" prefWidth="62.0" visible="false" />
+                  <TextField fx:id="textfieldApellido2" layoutX="194.0" layoutY="16.0" prefHeight="25.0" prefWidth="62.0" visible="false" />
                </children>
             </AnchorPane>
             <ImageView fx:id="foto" fitHeight="141.0" fitWidth="180.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="161.0" layoutY="171.0" mnemonicParsing="false" text="Modificar" />
-            <Button layoutX="379.0" layoutY="171.0" mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="botonModificar" layoutX="161.0" layoutY="171.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+            <Button fx:id="botonCancelar" layoutX="379.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
          </children>
       </AnchorPane>
    </children>

@@ -48,14 +48,14 @@ public class Encargado extends Trabajadores {
         this.incidencias.set(incidencias);
     }
 
-    public Encargado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id, byte[] imagen) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id, horario, imagen);
+    public Encargado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
+        super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
         this.idTienda.set(id);
         this.incidencias.set(incidencias);
     }
 
-    public Encargado(int idTienda, String horario, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id, byte[] imagen) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id, horario, imagen);
+    public Encargado(int idTienda, String horario, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
+        super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
         this.idTienda.set(id);
     }
 
@@ -67,16 +67,16 @@ public class Encargado extends Trabajadores {
         incidencias.set(value);
     }
 
-    public Image getImagen() throws IOException {
-//        try ( ObjectInputStream entrada = new ObjectInputStream())
-        ByteArrayInputStream in = new ByteArrayInputStream(this.imagen);
-        BufferedImage read = ImageIO.read(in);
-        return SwingFXUtils.toFXImage(read, null);
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
-    }
+//    public Image getImagen() throws IOException {
+////        try ( ObjectInputStream entrada = new ObjectInputStream())
+//        ByteArrayInputStream in = new ByteArrayInputStream(this.imagen);
+//        BufferedImage read = ImageIO.read(in);
+//        return SwingFXUtils.toFXImage(read, null);
+//    }
+//
+//    public void setImagen(byte[] imagen) {
+//        this.imagen = imagen;
+//    }
 
     public IntegerProperty incidenciasProperty() {
         return incidencias;

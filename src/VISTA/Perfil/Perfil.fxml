@@ -26,12 +26,12 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="textHorario" layoutX="94.0" layoutY="37.0" text="Horario: Mañana" textFill="WHITE">
+            <Label fx:id="textHorario" layoutX="84.0" layoutY="46.0" text="Horario: Mañana" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label fx:id="textIDTienda" layoutX="310.0" layoutY="36.0" text="IDTienda Nº1" textFill="WHITE">
+            <Label fx:id="textIDTienda" layoutX="310.0" layoutY="46.0" text="IDTienda Nº1" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

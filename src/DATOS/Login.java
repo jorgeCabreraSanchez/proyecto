@@ -39,7 +39,7 @@ public class Login {
     public Trabajadores comprobar(Integer id, String contraseña) throws IOException, SQLException {
         Trabajadores trabajador = null;
 
-        String sentencia = "Select idTrabajador,nombre,apellido1,apellido2,contraseña,tipo,idTienda,horario,Imagen from trabajadores where IDTrabajador = ?";
+        String sentencia = "Select idTrabajador,nombre,apellido1,apellido2,contraseña,tipo,idTienda,horario from trabajadores where IDTrabajador = ?";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
@@ -55,16 +55,20 @@ public class Login {
                 ps.setInt(1, id);
                 ps.executeUpdate();
             }
+            String sentencia2 = "Update trabajadores set estado = 'Conectado' where idTrabajador = ?;";
+            ps = this.connect.prepareStatement(sentencia2);
+            ps.setInt(1, rs.getInt(1));
+            ps.executeUpdate();
 
             String tipo = rs.getString(6);
             if (tipo.equalsIgnoreCase("Jefe")) {
-                trabajador = new Jefe(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),"Conectado",rs.getInt(1),rs.getString(8),rs.getBytes(9));
+                trabajador = new Jefe(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1), rs.getString(8));
             }
             if (tipo.equalsIgnoreCase("Encargado")) {
-                trabajador = new Encargado(rs.getInt(7), rs.getString(8),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1),rs.getBytes(9));
+                trabajador = new Encargado(rs.getInt(7), rs.getString(8), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1));
             }
             if (tipo.equalsIgnoreCase("Empleado")) {//                    
-                trabajador = new Empleado(rs.getInt(7), rs.getString(8),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1),rs.getBytes(9));
+                trabajador = new Empleado(rs.getInt(7), rs.getString(8), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1));
             }
         }
         return trabajador;

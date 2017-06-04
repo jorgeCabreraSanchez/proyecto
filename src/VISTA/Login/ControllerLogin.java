@@ -97,7 +97,7 @@ public class ControllerLogin implements Initializable {
                 Trabajadores trabajador = login.comprobar(id1, contraseña);
 
                 if (trabajador == null) {
-                    this.labelErrores.setText("- Usuario o contraseña incorrectos.");                
+                    this.labelErrores.setText("- Usuario o contraseña incorrectos.");
                 } else {
                     Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
                     stage.close();
@@ -106,14 +106,9 @@ public class ControllerLogin implements Initializable {
                     loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
                     Parent root = loader.load();
                     PerfilController controller = loader.getController();
+                    controller.setDatos(trabajador);
 
-                    if (trabajador instanceof Jefe) {
-                        controller.modoJefe(trabajador);
-                    } else {
-                        controller.modoTrabajador(trabajador);
-                    }
                     Stage stage2 = new Stage();
-                    stage2.initModality(Modality.APPLICATION_MODAL);
                     stage2.initStyle(StageStyle.UNDECORATED);
                     stage2.setResizable(false);
                     stage2.setScene(new Scene(root));

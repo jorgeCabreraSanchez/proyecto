@@ -134,6 +134,12 @@
                      </effect>
                   </TextField>
                   <ImageView fx:id="imagen" fitHeight="41.0" fitWidth="60.0" layoutX="537.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                  <MenuButton fx:id="menu" layoutX="537.0" mnemonicParsing="false" onMousePressed="#desclickar" prefHeight="44.0" prefWidth="69.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
+                        <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+                    </items>
+                  </MenuButton>
                </children>
             </AnchorPane>
          </children></AnchorPane>

@@ -17,10 +17,20 @@
       <Button fx:id="buttonTrabajadores" layoutX="417.0" layoutY="232.0" mnemonicParsing="false" onAction="#abrirTrabajadores" prefHeight="115.0" prefWidth="135.0" text="Trabajadores" />
       <Button fx:id="buttonVolver" layoutX="21.0" layoutY="393.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
       <Button fx:id="buttonIncidencias" layoutX="52.0" layoutY="232.0" mnemonicParsing="false" onAction="#abrirIncidencias" prefHeight="115.0" prefWidth="135.0" text="Incidencias" />
-      <Label fx:id="labelTienda" layoutX="266.0" layoutY="40.0" text="Tienda Nº">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
+      <AnchorPane fx:id="barra" layoutY="25.0" opacity="0.48" prefHeight="43.0" prefWidth="600.0">
+         <children>
+            <MenuButton layoutX="531.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="69.0">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
+                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+              </items>
+            </MenuButton>
+            <Label fx:id="labelTienda" layoutX="265.0" layoutY="13.0" text="Tienda Nº" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

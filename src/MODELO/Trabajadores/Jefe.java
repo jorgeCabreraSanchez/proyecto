@@ -29,8 +29,8 @@ public class Jefe extends Trabajadores {
         super(id, nombre, apellido1, estado, horario);
     }
 
-    public Jefe(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id, String horario, byte[] imagen) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id, horario, imagen);
+    public Jefe(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id, String horario) {
+        super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
     }
 
 }
