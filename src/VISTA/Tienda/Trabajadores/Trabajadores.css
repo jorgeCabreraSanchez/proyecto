@@ -1,6 +1,6 @@
 
 #fondo{
-    -fx-background-image:url("../../images/fondotrabajadores.jpg");
+    -fx-background-image:url("../../../images/fondotrabajadores.jpg");
 }
 #fondito{
     -fx-background-color: rgba(0,0,0,0.43);

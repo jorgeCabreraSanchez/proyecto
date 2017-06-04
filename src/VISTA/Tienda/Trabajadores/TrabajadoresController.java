@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Trabajadores;
+package VISTA.Tienda.Trabajadores;
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaTrabajadores;
@@ -76,8 +76,6 @@ public class TrabajadoresController implements Initializable {
     @FXML
     private TableColumn<Trabajadores, String> columnaHorario;
     @FXML
-    private TableColumn<Trabajadores, String> columnaEstado;
-    @FXML
     private TableColumn<Trabajadores, Integer> columnaIncidencias;
     @FXML
     private TextField textfieldNombre;
@@ -131,74 +129,74 @@ public class TrabajadoresController implements Initializable {
         columnaID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaNombre.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Nombre", t.getNewValue());
-                        trabajador.setNombre(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El nombre no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setNombre(t.getOldValue());
-
-                }
-                actualizarTrabajador("largo");
-            }
-
-        });
+//        columnaNombre.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
+//        columnaNombre.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
+//            @Override
+//            public void handle(CellEditEvent<Trabajadores, String> t) {
+//                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()));
+//                if (!t.getNewValue().isEmpty()) {
+//                    try {
+//                        lt.editarTrabajador(trabajador.getId(), "Nombre", t.getNewValue());
+//                        trabajador.setNombre(t.getNewValue());
+//                    } catch (SQLException ex) {
+//                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//                    }
+//                } else {
+//                    Alertas.generarAlerta("BD", "El nombre no puede estar vacío", Alert.AlertType.INFORMATION);
+//                    trabajador.setNombre(t.getOldValue());
+//
+//                }
+//                actualizarTrabajador("largo");
+//            }
+//
+//        });
 
         columnaApellido1.setCellValueFactory(new PropertyValueFactory<>("apellido1"));
-        columnaApellido1.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaApellido1.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Apellido1", t.getNewValue());
-                        trabajador.setApellido1(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El Apellido1 no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setApellido1(t.getOldValue());
-                }
-                actualizarTrabajador("largo");
-
-            }
-
-        });
+//        columnaApellido1.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
+//        columnaApellido1.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
+//            @Override
+//            public void handle(CellEditEvent<Trabajadores, String> t) {
+//                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()));
+//                if (!t.getNewValue().isEmpty()) {
+//                    try {
+//                        lt.editarTrabajador(trabajador.getId(), "Apellido1", t.getNewValue());
+//                        trabajador.setApellido1(t.getNewValue());
+//                    } catch (SQLException ex) {
+//                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//                    }
+//                } else {
+//                    Alertas.generarAlerta("BD", "El Apellido1 no puede estar vacío", Alert.AlertType.INFORMATION);
+//                    trabajador.setApellido1(t.getOldValue());
+//                }
+//                actualizarTrabajador("largo");
+//
+//            }
+//
+//        });
 
         columnaApellido2.setCellValueFactory(new PropertyValueFactory<>("apellido2"));
-        columnaApellido2.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaApellido2.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Apellido2", t.getNewValue());
-                        trabajador.setApellido2(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El Apellido2 no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setApellido2(t.getOldValue());
-                }
-                actualizarTrabajador("largo");
-            }
-        });
+//        columnaApellido2.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
+//        columnaApellido2.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
+//            @Override
+//            public void handle(CellEditEvent<Trabajadores, String> t) {
+//                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()));
+//                if (!t.getNewValue().isEmpty()) {
+//                    try {
+//                        lt.editarTrabajador(trabajador.getId(), "Apellido2", t.getNewValue());
+//                        trabajador.setApellido2(t.getNewValue());
+//                    } catch (SQLException ex) {
+//                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//                    }
+//                } else {
+//                    Alertas.generarAlerta("BD", "El Apellido2 no puede estar vacío", Alert.AlertType.INFORMATION);
+//                    trabajador.setApellido2(t.getOldValue());
+//                }
+//                actualizarTrabajador("largo");
+//            }
+//        });
 
         columnaPuesto.setCellValueFactory(
                 new Callback<CellDataFeatures<Trabajadores, String>, ObservableValue<String>>() {
@@ -213,90 +211,45 @@ public class TrabajadoresController implements Initializable {
                 return puesto;
             }
         });
-        ObservableList<String> puestos = FXCollections.observableArrayList("Empleado", "Encargado");
-        columnaPuesto.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaPuesto.setOnEditCommit((event) -> {
-            Trabajadores trabajador = ((Trabajadores) event.getTableView().getItems().get(
-                    event.getTablePosition().getRow()));
-            System.out.println("Hola");
-            try {
-                lt.editarTrabajador(trabajador.getId(), "Tipo", event.getNewValue());
-
-                actualizarTrabajador("largo");
-            } catch (SQLException ex) {
-                Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-            }
-        });
+//        ObservableList<String> puestos = FXCollections.observableArrayList("Empleado", "Encargado");
+//        columnaPuesto.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
+//        columnaPuesto.setOnEditCommit((event) -> {
+//            Trabajadores trabajador = ((Trabajadores) event.getTableView().getItems().get(
+//                    event.getTablePosition().getRow()));
+//            System.out.println("Hola");
+//            try {
+//                lt.editarTrabajador(trabajador.getId(), "Tipo", event.getNewValue());
+//
+//                actualizarTrabajador("largo");
+//            } catch (SQLException ex) {
+//                Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//            }
+//        });
 
         columnaHorario.setCellValueFactory(new PropertyValueFactory<>("horario"));
-        columnaHorario.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaHorario.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Horario", t.getNewValue());
-                        trabajador.setHorario(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El Horario no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setHorario(t.getOldValue());
-                }
-                actualizarTrabajador("largo");
-            }
-
-        });
-
-        columnaEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        columnaEstado.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaEstado.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Estado", t.getNewValue());
-                        trabajador.setEstado(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El Estado no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setEstado(t.getOldValue());
-                }
-                actualizarTrabajador("largo");
-            }
-
-        });
+//        columnaHorario.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
+//        columnaHorario.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
+//            @Override
+//            public void handle(CellEditEvent<Trabajadores, String> t) {
+//                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
+//                        t.getTablePosition().getRow()));
+//                if (!t.getNewValue().isEmpty()) {
+//                    try {
+//                        lt.editarTrabajador(trabajador.getId(), "Horario", t.getNewValue());
+//                        trabajador.setHorario(t.getNewValue());
+//                    } catch (SQLException ex) {
+//                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+//                    }
+//                } else {
+//                    Alertas.generarAlerta("BD", "El Horario no puede estar vacío", Alert.AlertType.INFORMATION);
+//                    trabajador.setHorario(t.getOldValue());
+//                }
+//                actualizarTrabajador("largo");
+//            }
+//
+//        });
 
         columnaIncidencias.setCellValueFactory(new PropertyValueFactory<>("incidencias"));
-
-        columnaEstado.setCellFactory(TextFieldTableCell.<Trabajadores>forTableColumn());
-        columnaEstado.setOnEditCommit(new EventHandler<CellEditEvent<Trabajadores, String>>() {
-            @Override
-            public void handle(CellEditEvent<Trabajadores, String> t) {
-                Trabajadores trabajador = ((Trabajadores) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow()));
-                if (!t.getNewValue().isEmpty()) {
-                    try {
-                        lt.editarTrabajador(trabajador.getId(), "Estado", t.getNewValue());
-                        trabajador.setEstado(t.getNewValue());
-                    } catch (SQLException ex) {
-                        Alertas.generarAlerta("BD", "Ha habido un error intentando editar el trabajador y no se ha podido", String.valueOf(ex.getErrorCode()) + "  " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
-                    }
-                } else {
-                    Alertas.generarAlerta("BD", "El Estado no puede estar vacío", Alert.AlertType.INFORMATION);
-                    trabajador.setEstado(t.getOldValue());
-                }
-                actualizarTrabajador("largo");
-            }
-
-        });
 
     }
 
@@ -414,9 +367,9 @@ public class TrabajadoresController implements Initializable {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
                 Parent root = loader.load();
+                
                 PerfilController controller = loader.getController();
-                controller.setTrabajador(trabajador, this.idTienda);
-                controller.modoJefe();
+                
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
@@ -527,13 +480,9 @@ public class TrabajadoresController implements Initializable {
             TiendaWhichController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
-
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
-            stage.close();
-
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana de ver Tienda", Alert.AlertType.ERROR);
         }

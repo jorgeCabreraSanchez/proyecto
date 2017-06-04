@@ -50,14 +50,26 @@ public class NuevaEditarIncidenciaController implements Initializable {
 
     @FXML
     private void accionCrear(ActionEvent event) throws IOException {
+        this.incidencia = new IncidenciaTienda();
         guardarIncidencia();
+    }
+    
+    
+    @FXML
+    private void accionCancelar(ActionEvent event) {        
+        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void accionEditar(ActionEvent event) {
+           guardarIncidencia();
     }
     
     private void guardarIncidencia(){
         if (verificar()) {
+            this.incidencia = new IncidenciaTienda(this.incidencia.getIdIncidencia(),this.textfieldTitulo.getText(),this.textfieldDescripcion.getText(),LocalDate.now());
             
-            this.incidencia = new IncidenciaTienda(this.textfieldTitulo.getText(),this.textfieldDescripcion.getText(),LocalDate.now());
-                        
             Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
             stage.close();
         }
@@ -67,8 +79,12 @@ public class NuevaEditarIncidenciaController implements Initializable {
         this.botonCrear.setVisible(true);
     }
     
-    public void botonEditar(){
+    public void botonEditar(IncidenciaTienda incidencia){
         this.botonEditar.setVisible(true);
+        this.incidencia = incidencia;
+        this.textfieldTitulo.setText(this.incidencia.getTitulo());
+        this.textfieldDescripcion.setText(this.incidencia.getDescripcion());
+        
     }
 
     private boolean verificar() {
@@ -92,15 +108,5 @@ public class NuevaEditarIncidenciaController implements Initializable {
         return this.incidencia;
     }
 
-    @FXML
-    private void accionCancelar(ActionEvent event) {
-        Stage stage = (Stage) this.botonCancelar.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void accionEditar(ActionEvent event) {
-           guardarIncidencia();
-    }
 
 }

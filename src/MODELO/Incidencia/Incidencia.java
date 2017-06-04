@@ -21,6 +21,10 @@ public abstract class Incidencia {
     protected String descripcion;
     protected Date fecha;
 
+    public Incidencia(){
+        
+    }
+    
     public Incidencia(Integer idIncidencia, String titulo, String descripcion, Date fecha) {
         this.idIncidencia = idIncidencia;
         this.titulo = titulo;

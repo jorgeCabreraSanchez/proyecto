@@ -20,8 +20,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import DATOS.Login;
 import MODELO.Alertas;
+import MODELO.Trabajadores.Jefe;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Perfil.PerfilController;
 import java.sql.SQLException;
 import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 
 public class ControllerLogin implements Initializable {
 
@@ -90,34 +94,33 @@ public class ControllerLogin implements Initializable {
         try {
             id1 = Integer.parseInt(id);
             try {
-                String ocurre = login.comprobar(id1, contraseña);
+                Trabajadores trabajador = login.comprobar(id1, contraseña);
 
-                if (ocurre.equalsIgnoreCase("Usuario")) {
-                    this.labelErrores.setText("- La ID escrita no existe.");
-                } else if (ocurre.equalsIgnoreCase("Contraseña")) {
-                    this.labelErrores.setText("- La contraseña escrita es incorrecta.");
-                    this.fieldPassword.setText("");
+                if (trabajador == null) {
+                    this.labelErrores.setText("- Usuario o contraseña incorrectos.");                
                 } else {
                     Stage stage = (Stage) this.buttonCancelar.getScene().getWindow();
                     stage.close();
 
-                    Parent root = new Parent() {
-                    };
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+                    Parent root = loader.load();
+                    PerfilController controller = loader.getController();
 
-                    if (ocurre.equalsIgnoreCase("Jefe")) {
-                        root = FXMLLoader.load(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
-                    } else if (ocurre.equalsIgnoreCase("Encargado")) {
-                        root = FXMLLoader.load(getClass().getResource("/VISTA/Encargado/Inicio/InicioEncargado.fxml"));
-                    } else if (ocurre.equalsIgnoreCase("Empleado")) {
-                        root = FXMLLoader.load(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+                    if (trabajador instanceof Jefe) {
+                        controller.modoJefe(trabajador);
+                    } else {
+                        controller.modoTrabajador(trabajador);
                     }
                     Stage stage2 = new Stage();
                     stage2.initModality(Modality.APPLICATION_MODAL);
+                    stage2.initStyle(StageStyle.UNDECORATED);
+                    stage2.setResizable(false);
                     stage2.setScene(new Scene(root));
                     stage2.show();
                 }
-            } catch (SQLException ex) {                 
-                    Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se puede acceder.", "Hable con el administrador de la BD para solucionar este problema.", Alert.AlertType.ERROR);                
+            } catch (SQLException ex) {
+                Alertas.generarAlerta("Error BD", "Ha habido un problema con la BD y no se puede acceder a este usuario.", "Hable con el administrador de la BD para solucionar este problema.\n Error: " + ex.getErrorCode() + " Mensaje: " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
             }
         } catch (NumberFormatException e) {
             this.labelErrores.setText("- El ID solo puede contener números");

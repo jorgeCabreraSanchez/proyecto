@@ -41,10 +41,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class TiendasController implements Initializable {
@@ -85,6 +87,8 @@ public class TiendasController implements Initializable {
     private Button buttonVer;
     @FXML
     private AnchorPane fondito;
+    @FXML
+    private ImageView imagen;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,7 +103,7 @@ public class TiendasController implements Initializable {
 
         tiendas();
         cerrar();
-        tabla();
+        tabla();               
     }
 
     private void tabla() {

@@ -11,22 +11,14 @@ import MODELO.Incidencia.IncidenciaTienda;
 import MODELO.Listas.ListaIncidenciasTienda;
 import VISTA.Tienda.Incidencias.NuevaEditar.NuevaEditarIncidenciaController;
 import VISTA.Tienda.Which.TiendaWhichController;
-import java.awt.Event;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,11 +32,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.scene.control.LocalDateTextField;
 
 /**
  * FXML Controller class
@@ -117,13 +106,9 @@ public class IncidenciasController implements Initializable {
             TiendaWhichController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
-
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
-            stage.close();
-
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana ver Tienda", Alert.AlertType.ERROR);
         }
@@ -142,7 +127,7 @@ public class IncidenciasController implements Initializable {
             Parent root = loader.load();
             NuevaEditarIncidenciaController controller = loader.getController();
             controller.botonNuevo();
-            
+
             Stage stageNuevo = new Stage();
             stageNuevo.setScene(new Scene(root));
             stageNuevo.initModality(Modality.APPLICATION_MODAL);
@@ -164,15 +149,15 @@ public class IncidenciasController implements Initializable {
 
     @FXML
     private void accionEliminar(ActionEvent event) {
-       IncidenciaTienda incidencia = this.listViewIncidencias.getSelectionModel().getSelectedItem();
-               if (incidencia != null) {
+        IncidenciaTienda incidencia = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        if (incidencia != null) {
             Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la Incidencia?", "Información de la Incidencia:  ID: " + incidencia.getIdIncidencia() + "   Titulo: " + incidencia.getTitulo() + " \n  Descripción: " + incidencia.getDescripcion(), AlertType.CONFIRMATION);
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
                 try {
                     lit.borrarIncidencia(incidencia.getIdIncidencia());
                     actualizarIncidencias();
                 } catch (SQLException e) {
-                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la incidencia y no se ha podido","Error: "+e.getErrorCode()+ " "+ e.getLocalizedMessage(), AlertType.ERROR);
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la incidencia y no se ha podido", "Error: " + e.getErrorCode() + " " + e.getLocalizedMessage(), AlertType.ERROR);
                 }
             }
         }
@@ -180,29 +165,32 @@ public class IncidenciasController implements Initializable {
 
     @FXML
     private void accionEditar(ActionEvent event) {
-               try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/NuevaEditar/NuevaEditarIncidencia.fxml"));
-            Parent root = loader.load();
-            NuevaEditarIncidenciaController controller = loader.getController();
-            controller.botonEditar();
-            
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.initModality(Modality.APPLICATION_MODAL);
-            stageNuevo.showAndWait();
+        IncidenciaTienda incidenciaDar = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        if (incidenciaDar != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/NuevaEditar/NuevaEditarIncidencia.fxml"));
+                Parent root = loader.load();
+                NuevaEditarIncidenciaController controller = loader.getController();
+                controller.botonEditar(incidenciaDar);
 
-            IncidenciaTienda incidencia = controller.cogerIncidencia();
-            if (incidencia != null) {
-                incidencia.setIdTienda(this.idTienda);
-                this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.editarIncidencia(incidencia)));
-                actualizarIncidencias();
+                Stage stageNuevo = new Stage();
+                stageNuevo.setScene(new Scene(root));
+                stageNuevo.initModality(Modality.APPLICATION_MODAL);
+                stageNuevo.showAndWait();
+
+                IncidenciaTienda incidencia = controller.cogerIncidencia();
+                if (incidencia != null) {
+                    incidencia.setIdTienda(this.idTienda);
+                    this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.editarIncidencia(incidencia)));
+                    actualizarIncidencias();
+                }
+
+            } catch (IOException ex) {
+                Alertas.generarAlerta("Ventana Editar Incidencia", "No se ha podido abrir la ventana editar incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
+            } catch (SQLException ex) {
+                Alertas.generarAlerta("BD", "No se ha podido modificar la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
             }
-
-        } catch (IOException ex) {
-            Alertas.generarAlerta("Ventana Editar Incidencia", "No se ha podido abrir la ventana editar incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
-        } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "No se ha podido modificar la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
         }
     }
 

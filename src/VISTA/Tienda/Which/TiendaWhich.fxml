@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,14 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Which.TiendaWhichController">
+<AnchorPane id="AnchorPane" prefHeight="448.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Which.TiendaWhichController">
     <stylesheets>
         <URL value="@TiendaWhich.css" />
     </stylesheets>
    <children>
-      <Button fx:id="buttonProductos" layoutX="233.0" layoutY="57.0" mnemonicParsing="false" onAction="#abrirProductos" prefHeight="115.0" prefWidth="135.0" text="Productos" />
-      <Button fx:id="buttonTrabajadores" layoutX="421.0" layoutY="200.0" mnemonicParsing="false" onAction="#abrirTrabajadores" prefHeight="115.0" prefWidth="135.0" text="Trabajadores" />
-      <Button fx:id="buttonVolver" layoutX="25.0" layoutY="361.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
-      <Button fx:id="buttonIncidencias" layoutX="50.0" layoutY="200.0" mnemonicParsing="false" onAction="#abrirIncidencias" prefHeight="115.0" prefWidth="135.0" text="Incidencias" />
+      <Button fx:id="buttonProductos" layoutX="235.0" layoutY="89.0" mnemonicParsing="false" onAction="#abrirProductos" prefHeight="115.0" prefWidth="135.0" text="Productos" />
+      <Button fx:id="buttonTrabajadores" layoutX="417.0" layoutY="232.0" mnemonicParsing="false" onAction="#abrirTrabajadores" prefHeight="115.0" prefWidth="135.0" text="Trabajadores" />
+      <Button fx:id="buttonVolver" layoutX="21.0" layoutY="393.0" mnemonicParsing="false" onAction="#accionVolver" text="Volver" />
+      <Button fx:id="buttonIncidencias" layoutX="52.0" layoutY="232.0" mnemonicParsing="false" onAction="#abrirIncidencias" prefHeight="115.0" prefWidth="135.0" text="Incidencias" />
+      <Label fx:id="labelTienda" layoutX="266.0" layoutY="40.0" text="Tienda Nº">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

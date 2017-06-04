@@ -5,6 +5,10 @@
  */
 package DATOS;
 
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
+import MODELO.Trabajadores.Jefe;
+import MODELO.Trabajadores.Trabajadores;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -32,50 +36,38 @@ public class Login {
         return Login.connect;
     }
 
-    public String comprobar(Integer id, String contraseña) throws IOException, SQLException {
-        String devolver = "";
+    public Trabajadores comprobar(Integer id, String contraseña) throws IOException, SQLException {
+        Trabajadores trabajador = null;
 
-        String sentencia = "Select * from trabajadores where IDTrabajador = ?";
+        String sentencia = "Select idTrabajador,nombre,apellido1,apellido2,contraseña,tipo,idTienda,horario,Imagen from trabajadores where IDTrabajador = ?";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, id);
-
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        String contraseñaUser = "";
-        try {
-            contraseñaUser = rs.getString(5);
-        } catch (SQLException e) {
-            devolver = "Usuario";
-        }
+        String contraseñaUser = rs.getString(5);
 
         if (contraseña.equals(contraseñaUser)) {
             if (!rs.getString(6).equalsIgnoreCase("jefe")) {
-                
+
                 sentencia = "call ficharEntrada(?);";
                 ps = connect.prepareStatement(sentencia);
                 ps.setInt(1, id);
-
                 ps.executeUpdate();
             }
 
             String tipo = rs.getString(6);
             if (tipo.equalsIgnoreCase("Jefe")) {
-                devolver = "Jefe";
+                trabajador = new Jefe(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),"Conectado",rs.getInt(1),rs.getString(8),rs.getBytes(9));
             }
             if (tipo.equalsIgnoreCase("Encargado")) {
-                devolver = "Encargado";
+                trabajador = new Encargado(rs.getInt(7), rs.getString(8),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1),rs.getBytes(9));
             }
-            if (tipo.equalsIgnoreCase("Empleado")) {
-//                    Trabajadores trabajador = new Empleado(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(7), rs.getString(8), rs.getString(9));
-//                    ListaTrabajadores.setTrabajadores(trabajador);
-                devolver = "Empleado";
+            if (tipo.equalsIgnoreCase("Empleado")) {//                    
+                trabajador = new Empleado(rs.getInt(7), rs.getString(8),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5), "Conectado", rs.getInt(1),rs.getBytes(9));
             }
-        } else {
-            devolver = "Contraseña";
         }
-
-        return devolver;
+        return trabajador;
     }
 
 }

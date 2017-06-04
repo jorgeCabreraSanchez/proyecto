@@ -8,13 +8,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Productos.InsertarProducto.InsertarProductoController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController">
     <stylesheets>
         <URL value="@InsertarProducto.css" />
     </stylesheets>
    <children>
-      <ListView fx:id="tableviewProductos" layoutX="34.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView fx:id="tableviewCatalogo" layoutX="361.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="tableviewCatalogo" layoutX="34.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="tableviewProductos" layoutX="361.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
       <Label layoutX="432.0" layoutY="69.0" text="Productos">
          <font>
             <Font name="System Bold" size="12.0" />

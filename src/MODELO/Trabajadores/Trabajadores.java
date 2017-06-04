@@ -5,10 +5,18 @@
  */
 package MODELO.Trabajadores;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -23,6 +31,7 @@ public abstract class Trabajadores {
     protected StringProperty contraseña = new SimpleStringProperty();
     protected StringProperty estado = new SimpleStringProperty();
     protected StringProperty horario = new SimpleStringProperty();
+    protected byte[] imagen;
     
     public Trabajadores() {
         
@@ -61,7 +70,7 @@ public abstract class Trabajadores {
         this.horario.set(horario);
     }
     
-    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id,String horario) {
+    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id,String horario,byte[] imagen) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
@@ -69,7 +78,21 @@ public abstract class Trabajadores {
         this.contraseña.set(contraseña);
         this.estado.set(estado);
         this.horario.set(horario);
+        this.imagen = imagen;
     }
+
+    public Image getImagen() throws IOException {
+//        try ( ObjectInputStream entrada = new ObjectInputStream())
+       
+            ByteArrayInputStream in = new ByteArrayInputStream(this.imagen);
+            BufferedImage read = ImageIO.read(in);      
+            
+            return SwingFXUtils.toFXImage(read, new WritableImage(200, 200));
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }        
     
     public String getEstado() {
         return estado.get();

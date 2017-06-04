@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" onMousePressed="#desclickar" prefHeight="480.0" prefWidth="775.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajadores.TrabajadoresController">
+    <stylesheets>
+        <URL value="@Trabajadores.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane fx:id="fondo" layoutX="-8.0" prefHeight="480.0" prefWidth="795.0" stylesheets="@Trabajadores.css">
+         <children>
+            <Button layoutX="367.0" layoutY="417.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="680.0" layoutY="354.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button layoutX="716.0" layoutY="75.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <TableView fx:id="tabla" editable="true" layoutX="91.0" layoutY="87.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="598.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
+                <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />
+                  <TableColumn fx:id="columnaApellido1" prefWidth="98.0" text="Apellido1" />
+                  <TableColumn fx:id="columnaApellido2" prefWidth="103.0" text="Apellido2" />
+                  <TableColumn fx:id="columnaPuesto" prefWidth="66.0" text="Puesto" />
+                  <TableColumn fx:id="columnaHorario" prefWidth="77.0" text="Horario" />
+                  <TableColumn fx:id="columnaIncidencias" prefWidth="75.0" text="Incidencias" />
+              </columns>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                     </light>
+                  </Lighting>
+               </effect>
+            </TableView>
+            <AnchorPane fx:id="fondito" layoutY="21.0" prefHeight="45.0" prefWidth="797.0">
+               <children>
+                  <TextField fx:id="textfieldApellido1" layoutX="444.0" layoutY="10.0" onMousePressed="#apellido1Clickado" prefHeight="25.0" prefWidth="175.0">
+                     <contextMenu>
+                        <ContextMenu fx:id="contextmenuApellido1">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TextField>
+                  <TextField fx:id="textfieldNombre" layoutX="169.0" layoutY="8.0" onMousePressed="#nombreClickado">
+                     <contextMenu>
+                        <ContextMenu fx:id="contextmenuNombre">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
+                  </TextField>
+                  <Label layoutX="335.0" layoutY="14.0" text="Apellido1:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="102.0" layoutY="12.0" text="Nombre:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Button fx:id="buttonVolver" layoutX="23.0" layoutY="417.0" mnemonicParsing="false" onAction="#accionVolver" text="volver" />
+            <TextField fx:id="Nombre" layoutX="47.0" layoutY="354.0" prefHeight="25.0" prefWidth="99.0" promptText="Nombre" />
+            <TextField fx:id="Apellido1" layoutX="157.0" layoutY="354.0" prefHeight="25.0" prefWidth="119.0" promptText="Apellido1" />
+            <TextField fx:id="Apellido2" layoutX="294.0" layoutY="354.0" prefHeight="25.0" prefWidth="119.0" promptText="Appelido2" />
+            <ComboBox fx:id="Puesto" layoutX="433.0" layoutY="354.0" prefHeight="25.0" prefWidth="99.0" promptText="Puesto" />
+            <ComboBox fx:id="Horario" layoutX="554.0" layoutY="354.0" prefHeight="25.0" prefWidth="99.0" promptText="Horario" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

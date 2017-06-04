@@ -20,6 +20,10 @@ public class IncidenciaTienda extends Incidencia {
 
     private Integer idTienda;
 
+    public IncidenciaTienda(){
+        
+    }
+    
     public IncidenciaTienda(Integer idTienda, Integer idIncidencia, String titulo, String descripcion, Date fecha) {
         super(idIncidencia, titulo, descripcion, fecha);
         this.idTienda = idTienda;
@@ -84,6 +88,14 @@ public class IncidenciaTienda extends Incidencia {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = Date.valueOf(fecha);
+    }
+    
+    public IncidenciaTienda igual(IncidenciaTienda incidencia){
+        this.setTitulo(incidencia.getTitulo());
+        this.setDescripcion(incidencia.getDescripcion());
+        this.setFecha(incidencia.getFecha());
+                
+       return this;
     }
 
     public String toString() {

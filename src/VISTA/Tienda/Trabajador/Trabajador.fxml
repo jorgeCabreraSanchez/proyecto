@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="209.0" prefWidth="593.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajador.TrabajadorController">
+   <children>
+      <AnchorPane fx:id="fondo1" layoutY="-1.0" prefHeight="210.0" prefWidth="593.0" stylesheets="@Trabajador.css">
+         <children>
+            <AnchorPane fx:id="fondito" layoutX="226.0" layoutY="20.0" prefHeight="141.0" prefWidth="344.0">
+               <children>
+                  <Label fx:id="textnombre" layoutX="20.0" layoutY="20.0" text="Nombre:  " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="textPuesto" layoutX="25.0" layoutY="62.0" text="Puesto: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="textTienda" layoutX="247.0" layoutY="106.0" text="Tienda Nº" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="textEstado" layoutX="27.0" layoutY="105.0" text="Estado:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Circle fx:id="estado" fill="RED" layoutX="81.0" layoutY="114.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="textHorario" layoutX="110.0" layoutY="105.0" text="Horario: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="textContraseña" layoutX="169.0" layoutY="62.0" text="Contraseña: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="textID" layoutX="279.0" layoutY="20.0" text="ID: " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nombre" layoutX="79.0" layoutY="19.0" prefHeight="17.0" prefWidth="180.0" text="Jorge" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="puesto" layoutX="74.0" layoutY="62.0" text="Empleado" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="contraseña" layoutX="244.0" layoutY="62.0" prefHeight="17.0" prefWidth="31.0" text="1234" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="IDTrabajador" layoutX="299.0" layoutY="20.0" prefHeight="17.0" prefWidth="14.0" text="1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="horario" layoutX="169.0" layoutY="105.0" prefHeight="17.0" prefWidth="50.0" text="Mañana" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="idTienda" layoutX="306.0" layoutY="106.0" prefHeight="17.0" prefWidth="31.0" text="12" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <ImageView fx:id="foto" fitHeight="141.0" fitWidth="180.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="161.0" layoutY="171.0" mnemonicParsing="false" text="Modificar" />
+            <Button layoutX="379.0" layoutY="171.0" mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

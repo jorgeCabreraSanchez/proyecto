@@ -99,7 +99,8 @@ public class ListaIncidenciasTienda {
         while (it.hasNext() && seguir) {
             IncidenciaTienda incidenciaCogida = it.next();
             if (incidenciaCogida.getIdIncidencia() == incidencia.getIdIncidencia()) {
-                this.incidencias.remove(incidencia);
+                this.incidencias.remove(incidenciaCogida);
+                this.incidencias.add(0,incidencia);
                 seguir = false;
             }
         }

@@ -49,7 +49,7 @@ public class GestionProductos {
     }
     
     public void eliminarProductoEnTienda(int idTienda,int idProducto) throws SQLException{
-        String sentencia = "Delete from producto where tiendas_idTienda = ? and productos_idProductos = ?;";
+        String sentencia = "Delete from producto where tiendas_idTienda = ? and catalogo_idProductos = ?;";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setInt(1, idTienda);
         ps.setInt(2,idProducto);

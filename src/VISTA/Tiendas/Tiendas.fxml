@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -9,12 +10,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="base" prefHeight="418.0" prefWidth="410.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tiendas.TiendasController">
+<AnchorPane id="AnchorPane" fx:id="base" prefHeight="455.0" prefWidth="588.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tiendas.TiendasController">
     <stylesheets>
         <URL value="@Tiendas.css" />
     </stylesheets>
    <children>
-      <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="459.0" prefWidth="545.0">
+      <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="455.0" prefWidth="606.0">
          <children>
             <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" onMouseReleased="#nadaClick" prefHeight="281.0" prefWidth="470.0">
               <columns>
@@ -88,7 +89,7 @@
                   </Lighting>
                </effect>
             </Button>
-            <AnchorPane fx:id="fondito" layoutY="14.0" prefHeight="41.0" prefWidth="545.0">
+            <AnchorPane fx:id="fondito" layoutY="14.0" prefHeight="41.0" prefWidth="606.0">
                <children>
                   <Text fill="WHITE" layoutX="39.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ciudad:" wrappingWidth="46.966796875">
                      <font>
@@ -132,6 +133,7 @@
                         </Lighting>
                      </effect>
                   </TextField>
+                  <ImageView fx:id="imagen" fitHeight="41.0" fitWidth="60.0" layoutX="537.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

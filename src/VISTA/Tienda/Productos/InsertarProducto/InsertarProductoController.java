@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Productos.InsertarProducto;
+package VISTA.Tienda.Productos.InsertarProducto;
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaCatalogo;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
-import VISTA.Productos.ProductosController;
+import VISTA.Tienda.Productos.ProductosController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,8 +65,8 @@ public class InsertarProductoController implements Initializable {
         ListaCatalogo lc = new ListaCatalogo();
         this.tableviewCatalogo.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.tableviewProductos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        this.tableviewProductos.setItems(FXCollections.observableArrayList(lc.catalogo()));
-        this.tableviewCatalogo.setItems(FXCollections.observableArrayList(lp.getProductos()));
+        this.tableviewCatalogo.setItems(FXCollections.observableArrayList(lc.catalogo()));
+        this.tableviewProductos.setItems(FXCollections.observableArrayList(lp.getProductos()));
     }
 
     public void setDatos(int idTienda, ListaProductos lp) {
@@ -74,15 +76,14 @@ public class InsertarProductoController implements Initializable {
 
     @FXML
     private void accionAgregar(ActionEvent event) {
-        ObservableList<Producto> lista = this.tableviewProductos.getSelectionModel().getSelectedItems();
-        List<String> errores = new ArrayList<>();
+        ObservableList<Producto> lista = this.tableviewCatalogo.getSelectionModel().getSelectedItems();
+        Set<String> errores = new HashSet<>();
 
         for (Producto producto : lista) {
             try {
                 lp.nuevoProductoEnTienda(idTienda, producto.getIdProducto());
-                this.tableviewCatalogo.getItems().add(producto);
+                this.tableviewProductos.getItems().add(producto);
             } catch (SQLException ex) {
-                System.out.println(ex.getErrorCode() + ex.getLocalizedMessage());
                 errores.add(producto.getNombre());
             }
         }
@@ -94,15 +95,14 @@ public class InsertarProductoController implements Initializable {
 
     @FXML
     private void accionEliminar(ActionEvent event) {
-        ObservableList<Producto> lista = this.tableviewCatalogo.getSelectionModel().getSelectedItems();
-        List<String> errores = new ArrayList<>();
+        ObservableList<Producto> lista = this.tableviewProductos.getSelectionModel().getSelectedItems();
+        Set<String> errores = new HashSet<>();
 
         for (Producto producto : lista) {
             try {
                 lp.eliminarProductoEnTienda(idTienda, producto.getIdProducto());
-                this.tableviewCatalogo.getItems().remove(producto);
+                this.tableviewProductos.getItems().remove(producto);
             } catch (SQLException ex) {
-                System.out.println(ex.getErrorCode() + ex.getLocalizedMessage());
                 errores.add(producto.getNombre());
             }
         }
@@ -116,23 +116,21 @@ public class InsertarProductoController implements Initializable {
     private void accionVolver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Productos/Productos.fxml"));
             Parent root = loader.load();
             ProductosController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
             controller.mostrarProductos();
-            try {
-                controller.mostrarProductos();
 
-                Stage stageNuevo = new Stage();
-                stageNuevo.setScene(new Scene(root));
-                stageNuevo.show();
+            controller.mostrarProductos();
 
-                Stage stage = (Stage) this.buttonAgregar.getScene().getWindow();
-                stage.close();
-            } catch (SQLException ex) {
-                Alertas.generarAlerta("BD", "No se puede visualizar los trabajadores", "Error code: " + String.valueOf(ex.getErrorCode()) + "\n Message: " + ex.getMessage(), Alert.AlertType.ERROR);
-            }
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.show();
+
+            Stage stage = (Stage) this.buttonAgregar.getScene().getWindow();
+            stage.close();
+
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajadores", "No se puede visualizar los trabajadores de esta tienda", Alert.AlertType.ERROR);
         } catch (SQLException ex) {

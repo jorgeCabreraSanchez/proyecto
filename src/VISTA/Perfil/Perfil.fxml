@@ -1,66 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="628.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Perfil.PerfilController">
+<AnchorPane id="AnchorPane" prefHeight="353.0" prefWidth="525.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Perfil.PerfilController">
+    <stylesheets>
+        <URL value="@Perfil.css" />
+    </stylesheets>
    <children>
-      <AnchorPane fx:id="fondo1" layoutY="-1.0" prefHeight="500.0" prefWidth="629.0" stylesheets="@Empleados.css">
+      <AnchorPane fx:id="barra" layoutX="-2.0" layoutY="20.0" opacity="0.4" prefHeight="75.0" prefWidth="502.0">
          <children>
-            <Button fx:id="botonCalendario" layoutX="138.0" layoutY="300.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="122.0" text="Calendario">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                     </light>
-                  </Lighting>
-               </effect>
+            <Label fx:id="textNombre" layoutX="49.0" layoutY="13.0" text="Nombre:  Jorge Cabrera Sánchez" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <Button fx:id="botonIncidencia" layoutX="385.0" layoutY="300.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="122.0" text="Incidencias">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                     </light>
-                  </Lighting>
-               </effect>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="textPuesto" layoutX="295.0" layoutY="13.0" text="Puesto: Encargado" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <AnchorPane fx:id="fondito" layoutX="1.0" layoutY="178.0" prefHeight="37.0" prefWidth="629.0">
-               <children>
-                  <Label fx:id="nombre" layoutX="54.0" layoutY="10.0" text="Nombre empleado" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label fx:id="tipoEmpleado" layoutX="271.0" layoutY="9.0" text="Tipo empleado" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label fx:id="tienda" layoutX="507.0" layoutY="9.0" text="Tienda" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-            <Pane fx:id="foto" layoutX="51.0" layoutY="24.0" prefHeight="142.0" prefWidth="132.0" stylesheets="@Perfil.css" />
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="textHorario" layoutX="94.0" layoutY="37.0" text="Horario: Mañana" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="textIDTienda" layoutX="310.0" layoutY="36.0" text="IDTienda Nº1" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <MenuButton fx:id="menu" layoutX="428.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="99.0">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#configuracion" text="Configuración" />
+                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="CerrarSesion" />
+              </items>
+            </MenuButton>
          </children>
       </AnchorPane>
-      <Button fx:id="buttonVolver" layoutX="10.0" layoutY="451.0" mnemonicParsing="false" onAction="#volver" text="&lt;--" visible="false">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
+      <Button fx:id="botonIncidencias" layoutX="159.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionIncidencias" prefHeight="76.0" prefWidth="86.0" text="Incidencias" visible="false" />
+      <Button fx:id="botonTienda" layoutX="305.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionTienda" prefHeight="76.0" prefWidth="86.0" text="Tienda" visible="false" />
+      <Button fx:id="botonTiendas" layoutX="305.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionTiendas" prefHeight="76.0" prefWidth="86.0" text="Tiendas" visible="false" />
+      <Button fx:id="botonCatalogo" layoutX="159.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionCatalogo" prefHeight="76.0" prefWidth="86.0" text="Catalogo" visible="false" />
    </children>
 </AnchorPane>

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VISTA.Productos;
+package VISTA.Tienda.Productos;
 
 import MODELO.Alertas;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
-import VISTA.Productos.InsertarProducto.InsertarProductoController;
+import VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
 import java.net.URL;
@@ -164,7 +164,7 @@ public class ProductosController implements Initializable {
     private void accionNuevo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Productos/InsertarProducto/InsertarProducto.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Productos/InsertarProducto/InsertarProducto.fxml"));
             Parent root = loader.load();
             InsertarProductoController controller = loader.getController();
             controller.setDatos(this.idTienda,this.lp);
@@ -193,13 +193,9 @@ public class ProductosController implements Initializable {
             TiendaWhichController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
-
-            Stage stage = (Stage) this.botonNuevo.getScene().getWindow();
-            stage.close();
-
+            Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana de ver Tienda", Alert.AlertType.ERROR);
         } 

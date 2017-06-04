@@ -1,0 +1,16 @@
+#fondo1{
+    -fx-background-image: url("../../images/fondoemple5.jpg");
+    -fx-background-size: cover;
+}
+#foto{
+    -fx-background-image: url("../../images/usuario1.png");
+    -fx-background-size: stretch;
+    -fx-alignment: BOTTOM_CENTER;
+    
+}
+#fondito{
+    -fx-background-color: rgba(0,0,0,0.43);
+}
+
+
+

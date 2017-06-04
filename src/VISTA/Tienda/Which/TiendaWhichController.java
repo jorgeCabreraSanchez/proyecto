@@ -6,9 +6,9 @@
 package VISTA.Tienda.Which;
 
 import MODELO.Alertas;
-import VISTA.Productos.ProductosController;
+import VISTA.Tienda.Productos.ProductosController;
 import VISTA.Tienda.Incidencias.IncidenciasController;
-import VISTA.Trabajadores.TrabajadoresController;
+import VISTA.Tienda.Trabajadores.TrabajadoresController;
 import java.awt.Dialog;
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -42,6 +43,8 @@ public class TiendaWhichController implements Initializable {
     private Button buttonVolver;
     @FXML
     private Button buttonIncidencias;
+    @FXML
+    private Label labelTienda;
 
     /**
      * Initializes the controller class.
@@ -55,18 +58,17 @@ public class TiendaWhichController implements Initializable {
     private void abrirProductos(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Productos/Productos.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Productos/Productos.fxml"));
             Parent root = loader.load();
 
             ProductosController controller = loader.getController();
             controller.setIDTienda(idTienda);
             controller.mostrarProductos();
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
+            Stage stage = (Stage) this.buttonProductos.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
 
-            cerrarVentanaActual();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana", "No se puede visualizar los productos de esta tienda", ex.getLocalizedMessage(), Alert.AlertType.ERROR);
         } catch (SQLException ex) {
@@ -78,18 +80,16 @@ public class TiendaWhichController implements Initializable {
     private void abrirTrabajadores(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Trabajadores/Trabajadores.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajadores/Trabajadores.fxml"));
             Parent root = loader.load();
             TrabajadoresController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
             try {
                 controller.mostrarTrabajadores();
 
-                Stage stageNuevo = new Stage();
-                stageNuevo.setScene(new Scene(root));
-                stageNuevo.show();
-
-                cerrarVentanaActual();
+                Stage stage = (Stage) this.buttonProductos.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
             } catch (SQLException ex) {
                 Alertas.generarAlerta("BD", "No se puede visualizar los trabajadores", "Error code: " + String.valueOf(ex.getErrorCode()) + "\n Message: " + ex.getMessage(), Alert.AlertType.ERROR);
             }
@@ -105,19 +105,12 @@ public class TiendaWhichController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tiendas/Tiendas.fxml"));
             Parent root = loader.load();
 
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
-
-            cerrarVentanaActual();
+            Stage stage = (Stage) this.buttonProductos.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajadores", "No se puede visualizar los trabajadores de esta tienda", Alert.AlertType.ERROR);
         }
-    }
-
-    private void cerrarVentanaActual() {
-        Stage stageActual = (Stage) this.buttonProductos.getScene().getWindow();
-        stageActual.close();
     }
 
     public int getIDTienda() {
@@ -126,6 +119,7 @@ public class TiendaWhichController implements Initializable {
 
     public void setIDTienda(Integer idTienda) {
         this.idTienda = idTienda;
+        this.labelTienda.setText(this.labelTienda.getText() + idTienda);
     }
 
     @FXML
@@ -137,17 +131,14 @@ public class TiendaWhichController implements Initializable {
             IncidenciasController controller = loader.getController();
             controller.setIDTienda(this.idTienda);
             controller.rellenarTabla();
-            
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
 
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
-            stage.close();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Incidencias", "No se ha podido abrir la ventana incidencias", Alert.AlertType.ERROR);
         } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "No se ha podido visualizar las incidencias de la tienda","Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(),Alert.AlertType.ERROR);
+            Alertas.generarAlerta("BD", "No se ha podido visualizar las incidencias de la tienda", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
         }
     }
 
