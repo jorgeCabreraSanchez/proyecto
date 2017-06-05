@@ -228,6 +228,7 @@ public class TrabajadorController implements Initializable {
 
         try {
             this.lit = new ListaIncidenciasTrabajador(this.trabajadorVer.getId());
+            this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias()));
 
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido mostrar las incidencias", Alert.AlertType.ERROR);
@@ -298,10 +299,10 @@ public class TrabajadorController implements Initializable {
         int incidencias;
         if (trabajadorVer instanceof Empleado) {
             Empleado empleado = (Empleado) trabajadorVer;
-            empleado.setIncidencias(numIncidencias);           
+            empleado.setIncidencias(numIncidencias);
         } else {
             Encargado encargado = (Encargado) trabajadorVer;
-            encargado.setIncidencias(numIncidencias); 
+            encargado.setIncidencias(numIncidencias);
         }
         this.numIncidencias = numIncidencias;
         this.tipo = tipo;
@@ -554,8 +555,13 @@ public class TrabajadorController implements Initializable {
                     lit.borrarIncidencia(incidencia.getIdIncidencia());
                     actualizarIncidencias();
                     if (this.trabajadorVer instanceof Empleado) {
-
+                        Empleado empleado = (Empleado) this.trabajadorVer;
+                        empleado.setIncidencias(empleado.getIncidencias() - 1);
+                    } else {
+                        Encargado encargado = (Encargado) this.trabajadorVer;
+                        encargado.setIncidencias(encargado.getIncidencias() - 1);
                     }
+                    this.numIncidencias = this.numIncidencias -1;
                 } catch (SQLException e) {
                     Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la incidencia y no se ha podido", "Error: " + e.getErrorCode() + " " + e.getLocalizedMessage(), Alert.AlertType.ERROR);
                 }
@@ -567,7 +573,7 @@ public class TrabajadorController implements Initializable {
     private void accionNuevo(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajador/ModificarIncidencia.fxml"));
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajador/ModificarIncidencia/ModificarIncidencia.fxml"));
             Parent root = loader.load();
             ModificarIncidenciaController controller = loader.getController();
             controller.botonNuevo();
@@ -581,6 +587,14 @@ public class TrabajadorController implements Initializable {
             if (incidencia != null) {
                 this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
                 actualizarIncidencias();
+                if (this.trabajadorVer instanceof Empleado) {
+                    Empleado empleado = (Empleado) this.trabajadorVer;
+                    empleado.setIncidencias(empleado.getIncidencias() + 1);
+                } else {
+                    Encargado encargado = (Encargado) this.trabajadorVer;
+                    encargado.setIncidencias(encargado.getIncidencias() + 1);
+                }
+                this.numIncidencias = this.numIncidencias +1;
             }
 
         } catch (IOException ex) {
