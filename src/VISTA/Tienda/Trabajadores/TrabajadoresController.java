@@ -330,6 +330,7 @@ public class TrabajadoresController implements Initializable {
     public void setTrabajador(Trabajadores trabajador, int idTienda) {
         this.trabajador = trabajador;
         this.idTienda = idTienda;
+        this.labelTienda.setText(this.labelTienda.getText() + this.idTienda);
     }
 
     public void setTrabajador(Trabajadores trabajador) {
@@ -413,24 +414,48 @@ public class TrabajadoresController implements Initializable {
                 Parent root = loader.load();
                 TrabajadorController controller = loader.getController();
                 String tipo;
-                int idTrabajador = 0;
+                int idTrabajador = 0;                
                 if (this.trabajador instanceof Jefe) {
                     tipo = "Jefe";
                 } else if (this.trabajador instanceof Encargado) {
                     tipo = "Encargado";
-                    idTrabajador = this.trabajador.getId();
+                    idTrabajador = this.trabajador.getId();                    
                 } else {
                     tipo = "Empleado";
                     idTrabajador = this.trabajador.getId();
                 }
-                controller.setIDTrabajador(trabajador.getId(), idTrabajador, tipo);
+                int incidencias;
+                if(trabajador instanceof Empleado){
+                    Empleado empleado = (Empleado) trabajador;
+                    incidencias = empleado.getIncidencias();
+                }  else {
+                    Encargado encargado = (Encargado) trabajador;
+                    incidencias = encargado.getIncidencias();
+                }
+                controller.setIDTrabajador(trabajador.getId(), idTrabajador, tipo,incidencias);
 
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
-
-                /* Recoger datos*/
+                try {
+                    if (controller.modificado()) {
+                        this.listaTrabajadores.clear();
+                        this.listaTrabajadores.addAll(this.lt.editarTrabajador(controller.getTrabajadorModificado(),this.idTienda));
+                        actualizarTrabajador("corto");
+                        Trabajadores trabajadorasd = controller.getTrabajadorModificado();             
+                    } else {
+                        if(trabajador instanceof Empleado){
+                            Empleado empleado = (Empleado) trabajador;
+                            empleado.setIncidencias(controller.numeroIncidencias());
+                        } else {
+                            Encargado encargado = (Encargado) trabajador;
+                            encargado.setIncidencias(controller.numeroIncidencias());
+                        }
+                    }
+                } catch (SQLException ex) {
+                    Alertas.generarAlerta("BD", "No se ha podido modificar el usuario", Alert.AlertType.ERROR);
+                }
             }
         } catch (IOException ex) {
             Alertas.generarAlerta("Trabajador", "No se ha podido visualizar el trabajador", Alert.AlertType.ERROR);

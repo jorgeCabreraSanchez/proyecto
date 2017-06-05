@@ -8,6 +8,11 @@ package VISTA.Tienda.Productos;
 import MODELO.Alertas;
 import MODELO.Listas.ListaProductos;
 import MODELO.Producto;
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
+import MODELO.Trabajadores.Jefe;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
@@ -30,12 +35,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -49,6 +57,7 @@ public class ProductosController implements Initializable {
     private ListaProductos lp;
     private ObservableList<Producto> productos;
     private ObservableList<MenuItem> menuProductos;
+    private Trabajadores trabajador;
 
     @FXML
     private TableColumn<Producto, Integer> columnaidProducto;
@@ -68,6 +77,10 @@ public class ProductosController implements Initializable {
     private Button buttonVolver;
     @FXML
     private Label labelTitulo;
+    @FXML
+    private AnchorPane barra;
+    @FXML
+    private MenuButton menu;
 
     /**
      * Initializes the controller class.
@@ -78,7 +91,7 @@ public class ProductosController implements Initializable {
     }
 
     public void mostrarProductos() throws SQLException {
-        this.labelTitulo.setText("Productos de la Tienda Nº"+this.idTienda);
+        this.labelTitulo.setText("Productos de la Tienda Nº" + this.idTienda);
         cargarListas();
         tabla();
     }
@@ -103,18 +116,18 @@ public class ProductosController implements Initializable {
                 if (oldValue.length() > newValue.length()) {
                     tamaño = "corto";
                 }
-                actualizarTrabajadores(newValue, tamaño);
+                actualizarProductos(newValue, tamaño);
                 contextMenuNombre.show(textfieldNombre, Side.BOTTOM, 0, 0);
             } else {
-                actualizarTrabajadores(newValue, "corto");
+                actualizarProductos(newValue, "corto");
                 contextMenuNombre.hide();
             }
         });
 
-        actualizarTrabajadores("", "corto");
+        actualizarProductos("", "corto");
     }
 
-    private void actualizarTrabajadores(String nombre1, String tamaño) {
+    private void actualizarProductos(String nombre1, String tamaño) {
         Set<Producto> lista = lp.getProductos(nombre1, tamaño);
         this.productos.clear();
         this.productos.addAll(lista);
@@ -140,12 +153,29 @@ public class ProductosController implements Initializable {
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
     }
 
-    public void setIDTienda(int idTienda) {
+    public void setTrabajador(Trabajadores trabajador, int idTienda) {
         this.idTienda = idTienda;
+        this.trabajador = trabajador;
+    }
+
+    public void setTrabajador(Trabajadores trabajador) {
+        this.trabajador = trabajador;
+        if (trabajador instanceof Encargado) {
+            Encargado encargado = (Encargado) trabajador;
+            this.idTienda = encargado.getIdTienda();
+        } else {
+            Empleado empleado = (Empleado) trabajador;
+            this.idTienda = empleado.getIdTienda();
+        }
+        this.botonNuevo.setVisible(false);
     }
 
     @FXML
     private void desclickar(MouseEvent event) {
+        desclickar();
+    }
+
+    private void desclickar() {
         if (this.contextMenuNombre.isShowing()) {
             this.contextMenuNombre.hide();
         }
@@ -167,16 +197,18 @@ public class ProductosController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Productos/InsertarProducto/InsertarProducto.fxml"));
             Parent root = loader.load();
             InsertarProductoController controller = loader.getController();
-            controller.setDatos(this.idTienda,this.lp);
+            controller.setDatos(this.idTienda, this.lp);
             controller.rellenarTablas();
 
             Stage stageNuevo = new Stage();
+            stageNuevo.initModality(Modality.APPLICATION_MODAL);
             stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
+            stageNuevo.showAndWait();
 
-            Stage stage = (Stage) this.botonNuevo.getScene().getWindow();
-            stage.close();
+            this.lp = controller.cogerLista();
+            actualizarProductos(this.textfieldNombre.getText(), "corto");
 
+            /* COger datos */
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Añadir Producto", "No se ha podido mostrar la ventana para añadir nuevos productos", Alert.AlertType.ERROR);
         } catch (SQLException ex) {
@@ -191,14 +223,46 @@ public class ProductosController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
             Parent root = loader.load();
             TiendaWhichController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
+            if (this.trabajador instanceof Jefe) {
+                controller.setTrabajador(this.idTienda, this.trabajador);
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
 
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex) {
             Alertas.generarAlerta("Ventana Ver Tienda", "No se ha podido mostrar la ventana de ver Tienda", Alert.AlertType.ERROR);
-        } 
+        }
+    }
+
+    @FXML
+    private void perfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+            Parent root = loader.load();
+            PerfilController controller = loader.getController();
+            controller.setDatos(this.trabajador);
+
+            Stage stage = (Stage) this.tabla.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Perfil", "Ahora mismo no se puede mostrar el perfil, intentelo más tarde.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        PerfilController.cerrarSesion(this.trabajador, (Stage) this.tabla.getScene().getWindow());
+    }
+
+    @FXML
+    private void desclickarPerfil(MouseEvent event) {
+        desclickar();
+        this.menu.show();
     }
 
 }

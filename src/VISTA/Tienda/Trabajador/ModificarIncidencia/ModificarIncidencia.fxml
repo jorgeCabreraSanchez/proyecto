@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="314.0" prefWidth="495.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Tienda.Trabajador.ModificarIncidencia.ModificarIncidenciaController">
+    <stylesheets>
+        <URL value="@ModificarIncidencia.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="97.0" layoutY="53.0" text="Título:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="68.0" layoutY="87.0" text="Descripción:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textFieldTitulo" layoutX="143.0" layoutY="50.0" />
+      <TextArea fx:id="textAreaDescripcion" layoutX="150.0" layoutY="87.0" prefHeight="155.0" prefWidth="260.0" />
+      <Button fx:id="botonCrear" layoutX="27.0" layoutY="263.0" mnemonicParsing="false" onAction="#accionCrear" text="Crear" visible="false" />
+      <Button fx:id="botonEditar" layoutX="24.0" layoutY="263.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" visible="false" />
+      <Button fx:id="botonCancelar" layoutX="378.0" layoutY="263.0" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar" />
+   </children>
+</AnchorPane>

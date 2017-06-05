@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import jfxtras.scene.control.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
@@ -10,10 +11,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="209.0" prefWidth="593.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajador.TrabajadorController">
+<AnchorPane id="AnchorPane" prefHeight="0.0" prefWidth="593.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajador.TrabajadorController">
    <children>
-      <AnchorPane fx:id="fondo1" layoutY="-1.0" prefHeight="210.0" prefWidth="593.0" stylesheets="@Trabajador.css">
+      <AnchorPane fx:id="fondo1" prefHeight="590.0" prefWidth="593.0" stylesheets="@Trabajador.css">
          <children>
+            <ListView fx:id="listViewIncidencias" layoutX="55.0" layoutY="280.0" prefHeight="200.0" prefWidth="485.0" />
             <AnchorPane fx:id="fondito" layoutX="226.0" layoutY="20.0" prefHeight="141.0" prefWidth="344.0">
                <children>
                   <Label fx:id="textnombre" layoutX="20.0" layoutY="20.0" text="Nombre:  " textFill="WHITE">
@@ -99,8 +101,23 @@
                </children>
             </AnchorPane>
             <ImageView fx:id="foto" fitHeight="141.0" fitWidth="180.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="botonModificar" layoutX="161.0" layoutY="171.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-            <Button fx:id="botonCancelar" layoutX="379.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+            <Button fx:id="botonModificar" layoutX="277.0" layoutY="171.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+            <Button fx:id="botonCancelar" layoutX="431.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+            <DatePicker fx:id="datePickerHasta" editable="false" layoutX="359.0" layoutY="230.0" onAction="#introducirFecha" />
+            <DatePicker fx:id="datePickerDesde" editable="false" layoutX="109.0" layoutY="230.0" onAction="#introducirFecha" />
+            <Text fx:id="label2" layoutX="315.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text fx:id="label1" layoutX="59.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Button fx:id="buttonEditar" layoutX="272.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" />
+            <Button fx:id="buttonEliminar" layoutX="432.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
+            <Button fx:id="buttonNuevo" layoutX="103.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nueva" />
          </children>
       </AnchorPane>
    </children>

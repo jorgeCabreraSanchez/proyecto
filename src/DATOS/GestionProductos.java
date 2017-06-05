@@ -70,16 +70,28 @@ public class GestionProductos {
         return productos;
     }
     
-    public void nuevoProducto(Producto producto){
-        
+    public void nuevoProducto(Producto producto) throws SQLException{
+        String sentencia = "Insert into catalogo (Nombre,Descripcion) values (?,?);";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setString(1, producto.getNombre());
+        ps.setString(2,producto.getDescripcion());
+        ps.executeUpdate();
     }
     
-    public void modificarProducto(int idProducto,Producto producto){
-        
+    public void modificarProducto(Producto producto) throws SQLException{
+        String sentencia = "update catalogo set Nombre = ?, Descripcion = ? where idProducto = ?;";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setString(1, producto.getNombre());
+        ps.setString(2,producto.getDescripcion());
+        ps.setInt(3, producto.getIdProducto());
+        ps.executeUpdate();
     }
     
-    public void eliminarProducto(int idProducto){
-        
+    public void eliminarProducto(int idProducto) throws SQLException, SQLException{
+        String sentencia = "delete from catalogo where idProducto = ?;";
+        PreparedStatement ps = connect.prepareStatement(sentencia);
+        ps.setInt(1, idProducto);
+        ps.executeUpdate();
     }
             
             

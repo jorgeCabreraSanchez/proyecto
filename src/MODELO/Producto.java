@@ -26,6 +26,9 @@ public class Producto {
         this.descripcion.set(descripcion);
     }
 
+    public Producto() {
+    }
+
         
     public String getDescripcion() {
         return descripcion.get();
@@ -64,7 +67,7 @@ public class Producto {
     }
     
     public String toString(){
-        return this.nombre.get();
+        return "ID: " + this.getIdProducto()+ "  " + this.getNombre();
     }
     
 }

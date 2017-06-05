@@ -7,9 +7,14 @@ package VISTA.Tienda.Trabajador;
  */
 import DATOS.GestionTrabajadores;
 import MODELO.Alertas;
+import MODELO.Incidencia.IncidenciaTienda;
+import MODELO.Incidencia.IncidenciaTrabajador;
+import MODELO.Listas.ListaIncidenciasTrabajador;
 import MODELO.Trabajadores.Empleado;
 import MODELO.Trabajadores.Encargado;
 import MODELO.Trabajadores.Trabajadores;
+import VISTA.Tienda.Incidencias.NuevaEditar.NuevaEditarIncidenciaController;
+import VISTA.Tienda.Trabajador.ModificarIncidencia.ModificarIncidenciaController;
 import VISTA.Tienda.Trabajadores.TrabajadoresController;
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +23,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,8 +38,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +51,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -53,6 +65,9 @@ public class TrabajadorController implements Initializable {
     Trabajadores trabajadorVer;
     GestionTrabajadores gs;
     String tipo;
+    boolean modificado;
+    ListaIncidenciasTrabajador lit;
+    int numIncidencias;
 
     @FXML
     private Label idTienda;
@@ -110,6 +125,22 @@ public class TrabajadorController implements Initializable {
     private TextField textfieldApellido1;
     @FXML
     private TextField textfieldApellido2;
+    @FXML
+    private DatePicker datePickerHasta;
+    @FXML
+    private DatePicker datePickerDesde;
+    @FXML
+    private Button buttonEditar;
+    @FXML
+    private Button buttonEliminar;
+    @FXML
+    private Button buttonNuevo;
+    @FXML
+    private Text label2;
+    @FXML
+    private Text label1;
+    @FXML
+    private ListView<IncidenciaTrabajador> listViewIncidencias;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -195,11 +226,22 @@ public class TrabajadorController implements Initializable {
             });
         }
 
+        try {
+            this.lit = new ListaIncidenciasTrabajador(this.trabajadorVer.getId());
+
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido mostrar las incidencias", Alert.AlertType.ERROR);
+        }
+
     }
 
     private void desclickarOtro() {
         this.nombre.setVisible(true);
         this.textfieldNombre.setVisible(false);
+        this.apellido1.setVisible(true);
+        this.textfieldApellido1.setVisible(false);
+        this.apellido2.setVisible(true);
+        this.textfieldApellido2.setVisible(false);
         this.puesto.setVisible(true);
         this.comboboxPuesto.setVisible(false);
         this.contraseña.setVisible(true);
@@ -213,19 +255,37 @@ public class TrabajadorController implements Initializable {
     private void modoEncargado(int idTrabajador) {
         if (this.trabajadorVer instanceof Encargado && this.trabajadorVer.getId() != idTrabajador) {
             this.contraseña.setText("******");
-            this.botonCancelar.setVisible(false);
-            this.botonModificar.setVisible(false);
+            ocultar();
         } else {
             edicion("Encargado");
         }
+    }
+
+    private void ocultar() {
+        this.botonCancelar.setVisible(false);
+        this.botonModificar.setVisible(false);
+        this.label1.setVisible(false);
+        this.label1.setManaged(false);
+        this.label2.setVisible(false);
+        this.label2.setManaged(false);
+        this.datePickerDesde.setVisible(false);
+        this.datePickerDesde.setManaged(false);
+        this.datePickerHasta.setVisible(false);
+        this.datePickerHasta.setManaged(false);
+        this.buttonNuevo.setVisible(false);
+        this.buttonNuevo.setManaged(false);
+        this.buttonEditar.setVisible(false);
+        this.buttonEditar.setManaged(false);
+        this.buttonEliminar.setVisible(false);
+        this.buttonEliminar.setManaged(false);
+        this.fondo1.maxHeight(216);
     }
 
     /* id del trabajador que ha abierto la aplicacion */
     private void modoEmpleado(int idTrabajador) {
         if (this.trabajadorVer.getId() != idTrabajador) {
             this.contraseña.setText("******");
-            this.botonModificar.setVisible(false);
-            this.botonCancelar.setVisible(false);
+            ocultar();
         } else {
             edicion("Empleado");
         }
@@ -233,8 +293,17 @@ public class TrabajadorController implements Initializable {
     }
 
     /* id del trabajador que vamos a ver */
-    public void setIDTrabajador(int idTrabajadorVer, int idTrabajadorSoy, String tipo) throws SQLException {
+    public void setIDTrabajador(int idTrabajadorVer, int idTrabajadorSoy, String tipo, int numIncidencias) throws SQLException {
         this.trabajadorVer = gs.trabajadorCompleto(idTrabajadorVer);
+        int incidencias;
+        if (trabajadorVer instanceof Empleado) {
+            Empleado empleado = (Empleado) trabajadorVer;
+            empleado.setIncidencias(numIncidencias);           
+        } else {
+            Encargado encargado = (Encargado) trabajadorVer;
+            encargado.setIncidencias(numIncidencias); 
+        }
+        this.numIncidencias = numIncidencias;
         this.tipo = tipo;
         if (tipo.equalsIgnoreCase("Jefe")) {
             modoJefe();
@@ -277,21 +346,91 @@ public class TrabajadorController implements Initializable {
 
     @FXML
     private void modificar(ActionEvent event) {
-        if(verificar()){
-            if(this.puesto.getText().equalsIgnoreCase("Encargado")){
-                Trabajador trabajador = 
+        if (verificar()) {
+            this.modificado = true;
+            Trabajadores trabajador;
+            if (this.puesto.getText().equalsIgnoreCase("Encargado")) {
+                trabajador = new Encargado();
+            } else {
+                trabajador = new Empleado();
             }
+            trabajador.setId(this.trabajadorVer.getId());
+            trabajador.setHorario(this.horario.getText());
+            trabajador.setNombre(this.nombre.getText());
+            trabajador.setApellido1(this.apellido1.getText());
+            trabajador.setApellido2(apellido2(this.apellido2.getText()));
+            trabajador.setContraseña(this.contraseña.getText());
+            if (trabajador instanceof Empleado) {
+                Empleado empleado = (Empleado) trabajador;
+                empleado.setIdTienda(Integer.parseInt(this.idTienda.getText()));
+            } else {
+                Encargado encargado = (Encargado) trabajador;
+                encargado.setIdTienda(Integer.parseInt(this.idTienda.getText()));
+            }
+
+            if (this.trabajadorVer instanceof Empleado && trabajador instanceof Empleado) {
+                Empleado empleadoVer = (Empleado) this.trabajadorVer;
+                Empleado empleadoModificado = (Empleado) trabajador;
+                empleadoModificado.setIncidencias(empleadoVer.getIncidencias());
+                numIncidencias = empleadoVer.getIncidencias();
+                if (empleadoVer.igual(empleadoModificado)) {
+                    this.modificado = false;
+                }
+            } else if (this.trabajadorVer instanceof Encargado && trabajador instanceof Encargado) {
+                Encargado encargadoVer = (Encargado) this.trabajadorVer;
+                Encargado encargadoModificado = (Encargado) trabajador;
+                encargadoModificado.setIncidencias(encargadoVer.getIncidencias());
+                numIncidencias = encargadoVer.getIncidencias();
+                if (encargadoVer.igual(encargadoModificado)) {
+                    this.modificado = false;
+                }
+            } else if (this.trabajadorVer instanceof Encargado && trabajador instanceof Empleado) {
+                Encargado encargadoVer = (Encargado) this.trabajadorVer;
+                Empleado empleadoModificado = (Empleado) trabajador;
+                empleadoModificado.setIncidencias(encargadoVer.getIncidencias());
+                numIncidencias = encargadoVer.getIncidencias();
+            } else {
+                Encargado encargadoModificado = (Encargado) trabajador;
+                Empleado empleadoVer = (Empleado) this.trabajadorVer;
+                encargadoModificado.setIncidencias(empleadoVer.getIncidencias());
+                numIncidencias = empleadoVer.getIncidencias();
+            }
+
+            if (this.modificado) {
+                Alertas.generarAlerta("Datos", "Los datos han sido modificados sucesfully.", Alert.AlertType.INFORMATION);
+                this.trabajadorVer = trabajador;
+                Stage stage = (Stage) this.nombre.getScene().getWindow();
+                stage.close();
+            } else {
+                Alertas.generarAlerta("Datos", "No se ha modificado ningún dato.", Alert.AlertType.INFORMATION);
+            }
+
         }
+    }
+
+    public int numeroIncidencias() {
+        return this.numIncidencias;
+    }
+
+    public boolean modificado() {
+        return this.modificado;
+    }
+
+    /* Si se ha editado, lo he modificado y he puesto el modificado, ya no es el de ver. */
+    public Trabajadores getTrabajadorModificado() {
+        return this.trabajadorVer;
     }
 
     @FXML
     private void cancelar(ActionEvent event) {
+        Stage stage = (Stage) this.nombre.getScene().getWindow();
+        stage.close();
     }
 
-    
-    private boolean verificar(){
+    private boolean verificar() {
+        desclickarOtro();
         boolean devolver = true;
-        if(this.nombre.getText().isEmpty()){
+        if (this.nombre.getText().isEmpty()) {
             devolver = false;
             this.nombre.setVisible(false);
             this.textfieldNombre.setVisible(true);
@@ -299,8 +438,8 @@ public class TrabajadorController implements Initializable {
         } else {
             this.textfieldNombre.setStyle("-fx-border-color:none");
         }
-        
-        if(this.apellido1.getText().isEmpty()){
+
+        if (this.apellido1.getText().isEmpty()) {
             devolver = false;
             this.apellido1.setVisible(false);
             this.textfieldApellido1.setVisible(true);
@@ -308,17 +447,18 @@ public class TrabajadorController implements Initializable {
         } else {
             this.textfieldApellido1.setStyle("-fx-border-color:none");
         }
-        
-        if(this.puesto.getText().isEmpty()){
-            devolver = false;
-            this.puesto.setVisible(false);
-            this.comboboxPuesto.setVisible(true);
-            this.comboboxPuesto.setStyle("-fx-border-color:red");
-        } else {
-            this.comboboxPuesto.setStyle("-fx-border-color:none");
+        if (this.tipo.equalsIgnoreCase("Jefe")) {
+            if (this.puesto.getText().isEmpty()) {
+                devolver = false;
+                this.puesto.setVisible(false);
+                this.comboboxPuesto.setVisible(true);
+                this.comboboxPuesto.setStyle("-fx-border-color:red");
+            } else {
+                this.comboboxPuesto.setStyle("-fx-border-color:none");
+            }
         }
-        
-        if(this.contraseña.getText().isEmpty()){
+
+        if (this.contraseña.getText().isEmpty()) {
             devolver = false;
             this.contraseña.setVisible(false);
             this.textfieldContraseña.setVisible(true);
@@ -326,30 +466,128 @@ public class TrabajadorController implements Initializable {
         } else {
             this.textfieldContraseña.setStyle("-fx-border-color:none");
         }
-        
-        if(this.horario.getText().isEmpty()){
-            devolver = false;
-            this.horario.setVisible(false);
-            this.comboboxHorario.setVisible(true);
-            this.comboboxHorario.setStyle("-fx-border-color:red");
-        } else {
-            this.comboboxHorario.setStyle("-fx-border-color:none");
+
+        if (!this.tipo.equalsIgnoreCase("Empleado")) {
+            if (this.horario.getText().isEmpty()) {
+                devolver = false;
+                this.horario.setVisible(false);
+                this.comboboxHorario.setVisible(true);
+                this.comboboxHorario.setStyle("-fx-border-color:red");
+            } else {
+                this.comboboxHorario.setStyle("-fx-border-color:none");
+            }
         }
-        
-        if(this.idTienda.getText().isEmpty()){
-            devolver = false;
-            this.idTienda.setVisible(false);
-            this.textFieldidTienda.setVisible(true);
-            this.textFieldidTienda.setStyle("-fx-border-color:red");
-        } else {
-            this.textFieldidTienda.setStyle("-fx-border-color:none");
-        }       
-        
+
+        if (this.tipo.equalsIgnoreCase("Jefe")) {
+            if (this.idTienda.getText().isEmpty()) {
+                devolver = false;
+                this.idTienda.setVisible(false);
+                this.textFieldidTienda.setVisible(true);
+                this.textFieldidTienda.setStyle("-fx-border-color:red");
+            } else {
+                this.textFieldidTienda.setStyle("-fx-border-color:none");
+            }
+        }
+
         return devolver;
     }
-    
-    
-    
-    
-    
+
+    @FXML
+    private void introducirFecha(ActionEvent event) {
+    }
+
+    @FXML
+    private void accionEditar(ActionEvent event) {
+        IncidenciaTrabajador incidenciaDar = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        if (incidenciaDar != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajador/ModificarIncidencia/ModificarIncidencia.fxml"));
+                Parent root = loader.load();
+                ModificarIncidenciaController controller = loader.getController();
+                controller.botonEditar(incidenciaDar);
+
+                Stage stageNuevo = new Stage();
+                stageNuevo.setScene(new Scene(root));
+                stageNuevo.initModality(Modality.APPLICATION_MODAL);
+                stageNuevo.showAndWait();
+
+                IncidenciaTrabajador incidencia = controller.cogerIncidencia();
+                if (incidencia != null) {
+                    this.listViewIncidencias.setItems(FXCollections.observableArrayList(this.lit.editarIncidencia(incidencia)));
+
+                    actualizarIncidencias();
+                }
+
+            } catch (IOException ex) {
+                Alertas.generarAlerta("Ventana Editar Incidencia", "No se ha podido abrir la ventana editar incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
+            } catch (SQLException ex) {
+                Alertas.generarAlerta("BD", "No se ha podido modificar la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    private void actualizarIncidencias() {
+        LocalDate fechaEntrada;
+        LocalDate fechaSalida;
+        if (this.datePickerDesde.getValue() == null) {
+            fechaEntrada = LocalDate.MIN;
+        } else {
+            fechaEntrada = this.datePickerDesde.getValue();
+        }
+        if (this.datePickerHasta.getValue() == null) {
+            fechaSalida = LocalDate.now();
+        } else {
+            fechaSalida = this.datePickerHasta.getValue();
+
+        }
+        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(fechaEntrada, fechaSalida)));
+    }
+
+    @FXML
+    private void accionEliminar(ActionEvent event) {
+        IncidenciaTrabajador incidencia = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        if (incidencia != null) {
+            Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la Incidencia?", "Información de la Incidencia:  ID: " + incidencia.getIdIncidencia() + "   Titulo: " + incidencia.getTitulo() + " \n  Descripción: " + incidencia.getDescripcion(), Alert.AlertType.CONFIRMATION);
+            if (boton.get().getText().equalsIgnoreCase("aceptar")) {
+                try {
+                    lit.borrarIncidencia(incidencia.getIdIncidencia());
+                    actualizarIncidencias();
+                    if (this.trabajadorVer instanceof Empleado) {
+
+                    }
+                } catch (SQLException e) {
+                    Alertas.generarAlerta("Error BD", "Ha habido un error intentando borrar la incidencia y no se ha podido", "Error: " + e.getErrorCode() + " " + e.getLocalizedMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void accionNuevo(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajador/ModificarIncidencia.fxml"));
+            Parent root = loader.load();
+            ModificarIncidenciaController controller = loader.getController();
+            controller.botonNuevo();
+
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.initModality(Modality.APPLICATION_MODAL);
+            stageNuevo.showAndWait();
+
+            IncidenciaTrabajador incidencia = controller.cogerIncidencia();
+            if (incidencia != null) {
+                this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
+                actualizarIncidencias();
+            }
+
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Nueva Incidencia", "No se ha podido abrir la ventana nueva incidencia", "Error: " + ex.getMessage(), Alert.AlertType.ERROR);
+        } catch (SQLException ex) {
+            Alertas.generarAlerta("BD", "No se ha podido crear la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
 }

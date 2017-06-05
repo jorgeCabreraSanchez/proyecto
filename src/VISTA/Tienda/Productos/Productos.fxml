@@ -36,10 +36,20 @@
       </TextField>
       <Button fx:id="botonNuevo" layoutX="234.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Añadir/Eliminar" />
       <Button fx:id="buttonVolver" layoutX="14.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVolver" text="volver" />
-      <Label fx:id="labelTitulo" layoutX="210.0" layoutY="32.0" text="Productos de la Tienda">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
+      <AnchorPane fx:id="barra" layoutY="22.0" opacity="0.45" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <MenuButton fx:id="menu" layoutX="537.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="42.0" prefWidth="63.0">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
+                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+              </items>
+            </MenuButton>
+            <Label fx:id="labelTitulo" layoutX="200.0" layoutY="11.0" text="Productos de la Tienda Nº" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

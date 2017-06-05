@@ -42,14 +42,14 @@ public class InsertarProductoController implements Initializable {
 
     int idTienda;
     ListaProductos lp;
+    boolean aceptar = false;
+
     @FXML
     private ListView<Producto> tableviewProductos;
     @FXML
     private ListView<Producto> tableviewCatalogo;
     @FXML
     private Button buttonAgregar;
-    @FXML
-    private Button buttonVolver;
     @FXML
     private Button buttonEliminar;
 
@@ -81,7 +81,7 @@ public class InsertarProductoController implements Initializable {
 
         for (Producto producto : lista) {
             try {
-                lp.nuevoProductoEnTienda(idTienda, producto.getIdProducto());
+                lp.nuevoProductoEnTienda(idTienda, producto);
                 this.tableviewProductos.getItems().add(producto);
             } catch (SQLException ex) {
                 errores.add(producto.getNombre());
@@ -96,47 +96,30 @@ public class InsertarProductoController implements Initializable {
     @FXML
     private void accionEliminar(ActionEvent event) {
         ObservableList<Producto> lista = this.tableviewProductos.getSelectionModel().getSelectedItems();
-        Set<String> errores = new HashSet<>();
+        if (!lista.isEmpty()) {
 
-        for (Producto producto : lista) {
-            try {
-                lp.eliminarProductoEnTienda(idTienda, producto.getIdProducto());
-                this.tableviewProductos.getItems().remove(producto);
-            } catch (SQLException ex) {
-                errores.add(producto.getNombre());
+            Set<String> errores = new HashSet<>();
+
+            for (Producto producto : lista) {
+                try {
+                    lp.eliminarProductoEnTienda(idTienda, producto);
+                    this.tableviewProductos.getItems().remove(producto);
+                } catch (SQLException ex) {
+                    errores.add(producto.getNombre());
+                }
+            }
+
+            if (!errores.isEmpty()) {
+                Alertas.generarAlerta("Productos", "Información repetida", "Los productos:" + errores + " no se han podido eliminar", Alert.AlertType.INFORMATION);
             }
         }
-
-        if (!errores.isEmpty()) {
-            Alertas.generarAlerta("Productos", "Información repetida", "Los productos:" + errores + " no se han podido eliminar", Alert.AlertType.INFORMATION);
-        }
     }
 
-    @FXML
-    private void accionVolver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/VISTA/Tienda/Productos/Productos.fxml"));
-            Parent root = loader.load();
-            ProductosController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
-            controller.mostrarProductos();
-
-            controller.mostrarProductos();
-
-            Stage stageNuevo = new Stage();
-            stageNuevo.setScene(new Scene(root));
-            stageNuevo.show();
-
-            Stage stage = (Stage) this.buttonAgregar.getScene().getWindow();
-            stage.close();
-
-        } catch (IOException ex) {
-            Alertas.generarAlerta("Trabajadores", "No se puede visualizar los trabajadores de esta tienda", Alert.AlertType.ERROR);
-        } catch (SQLException ex) {
-            Alertas.generarAlerta("BD", "No se ha podido visualizar los productos de esta tienda", Alert.AlertType.ERROR);
-
-        }
+    public ListaProductos cogerLista() {
+        return this.lp;
     }
+
+
+
 
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" onMousePressed="#desclickar" prefHeight="350.0" prefWidth="606.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Catalogo.CatalogoController">
+    <stylesheets>
+        <URL value="@Catalogo.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane fx:id="barra" layoutY="20.0" opacity="0.42" prefHeight="43.0" prefWidth="607.0">
+         <children>
+            <TextField fx:id="textFieldNombre" layoutX="238.0" layoutY="10.0" onMousePressed="#nombreClickado" prefHeight="25.0" prefWidth="132.0">
+               <contextMenu>
+                  <ContextMenu fx:id="contextMenuNombre" />
+               </contextMenu>
+            </TextField>
+            <Label layoutX="175.0" layoutY="13.0" text="Nombre:" textFill="#ffeeee">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <MenuButton fx:id="menu" layoutX="548.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="43.0" prefWidth="59.0">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
+                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+              </items>
+            </MenuButton>
+         </children>
+      </AnchorPane>
+      <Button fx:id="botonNuevo" layoutX="69.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo" />
+      <Button fx:id="botonEditar" layoutX="277.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" />
+      <Button fx:id="botonEliminar" layoutX="479.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
+      <TableView fx:id="tablaCatalogo" layoutX="83.0" layoutY="83.0" onMousePressed="#desclickar" prefHeight="200.0" prefWidth="436.0">
+        <columns>
+          <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="columnaNombre" prefWidth="135.0" text="Nombre" />
+            <TableColumn fx:id="columnaDescripcion" prefWidth="225.0" text="Descripción" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

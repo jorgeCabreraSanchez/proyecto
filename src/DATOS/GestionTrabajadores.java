@@ -92,6 +92,8 @@ public class GestionTrabajadores {
 
         ps.executeUpdate();
     }
+    
+    
 
     public void modificarPerfil(Trabajadores trabajador) throws SQLException {
         String sentencia = "Update trabajadores set nombre = ?,apellido1 = ?,apellido2 = ?,contraseña = ? where idTrabajador = ?";

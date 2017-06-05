@@ -9,6 +9,11 @@ import MODELO.Alertas;
 import MODELO.Incidencia.Incidencia;
 import MODELO.Incidencia.IncidenciaTienda;
 import MODELO.Listas.ListaIncidenciasTienda;
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
+import MODELO.Trabajadores.Jefe;
+import MODELO.Trabajadores.Trabajadores;
+import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Incidencias.NuevaEditar.NuevaEditarIncidenciaController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import java.io.IOException;
@@ -31,7 +36,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -44,6 +51,7 @@ public class IncidenciasController implements Initializable {
 
     private int idTienda;
     private ListaIncidenciasTienda lit;
+    private Trabajadores trabajador;
 
     @FXML
     private Button buttonVolver;
@@ -63,16 +71,46 @@ public class IncidenciasController implements Initializable {
     private Button buttonEliminar;
     @FXML
     private Button buttonEditar;
+    @FXML
+    private MenuButton menu;
+    @FXML
+    private AnchorPane barra;
+    @FXML
+    private AnchorPane fondo;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.datePickerHasta.setValue(LocalDate.now());
     }
 
-    public void setIDTienda(int idTienda) {
-        this.idTienda = idTienda;
+    public void setTrabajador(Trabajadores trabajador,int idTienda) {
+        this.trabajador = trabajador;
+        this.idTienda = idTienda;      
+        this.labelTienda.setText(this.labelTienda.getText() + this.idTienda);
+    }
+    
+    public void setTrabajador(Trabajadores trabajador) {
+        this.trabajador = trabajador;
+        if (trabajador instanceof Encargado) {
+            Encargado encargado = (Encargado) trabajador;
+            this.idTienda = encargado.getIdTienda();
+        } else {
+            Empleado empleado = (Empleado) trabajador;
+            this.idTienda = empleado.getIdTienda();
+            this.buttonNuevo.setVisible(false);
+            this.buttonNuevo.setManaged(false);
+            this.buttonEditar.setVisible(false);
+            this.buttonEditar.setManaged(false);
+            this.buttonEliminar.setVisible(false);
+            this.buttonEliminar.setManaged(false);
+            this.buttonVolver.setLayoutY(415);
+            this.fondo.setMaxHeight(454);
+            
+        }
+        this.labelTienda.setText(this.labelTienda.getText() + this.idTienda);
     }
 
     public void rellenarTabla() throws SQLException {
@@ -104,7 +142,11 @@ public class IncidenciasController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Which/TiendaWhich.fxml"));
             Parent root = loader.load();
             TiendaWhichController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
+            if(this.trabajador instanceof Jefe){
+                controller.setTrabajador(this.idTienda, this.trabajador);
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
 
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -192,6 +234,28 @@ public class IncidenciasController implements Initializable {
                 Alertas.generarAlerta("BD", "No se ha podido modificar la incidencia", "Error: " + ex.getErrorCode() + " " + ex.getLocalizedMessage(), Alert.AlertType.ERROR);
             }
         }
+    }
+
+      @FXML
+    private void perfil(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/VISTA/Perfil/Perfil.fxml"));
+            Parent root = loader.load();
+            PerfilController controller = loader.getController();
+            controller.setDatos(this.trabajador);
+
+            Stage stage = (Stage) this.barra.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Perfil", "Ahora mismo no se puede mostrar el perfil, intentelo más tarde.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    private void cerrarSesion(ActionEvent event) {
+        PerfilController.cerrarSesion(this.trabajador, (Stage) this.barra.getScene().getWindow());
     }
 
 }

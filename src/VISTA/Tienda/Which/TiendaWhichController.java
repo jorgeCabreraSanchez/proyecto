@@ -44,7 +44,7 @@ public class TiendaWhichController implements Initializable {
 
     private int idTienda;
     Trabajadores trabajador;
-    
+
     @FXML
     private Button buttonProductos;
     @FXML
@@ -74,7 +74,11 @@ public class TiendaWhichController implements Initializable {
             Parent root = loader.load();
 
             ProductosController controller = loader.getController();
-            controller.setIDTienda(idTienda);
+            if (this.trabajador instanceof Jefe) {
+                controller.setTrabajador(this.trabajador, this.idTienda);
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
             controller.mostrarProductos();
 
             Stage stage = (Stage) this.buttonProductos.getScene().getWindow();
@@ -95,12 +99,12 @@ public class TiendaWhichController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Trabajadores/Trabajadores.fxml"));
             Parent root = loader.load();
             TrabajadoresController controller = loader.getController();
-            if(this.trabajador instanceof Jefe){
-              controller.setTrabajador(this.trabajador,this.idTienda);  
+            if (this.trabajador instanceof Jefe) {
+                controller.setTrabajador(this.trabajador, this.idTienda);
             } else {
                 controller.setTrabajador(this.trabajador);
             }
-            
+
             try {
                 controller.mostrarTrabajadores();
 
@@ -135,10 +139,10 @@ public class TiendaWhichController implements Initializable {
     public int getIDTienda() {
         return this.idTienda;
     }
-    
-    public void setTrabajador(Trabajadores trabajador){
+
+    public void setTrabajador(Trabajadores trabajador) {
         this.trabajador = trabajador;
-        if(trabajador instanceof Encargado){
+        if (trabajador instanceof Encargado) {
             Encargado encargado = (Encargado) trabajador;
             this.idTienda = encargado.getIdTienda();
         } else {
@@ -149,7 +153,7 @@ public class TiendaWhichController implements Initializable {
         this.buttonVolver.setVisible(false);
     }
 
-    public void setTrabajador(int idTienda,Trabajadores trabajador) {
+    public void setTrabajador(int idTienda, Trabajadores trabajador) {
         this.trabajador = trabajador;
         this.idTienda = idTienda;
         this.labelTienda.setText(this.labelTienda.getText() + idTienda);
@@ -162,7 +166,11 @@ public class TiendaWhichController implements Initializable {
             loader.setLocation(getClass().getResource("/VISTA/Tienda/Incidencias/Incidencias.fxml"));
             Parent root = loader.load();
             IncidenciasController controller = loader.getController();
-            controller.setIDTienda(this.idTienda);
+            if (this.trabajador instanceof Jefe) {
+                controller.setTrabajador(this.trabajador,this.idTienda);
+            } else {
+                controller.setTrabajador(this.trabajador);
+            }
             controller.rellenarTabla();
 
             Stage stage = (Stage) this.buttonVolver.getScene().getWindow();
@@ -175,7 +183,7 @@ public class TiendaWhichController implements Initializable {
         }
     }
 
-       @FXML
+    @FXML
     private void perfil(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -183,8 +191,8 @@ public class TiendaWhichController implements Initializable {
             Parent root = loader.load();
             PerfilController controller = loader.getController();
             controller.setDatos(this.trabajador);
-            
-            Stage stage = (Stage)this.barra.getScene().getWindow();
+
+            Stage stage = (Stage) this.barra.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException ex) {

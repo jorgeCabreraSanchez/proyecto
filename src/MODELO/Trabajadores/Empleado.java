@@ -51,15 +51,22 @@ public class Empleado extends Trabajadores {
         this.idTienda.set(idTienda);
     }
 
+    public Empleado(String nombre, String apellido1, String apellido2, String horario, String contraseña) {
+        super(nombre, apellido1, apellido2, horario, contraseña);
+    }
+
     public Empleado(int idTienda, String horario, int incidencias, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id, horario );
+        super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
         this.idTienda.set(idTienda);
         this.incidencias.set(incidencias);
     }
 
     public Empleado(int idTienda, String horario, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
-        super(nombre, apellido1, apellido2, contraseña, estado, id, horario );
+        super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
         this.idTienda.set(idTienda);
+    }
+
+    public Empleado() {
     }
 
     public int getIncidencias() {
@@ -84,7 +91,6 @@ public class Empleado extends Trabajadores {
 //    public void setImagen(byte[] imagen) {
 //        this.imagen = imagen;
 //    }
-
     public int getIdTienda() {
         return idTienda.get();
     }
@@ -95,6 +101,27 @@ public class Empleado extends Trabajadores {
 
     public IntegerProperty idTiendaProperty() {
         return idTienda;
+    }
+
+    public boolean igual(Empleado empleado) {
+        boolean devolver = true;
+        if (!this.nombre.get().equalsIgnoreCase(empleado.getNombre())) {
+            devolver = false;
+        } else if (!this.apellido1.get().equalsIgnoreCase(empleado.getApellido1())) {
+            devolver = false;
+        } else if (!this.apellido2.get().equalsIgnoreCase(empleado.getApellido2())) {
+            devolver = false;
+        } else if (!this.contraseña.get().equalsIgnoreCase(empleado.getContraseña())) {
+            devolver = false;
+        } else if (!this.horario.get().equalsIgnoreCase(empleado.getHorario())) {
+            devolver = false;
+        } else if (this.idTienda.get() != empleado.getIdTienda()) {
+            devolver = false;
+        } else if (this.incidencias.get() != empleado.getIncidencias()) {
+            devolver = false;
+        }
+
+        return devolver;
     }
 
 }

@@ -6,6 +6,8 @@
 package MODELO.Listas;
 
 import DATOS.GestionTrabajadores;
+import MODELO.Trabajadores.Empleado;
+import MODELO.Trabajadores.Encargado;
 import MODELO.Trabajadores.Trabajadores;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -26,8 +28,8 @@ public class ListaTrabajadores {
         gt = new GestionTrabajadores();
         traerTrabajadores(idTienda);
     }
-    
-    public void traerTrabajadores(int idTienda) throws SQLException{
+
+    public void traerTrabajadores(int idTienda) throws SQLException {
         trabajadores = gt.trabajadoresEnLaTienda(idTienda);
         trabajadoresMostrar.addAll(trabajadores);
     }
@@ -64,10 +66,40 @@ public class ListaTrabajadores {
         return lista;
     }
 
-    public void editarTrabajador(int idTrabajador, String campo,String nuevo) throws SQLException {
-        gt.modificarTrabajador(idTrabajador,campo,nuevo);
+    public void editarTrabajador(int idTrabajador, String campo, String nuevo) throws SQLException {
+        gt.modificarTrabajador(idTrabajador, campo, nuevo);
     }
-    
+
+    public Set editarTrabajador(Trabajadores trabajadorEditado, int idTienda) throws SQLException {
+        boolean seguir = true;
+
+        Iterator it = this.trabajadores.iterator();
+        while (it.hasNext() && seguir == true) {
+            Trabajadores trabajador = (Trabajadores) it.next();
+            if (trabajador.getId() == trabajadorEditado.getId()) {
+
+                this.trabajadores.remove(trabajador);
+                this.trabajadoresMostrar.remove(trabajador);                                
+                
+                int idTiendaEditado;                
+                if (trabajadorEditado instanceof Empleado) {
+                    Empleado empleado = (Empleado) trabajadorEditado;
+                    idTiendaEditado = empleado.getIdTienda();                    
+                } else {
+                    Encargado encargado = (Encargado) trabajadorEditado;
+                    idTiendaEditado = encargado.getIdTienda();
+                }
+                if (idTiendaEditado == idTienda) {
+                    this.trabajadores.add(trabajadorEditado);
+                    this.trabajadoresMostrar.add(trabajadorEditado);
+                }
+                seguir = false;
+
+            }
+            gt.modificarTrabajador(trabajadorEditado);
+        }
+        return this.trabajadoresMostrar;
+    }
 
     public void eliminarTrabajador(int idTrabajador) throws SQLException {
         this.gt.borrarTrabajador(idTrabajador);
@@ -84,11 +116,10 @@ public class ListaTrabajadores {
         }
     }
 
-    
-    public void nuevoTrabajador(Trabajadores trabajador) throws SQLException{
-      gt.nuevoTrabajador(trabajador);
+    public void nuevoTrabajador(Trabajadores trabajador) throws SQLException {
+        gt.nuevoTrabajador(trabajador);
     }
-    
+
     private boolean empiezaPor(String palabra1, String empieza) {
         if (empieza.equalsIgnoreCase("")) {
             return true;
@@ -105,6 +136,5 @@ public class ListaTrabajadores {
             return false;
         }
     }
-       
 
 }

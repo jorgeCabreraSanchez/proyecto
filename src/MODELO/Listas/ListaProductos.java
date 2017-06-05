@@ -29,7 +29,7 @@ public class ListaProductos {
     }
 
     public Set<Producto> getProductos() {
-        return this.productosMostrar;
+        return this.productos;
     }
 
     public Set<Producto> getProductos(String nombre, String tamaño) {
@@ -56,12 +56,14 @@ public class ListaProductos {
 
     
 
-    public void nuevoProductoEnTienda(int idTienda, int idProducto) throws SQLException {
-        gp.nuevoProductoEnTienda(idTienda, idProducto);       
+    public void nuevoProductoEnTienda(int idTienda, Producto producto) throws SQLException {        
+        gp.nuevoProductoEnTienda(idTienda, producto.getIdProducto());       
+        this.productos.add(producto);        
     }
 
-    public void eliminarProductoEnTienda(int idTienda, int idProducto) throws SQLException {
-        gp.eliminarProductoEnTienda(idTienda, idProducto);
+    public void eliminarProductoEnTienda(int idTienda,Producto producto) throws SQLException {
+        gp.eliminarProductoEnTienda(idTienda, producto.getIdProducto());
+        this.productos.remove(producto);
     }
 
     private boolean empiezaPor(String palabra1, String empieza) {

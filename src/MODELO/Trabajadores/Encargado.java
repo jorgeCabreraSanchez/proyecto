@@ -56,7 +56,10 @@ public class Encargado extends Trabajadores {
 
     public Encargado(int idTienda, String horario, String nombre, String apellido1, String apellido2, String contraseña, String estado, int id) {
         super(nombre, apellido1, apellido2, contraseña, estado, id, horario);
-        this.idTienda.set(id);
+        this.idTienda.set(idTienda);
+    }
+
+    public Encargado() {
     }
 
     public int getIncidencias() {
@@ -77,7 +80,6 @@ public class Encargado extends Trabajadores {
 //    public void setImagen(byte[] imagen) {
 //        this.imagen = imagen;
 //    }
-
     public IntegerProperty incidenciasProperty() {
         return incidencias;
     }
@@ -92,5 +94,26 @@ public class Encargado extends Trabajadores {
 
     public IntegerProperty idTiendaProperty() {
         return idTienda;
+    }
+
+    public boolean igual(Encargado encargado) {
+        boolean devolver = true;
+        if (!this.nombre.get().equalsIgnoreCase(encargado.getNombre())) {
+            devolver = false;
+        } else if (!this.apellido1.get().equalsIgnoreCase(encargado.getApellido1())) {
+            devolver = false;
+        } else if (!this.apellido2.get().equalsIgnoreCase(encargado.getApellido2())) {
+            devolver = false;
+        } else if (!this.contraseña.get().equalsIgnoreCase(encargado.getContraseña())) {
+            devolver = false;
+        } else if (!this.horario.get().equalsIgnoreCase(encargado.getHorario())) {
+            devolver = false;
+        } else if (this.idTienda.get() != encargado.getIdTienda()) {
+            devolver = false;
+        } else if (this.incidencias.get() != encargado.getIncidencias()){
+            devolver = false;
+        }
+
+        return devolver;
     }
 }

@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
  * @author jorge
  */
 public abstract class Trabajadores {
-    
+
     protected IntegerProperty id = new SimpleIntegerProperty();
     protected StringProperty nombre = new SimpleStringProperty();
     protected StringProperty apellido1 = new SimpleStringProperty();
@@ -32,12 +32,12 @@ public abstract class Trabajadores {
     protected StringProperty estado = new SimpleStringProperty();
     protected StringProperty horario = new SimpleStringProperty();
     protected byte[] imagen;
-    
+
     public Trabajadores() {
-        
+
     }
-    
-    public Trabajadores(String nombre, int id, String apellido1, String contraseña, String estado,String horario) {
+
+    public Trabajadores(String nombre, int id, String apellido1, String contraseña, String estado, String horario) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
@@ -45,15 +45,23 @@ public abstract class Trabajadores {
         this.estado.set(estado);
         this.horario.set(horario);
     }
-    
-    public Trabajadores(String nombre, String apellido1, String apellido2,String horario) {
+
+    public Trabajadores(String nombre, String apellido1, String apellido2, String horario, String contraseña) {
+        this.nombre.set(nombre);
+        this.apellido1.set(apellido1);
+        this.apellido2.set(apellido2);
+        this.horario.set(horario);
+        this.contraseña.setValue(contraseña);
+    }
+
+    public Trabajadores(String nombre, String apellido1, String apellido2, String horario) {
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
         this.apellido2.set(apellido2);
         this.horario.set(horario);
     }
-    
-    public Trabajadores(int id, String nombre, String apellido1, String apellido2, String estado,String horario) {
+
+    public Trabajadores(int id, String nombre, String apellido1, String apellido2, String estado, String horario) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
@@ -61,16 +69,16 @@ public abstract class Trabajadores {
         this.estado.set(estado);
         this.horario.set(horario);
     }
-    
-    public Trabajadores(int id, String nombre, String apellido1, String estado,String horario) {
+
+    public Trabajadores(int id, String nombre, String apellido1, String estado, String horario) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
         this.estado.set(estado);
         this.horario.set(horario);
     }
-    
-    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id,String horario) {
+
+    public Trabajadores(String nombre, String apellido1, String apellido2, String contraseña, String estado, int id, String horario) {
         this.id.set(id);
         this.nombre.set(nombre);
         this.apellido1.set(apellido1);
@@ -93,82 +101,81 @@ public abstract class Trabajadores {
 //    public void setImagen(byte[] imagen) {
 //        this.imagen = imagen;
 //    }        
-    
     public String getEstado() {
         return estado.get();
     }
-    
+
     public void setEstado(String value) {
         estado.set(value);
     }
-    
+
     public StringProperty estadoProperty() {
         return estado;
     }
-    
+
     public String getContraseña() {
         return contraseña.get();
     }
-    
+
     public void setContraseña(String value) {
         contraseña.set(value);
     }
-    
+
     public StringProperty contraseñaProperty() {
         return contraseña;
     }
-    
+
     public String getApellido2() {
         return apellido2.get();
     }
-    
+
     public void setApellido2(String value) {
         apellido2.set(value);
     }
-    
+
     public StringProperty apellido2Property() {
         return apellido2;
     }
-    
+
     public String getApellido1() {
         return apellido1.get();
     }
-    
+
     public void setApellido1(String value) {
         apellido1.set(value);
     }
-    
+
     public StringProperty apellido1Property() {
         return apellido1;
     }
-    
+
     public String getNombre() {
         return nombre.get();
     }
-    
+
     public void setNombre(String value) {
         nombre.set(value);
     }
-    
+
     public StringProperty nombreProperty() {
         return nombre;
     }
-    
+
     public int getId() {
         return id.get();
     }
-    
+
     public void setId(int value) {
         id.set(value);
     }
-    
+
     public IntegerProperty idProperty() {
         return id;
     }
-    
+
     public String getHorario() {
         return horario.get();
-    }    
+    }
 
     public void setHorario(String value) {
         horario.set(value);
@@ -177,7 +184,24 @@ public abstract class Trabajadores {
     public StringProperty horarioProperty() {
         return horario;
     }
-    
+
+    public boolean igual(Trabajadores trabajador) {
+        boolean devolver = true;
+        if (!this.nombre.get().equalsIgnoreCase(trabajador.getNombre())) {
+            devolver = false;
+        } else if (!this.apellido1.get().equalsIgnoreCase(trabajador.getApellido1())) {
+            devolver = false;
+        } else if (!this.apellido2.get().equalsIgnoreCase(trabajador.getApellido2())) {
+            devolver = false;
+        } else if (!this.contraseña.get().equalsIgnoreCase(trabajador.getContraseña())){
+            devolver = false;
+        } else if (!this.horario.get().equalsIgnoreCase(trabajador.getHorario())){
+            devolver = false;
+        }
+        
+        return devolver;
+    }
+
     public String toString() {
         String apellido2string = this.apellido2.get();
         if (apellido2string == null) {
@@ -185,5 +209,5 @@ public abstract class Trabajadores {
         }
         return "IDTrabajador: " + this.id.get() + "   Nombre: " + this.nombre.get() + "   Apellidos: " + this.apellido1.get() + " " + apellido2string;
     }
-    
+
 }

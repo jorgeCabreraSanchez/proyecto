@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import jfxtras.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -9,12 +10,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="353.0" prefWidth="525.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Perfil.PerfilController">
+<AnchorPane id="AnchorPane" prefHeight="373.0" prefWidth="539.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Perfil.PerfilController">
     <stylesheets>
         <URL value="@Perfil.css" />
     </stylesheets>
    <children>
-      <AnchorPane fx:id="barra" layoutX="-2.0" layoutY="20.0" opacity="0.4" prefHeight="75.0" prefWidth="502.0">
+      <AnchorPane fx:id="barra" layoutX="-2.0" layoutY="20.0" opacity="0.4" prefHeight="76.0" prefWidth="545.0">
          <children>
             <Label fx:id="textNombre" layoutX="49.0" layoutY="13.0" text="Nombre:  Jorge Cabrera Sánchez" textFill="WHITE">
                <font>
@@ -36,17 +37,29 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <MenuButton fx:id="menu" layoutX="428.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="99.0">
+            <MenuButton fx:id="menu" layoutX="451.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="94.0">
               <items>
+                  <MenuItem fx:id="menuTienda" mnemonicParsing="false" onAction="#accionTienda" text="Tienda" />
                 <MenuItem mnemonicParsing="false" onAction="#configuracion" text="Configuración" />
                 <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="CerrarSesion" />
               </items>
             </MenuButton>
          </children>
       </AnchorPane>
-      <Button fx:id="botonIncidencias" layoutX="159.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionIncidencias" prefHeight="76.0" prefWidth="86.0" text="Incidencias" visible="false" />
-      <Button fx:id="botonTienda" layoutX="305.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionTienda" prefHeight="76.0" prefWidth="86.0" text="Tienda" visible="false" />
       <Button fx:id="botonTiendas" layoutX="305.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionTiendas" prefHeight="76.0" prefWidth="86.0" text="Tiendas" visible="false" />
       <Button fx:id="botonCatalogo" layoutX="159.0" layoutY="148.0" mnemonicParsing="false" onAction="#accionCatalogo" prefHeight="76.0" prefWidth="86.0" text="Catalogo" visible="false" />
+      <ListView fx:id="listViewIncidencias" layoutX="38.0" layoutY="160.0" prefHeight="178.0" prefWidth="475.0" />
+      <Text fx:id="label1" layoutX="60.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desde:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fx:id="label2" layoutX="280.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <LocalDateTextField fx:id="datePickerDesde" layoutX="112.0" layoutY="114.0" promptText="dd/MM/yyyy" />
+      <LocalDateTextField fx:id="datePickerHasta" layoutX="324.0" layoutY="114.0" />
    </children>
 </AnchorPane>
