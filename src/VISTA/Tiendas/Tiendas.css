@@ -1,7 +1,25 @@
 #fondo{
-    -fx-background-image:url("../../images/fondojefe.jpg");
+    -fx-background-image:url("../../images/fondoprueba1.png");
     
 }
 #fondito{
     -fx-background-color: rgba(0,0,0,0.43);
+}
+#ciudad:focused, #direccion:focused{
+    -fx-background-radius: 20px;
+}
+#menu{
+    -fx-border-color: black;
+    -fx-background-image: url(../../images/logoMin1.png);
+    -fx-background-size: stretch;
+}
+#buttonVer, #buttonNuevo, #buttonBorrar, #buttonEditar{
+    -fx-border-color: black;
+}
+#buttonVer:hover, #buttonNuevo:hover, #buttonBorrar:hover, #buttonEditar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
 }

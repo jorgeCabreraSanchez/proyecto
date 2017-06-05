@@ -69,7 +69,7 @@ public class ListaIncidenciasTrabajador {
 
     public void borrarIncidencia(int idIncidencia) throws SQLException {
         boolean seguir = true;
-        this.gi.borrarIncidencia(idIncidencia);
+        this.gi.borrarIncidenciaTrabajador(idIncidencia);
         Iterator<IncidenciaTrabajador> it = this.incidencias.iterator();
         while (it.hasNext() && seguir) {
             IncidenciaTrabajador incidencia = it.next();

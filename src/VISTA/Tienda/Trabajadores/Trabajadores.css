@@ -1,8 +1,32 @@
 
 #fondo{
-    -fx-background-image:url("../../../images/fondotrabajadores.jpg");
+    -fx-background-image:url("../../../images/fondoprueba1.png");
+    -fx-background-size: stretch;
 }
 #fondito{
     -fx-background-color: rgba(0,0,0,0.43);
-    
+}
+#textfieldApellido1:focused{
+    -fx-background-radius: 20px;
+}
+#textfieldNombre:focused{
+    -fx-background-radius: 20px;
+}
+#menu{
+    -fx-border-color: black;
+    -fx-background-image: url(../../../images/logoMin1.png);
+    -fx-background-size: stretch;
+}
+#Nombre:focused, #Apellido1:focused, #Apellido2:focused{
+    -fx-background-radius: 20px;
+}
+#botonNuevo, #buttonVolver, #botonEliminar, #botonVer, #Puesto, #Horario{
+    -fx-border-color: black;
+}
+#botonNuevo:hover, #buttonVolver:hover, #botonEliminar:hover, #botonVer:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
 }

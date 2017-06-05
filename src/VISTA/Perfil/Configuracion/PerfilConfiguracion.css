@@ -1,7 +1,47 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
+#fondito{
+    -fx-background-color: rgba(0,0,0,0.43)
 }
+#fondito1{
+  -fx-background-color: rgba(0,0,0,0.43);  
+}
+#fondo{
+    -fx-background-image: url(../../../images/fondoprueba3.png);
+    -fx-background-size: stretch;
+}
+#textFieldNombre:focused{
+    -fx-background-radius: 20px;
+}
+#textFieldApellido1:focused{
+    -fx-background-radius: 20px;
+}
+#textFieldApellido2:focused{
+    -fx-background-radius: 20px;
+}
+#textFieldContrasena:focused{
+    -fx-background-radius: 20px;
+}
+#contrasenaField:focused{
+    -fx-background-radius: 20px;
+}
+#botonModificar{
+    -fx-border-color: black;
+}
+#botonModificar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+#botonCancelar{
+    -fx-border-color: black;
+}
+#botonCancelar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+
+

@@ -15,12 +15,18 @@ import MODELO.Trabajadores.Trabajadores;
 import VISTA.Perfil.PerfilController;
 import VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController;
 import VISTA.Tienda.Which.TiendaWhichController;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,6 +39,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -43,6 +50,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -81,6 +89,8 @@ public class ProductosController implements Initializable {
     private AnchorPane barra;
     @FXML
     private MenuButton menu;
+    @FXML
+    private Button botonImprimir;
 
     /**
      * Initializes the controller class.
@@ -263,6 +273,49 @@ public class ProductosController implements Initializable {
     private void desclickarPerfil(MouseEvent event) {
         desclickar();
         this.menu.show();
+    }
+
+    @FXML
+    private void accionImprimir(ActionEvent event) {
+        Alert ventanita = new Alert(Alert.AlertType.INFORMATION);
+        ventanita.setTitle("Precios");
+        ventanita.setHeaderText("Eliga el archivo donde quiere generar el ticket");
+        ButtonType abrir = new ButtonType("Buscar archivo");
+        ButtonType defecto = new ButtonType("Por defecto");
+        ButtonType cancelar = new ButtonType("Cancelar");
+        ventanita.getButtonTypes().setAll(abrir, defecto, cancelar);
+        Optional<ButtonType> elegido = ventanita.showAndWait();
+
+        if (elegido.get() == abrir) {
+            DirectoryChooser elegir = new DirectoryChooser();
+            Path archivo = Paths.get(new File("").getAbsolutePath() + "\\productos");
+            elegir.setInitialDirectory(archivo.toFile());
+
+            try {
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                File file = elegir.showDialog(new Stage());
+                if (file != null) {
+                    this.lp.generarTXT(file.toPath(), this.idTienda);
+                }
+            } catch (IOException ex) {
+                Alertas.generarAlerta("Generar Lista Productos", "Error generando la lista de productos", "No se ha podido imprimir la lista de productos", Alert.AlertType.WARNING);
+            }
+
+        } else if (elegido.get() == cancelar) {
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Producto");
+            alerta.setHeaderText("No se generará la lista de productos");
+            alerta.setContentText("No se generará la lista de productos debido a que usted no ha puesto \n"
+                    + "un archivo destino");
+        } else if (elegido.get() == defecto) {
+            try {
+                this.lp.generarTXT(this.idTienda);
+            } catch (IOException ex) {
+                Alertas.generarAlerta("Generar Lista Productos", "Error generando la lista de productos", "No se ha podido imprimir la lista de productos", Alert.AlertType.WARNING);
+            }
+        }
+
     }
 
 }

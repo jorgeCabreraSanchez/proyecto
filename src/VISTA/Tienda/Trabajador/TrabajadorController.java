@@ -279,6 +279,8 @@ public class TrabajadorController implements Initializable {
         this.buttonEditar.setManaged(false);
         this.buttonEliminar.setVisible(false);
         this.buttonEliminar.setManaged(false);
+        this.listViewIncidencias.setVisible(false);
+        this.listViewIncidencias.setManaged(false);
         this.fondo1.maxHeight(216);
     }
 
@@ -495,6 +497,7 @@ public class TrabajadorController implements Initializable {
 
     @FXML
     private void introducirFecha(ActionEvent event) {
+                actualizarIncidencias();
     }
 
     @FXML
@@ -585,6 +588,7 @@ public class TrabajadorController implements Initializable {
 
             IncidenciaTrabajador incidencia = controller.cogerIncidencia();
             if (incidencia != null) {
+                incidencia.setIdTrabajador(this.trabajadorVer.getId());
                 this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
                 actualizarIncidencias();
                 if (this.trabajadorVer instanceof Empleado) {

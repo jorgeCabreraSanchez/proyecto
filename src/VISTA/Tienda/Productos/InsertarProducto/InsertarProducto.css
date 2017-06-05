@@ -1,7 +1,27 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
+#fondo{
+    -fx-background-image: url(../../../../images/fondoprueba3.png);
+    -fx-background-size: stretch;
+}
+#fondito{
+    -fx-background-color: rgba(0,0,0,0.43)
+}
+#buttonAgregar{
+    -fx-border-color: black;
+}
+#buttonAgregar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
+}
+#buttonEliminar{
+    -fx-border-color: black;
+}
+#buttonEliminar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
 }

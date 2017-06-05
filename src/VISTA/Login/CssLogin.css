@@ -9,3 +9,28 @@
 #fondoLogin{
     -fx-background-color: rgba(0,0,0,0.43);  
 }
+#buttonCancelar{
+    -fx-border-color: black;
+}
+#buttonCancelar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+#fieldUsuario:focused{
+    -fx-background-radius: 20px;
+}
+#fieldPassword:focused{
+    -fx-background-radius: 20px;
+}
+#buttonLogin{
+    -fx-border-color: black;
+}
+#buttonLogin:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-underline: true;
+}

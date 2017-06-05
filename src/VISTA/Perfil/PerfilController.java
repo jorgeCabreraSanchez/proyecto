@@ -6,6 +6,7 @@
 package VISTA.Perfil;
 
 import DATOS.GestionTrabajadores;
+import DATOS.Login;
 import MODELO.Alertas;
 import MODELO.Incidencia.IncidenciaTrabajador;
 import MODELO.Listas.ListaIncidenciasTrabajador;
@@ -16,6 +17,7 @@ import MODELO.Trabajadores.Trabajadores;
 import VISTA.Catalogo.CatalogoController;
 import VISTA.Tienda.Which.TiendaWhichController;
 import VISTA.Perfil.Configuracion.PerfilConfiguracionController;
+import VISTA.Tienda.Trabajador.ModificarIncidencia.ModificarIncidenciaController;
 import VISTA.Tiendas.TiendasController;
 import java.io.IOException;
 import java.net.URL;
@@ -142,12 +144,12 @@ public class PerfilController implements Initializable {
             actualizarIncidencias();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             this.datePickerDesde.setDateTimeFormatter(formato);
-            this.datePickerHasta.setDateTimeFormatter(formato);             
-            this.datePickerDesde.localDateProperty().addListener((observable, oldValue, newValue) -> {                
-                    actualizarIncidencias();                
+            this.datePickerHasta.setDateTimeFormatter(formato);
+            this.datePickerDesde.localDateProperty().addListener((observable, oldValue, newValue) -> {
+                actualizarIncidencias();
             });
-             this.datePickerHasta.localDateProperty().addListener((observable, oldValue, newValue) -> {                
-                    actualizarIncidencias();                
+            this.datePickerHasta.localDateProperty().addListener((observable, oldValue, newValue) -> {
+                actualizarIncidencias();
             });
 
         } catch (SQLException ex) {
@@ -252,9 +254,19 @@ public class PerfilController implements Initializable {
                 tipo = "Empleado";
             }
             GestionTrabajadores.desconectar(trabajador.getId(), tipo);
+            
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Login.class.getResource("/VISTA/Login/FXMLLogin.fxml"));
+            Parent root = loader.load();
+            
+            Stage stageNuevo = new Stage();
+            stageNuevo.setScene(new Scene(root));
+            stageNuevo.show();
             stage.close();
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido cerrar sesion", "Error: " + ex.getErrorCode() + " " + ex.getMessage(), Alert.AlertType.ERROR);
+        } catch (IOException ex) {
+            Alertas.generarAlerta("Ventana Login", "No se ha podido abrir la ventana de login", Alert.AlertType.ERROR);
         }
     }
 
@@ -310,7 +322,5 @@ public class PerfilController implements Initializable {
             Alertas.generarAlerta("BD", "Ha ocurrido un error y no se ha podido abrir el catalogo", "Error: " + ex.getErrorCode() + " " + ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-  
 
 }

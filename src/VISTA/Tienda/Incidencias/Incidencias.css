@@ -1,11 +1,52 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
+#fondo{
+    -fx-background-image: url(../../../images/fondoprueba1.png);
+    -fx-background-size: stretch;
 }
-
 #barra{
-    -fx-background-color:black;
+    -fx-background-color: rgba(0,0,0,0.43)
 }
+#buttonEliminar{
+    -fx-border-color: black;
+}
+#buttonEliminar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+#buttonEditar{
+    -fx-border-color: black;
+}
+#buttonEditar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+#buttonNuevo{
+    -fx-border-color: black;
+}
+#buttonNuevo:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}#buttonVolver{
+    -fx-border-color: black;
+}
+#buttonVolver:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
+#menu{
+    -fx-background-image: url(../../../images/logoMin1.png);
+    -fx-border-color: black;
+    -fx-background-size: stretch;
+}
+

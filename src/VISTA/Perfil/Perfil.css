@@ -1,15 +1,30 @@
-/*
- * Empty Stylesheet file.
- */
-
-/*.mainFxmlClass {
-   
-}*/
-
 #barra{
-    -fx-background-color:#000000;
+    -fx-background-color: rgba(0,0,0,0.43)
 }
 #menu{    
     -fx-background-size: stretch; 
     -fx-background-image: url(../../images/usuario1.png);
+}
+#fondo{
+    -fx-background-image: url(../../images/fondoprueba1.png);
+}
+#botonTiendas{
+    -fx-border-color: black;
+}
+#botonTiendas:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
+}
+#botonCatalogo{
+    -fx-border-color: black;
+}
+#botonCatalogo:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
 }

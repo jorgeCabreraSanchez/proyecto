@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" onMousePressed="#desclickar" prefHeight="421.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.ProductosController">
+<AnchorPane id="AnchorPane" fx:id="fondo" onMousePressed="#desclickar" prefHeight="421.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.ProductosController">
     <stylesheets>
         <URL value="@Productos.css" />
     </stylesheets>
@@ -51,5 +51,6 @@
             </Label>
          </children>
       </AnchorPane>
+      <Button fx:id="botonImprimir" layoutX="516.0" layoutY="225.0" mnemonicParsing="false" onAction="#accionImprimir" text="Imprimir" />
    </children>
 </AnchorPane>

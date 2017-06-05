@@ -1,5 +1,21 @@
-/*
- * Empty Stylesheet file.
- */
-
+#fondo{
+    -fx-background-image: url(../../../images/fondoprueba3.png);
+    -fx-background-size: stretch;
+}
+#fondito{
+    -fx-background-color: rgba(0,0,0,0.43);
+}
+#textID:focused, #textCiudad:focused, #textDireccion:focused{
+    -fx-background-radius: 20px;
+}
+#botonNuevo, #botonCancelar{
+    -fx-border-color: black;
+}
+#botonNuevo:hover, #botonCancelar:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true;
+}
 

@@ -104,7 +104,7 @@ public class GestionIncidencias {
     }
     
     public void editarIncidenciaTrabajador(IncidenciaTrabajador incidencia) throws SQLException{
-        String sentencia = "Update incidenciastrabajadores set titulo = ?, descripcion = ? where idIncidencia = ?;";
+        String sentencia = "Update incidenciastrabajadores set titulo = ?, descripcion = ?,fecha = ? where idIncidencia = ?;";
         PreparedStatement ps = connect.prepareStatement(sentencia);
         ps.setString(1, incidencia.getTitulo());
         ps.setString(2, incidencia.getDescripcion());

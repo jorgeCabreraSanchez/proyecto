@@ -1,11 +1,22 @@
-/*
- * Empty Stylesheet file.
- */
-
-.mainFxmlClass {
-
-}
-
 #barra{
-    -fx-background-color:black;
+    -fx-background-color: rgba(0,0,0,0.43);
+}
+#fondo{
+    -fx-background-image: url(../../../images/fondoprueba3.png);
+    -fx-background-size: stretch;
+}
+#menu{
+    -fx-border-color: black;
+    -fx-background-image: url(../../../images/logoMin1.png);
+    -fx-background-size: stretch;
+}
+#buttonVolver, #buttonIncidencias, #buttonProductos, #buttonTrabajadores{
+    -fx-border-color: black;
+}
+#buttonVolver:hover, #buttonIncidencias:hover, #buttonProductos:hover, #buttonTrabajadores:hover{
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-font-weight: bold; 
+    -fx-underline: true; 
 }
