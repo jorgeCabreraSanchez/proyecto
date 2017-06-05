@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="fondo" onMousePressed="#desclickar" prefHeight="421.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.ProductosController">
+<AnchorPane id="fondo" fx:id="fondo" onMousePressed="#desclickar" prefHeight="421.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.ProductosController">
     <stylesheets>
         <URL value="@Productos.css" />
     </stylesheets>
@@ -19,6 +20,16 @@
           <TableColumn fx:id="columnaNombre" prefWidth="106.0" text="Nombre" />
             <TableColumn fx:id="columnaDescripcion" prefWidth="206.0" text="Descripción" />
         </columns>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </TableView>
       <Text layoutX="173.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre">
          <font>
@@ -33,16 +44,56 @@
               </items>
             </ContextMenu>
          </contextMenu>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </TextField>
-      <Button fx:id="botonNuevo" layoutX="234.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Añadir/Eliminar" />
-      <Button fx:id="buttonVolver" layoutX="14.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVolver" text="volver" />
-      <AnchorPane fx:id="barra" layoutY="22.0" opacity="0.45" prefHeight="40.0" prefWidth="600.0">
+      <Button fx:id="botonNuevo" layoutX="234.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionNuevo" text="Añadir/Eliminar">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Button>
+      <Button fx:id="buttonVolver" layoutX="14.0" layoutY="366.0" mnemonicParsing="false" onAction="#accionVolver" text="volver">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Button>
+      <AnchorPane fx:id="barra" layoutY="22.0" prefHeight="40.0" prefWidth="600.0">
          <children>
             <MenuButton fx:id="menu" layoutX="537.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="42.0" prefWidth="63.0">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
                 <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
               </items>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </MenuButton>
             <Label fx:id="labelTitulo" layoutX="200.0" layoutY="11.0" text="Productos de la Tienda Nº" textFill="WHITE">
                <font>
@@ -51,6 +102,5 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="botonImprimir" layoutX="516.0" layoutY="225.0" mnemonicParsing="false" onAction="#accionImprimir" text="Imprimir" />
    </children>
 </AnchorPane>

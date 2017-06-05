@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -14,39 +15,139 @@
         <URL value="@PerfilConfiguracion.css" />
     </stylesheets>
    <children>
-      <Label layoutX="78.0" layoutY="64.0" text="Nombre:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="99.0" text="Apellido1:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="78.0" layoutY="134.0" text="Apellido2:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="73.0" layoutY="170.0" text="Contraseña:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="225.0" layoutY="27.0" text="Configuración">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textFieldNombre" layoutX="151.0" layoutY="61.0" />
-      <TextField fx:id="textFieldApellido1" layoutX="151.0" layoutY="96.0" prefHeight="25.0" prefWidth="203.0" />
-      <TextField fx:id="textFieldApellido2" layoutX="151.0" layoutY="131.0" prefHeight="25.0" prefWidth="203.0" />
-      <TextField fx:id="textFieldContraseña" layoutX="151.0" layoutY="167.0" />
-      <Button fx:id="botonModificar" layoutX="399.0" layoutY="199.0" mnemonicParsing="false" onAction="#accionModificar" text="Modificar" />
-      <Button fx:id="botonCancelar" layoutX="481.0" layoutY="199.0" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar" />
-      <PasswordField fx:id="contraseñaField" layoutX="151.0" layoutY="167.0" />
-      <CheckBox fx:id="checkboxContraseña" layoutX="310.0" layoutY="171.0" mnemonicParsing="false" text="Mostrar Contraseña" />
-      <ImageView fx:id="imagen" fitHeight="106.0" fitWidth="149.0" layoutX="416.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane fx:id="fondo" prefHeight="263.0" prefWidth="600.0">
+         <children>
+            <ImageView fx:id="imagen" fitHeight="106.0" fitWidth="149.0" layoutX="411.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" />
+            <PasswordField fx:id="contraseñaField" layoutX="151.0" layoutY="177.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </PasswordField>
+            <Button fx:id="botonCancelar" layoutX="478.0" layoutY="213.0" mnemonicParsing="false" onAction="#accionCancelar" text="Cancelar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="botonModificar" layoutX="404.0" layoutY="213.0" mnemonicParsing="false" onAction="#accionModificar" text="Modificar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <TextField fx:id="textFieldContraseña" layoutX="151.0" layoutY="177.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TextField>
+            <TextField fx:id="textFieldApellido2" layoutX="151.0" layoutY="137.0" prefHeight="25.0" prefWidth="203.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TextField>
+            <TextField fx:id="textFieldApellido1" layoutX="151.0" layoutY="96.0" prefHeight="25.0" prefWidth="203.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TextField>
+            <TextField fx:id="textFieldNombre" layoutX="151.0" layoutY="60.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TextField>
+            <Label layoutX="71.0" layoutY="180.0" text="Contraseña:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="76.0" layoutY="140.0" text="Apellido2:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="76.0" layoutY="99.0" text="Apellido1:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="84.0" layoutY="63.0" text="Nombre:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <AnchorPane fx:id="fondito" layoutY="10.0" prefHeight="36.0" prefWidth="600.0">
+               <children>
+                  <Label layoutX="253.0" layoutY="8.0" text="Configuración" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="fondito1" layoutX="304.0" layoutY="176.0" prefHeight="27.0" prefWidth="143.0">
+               <children>
+                  <CheckBox fx:id="checkboxContraseña" layoutX="9.0" layoutY="5.0" mnemonicParsing="false" text="Mostrar Contraseña" textFill="WHITE">
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </CheckBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -11,11 +11,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="0.0" prefWidth="593.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajador.TrabajadorController">
+<AnchorPane id="fondo1" fx:id="fondo1" prefHeight="0.0" prefWidth="593.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Trabajador.TrabajadorController">
    <children>
-      <AnchorPane fx:id="fondo1" prefHeight="590.0" prefWidth="593.0" stylesheets="@Trabajador.css">
+      <AnchorPane id="fondo" fx:id="fondo" prefHeight="590.0" prefWidth="593.0" stylesheets="@Trabajador.css">
          <children>
-            <ListView fx:id="listViewIncidencias" layoutX="55.0" layoutY="280.0" prefHeight="200.0" prefWidth="485.0" />
+            <ListView id="listaVistaIncidencias" fx:id="listaVistaIncidencias" layoutX="55.0" layoutY="280.0" prefHeight="200.0" prefWidth="485.0">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></ListView>
             <AnchorPane fx:id="fondito" layoutX="226.0" layoutY="20.0" prefHeight="141.0" prefWidth="344.0">
                <children>
                   <Label fx:id="textnombre" layoutX="20.0" layoutY="20.0" text="Nombre:  " textFill="WHITE">
@@ -46,12 +56,12 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="textID" layoutX="266.0" layoutY="20.0" text="ID: " textFill="WHITE">
+                  <Label fx:id="textID" layoutX="276.0" layoutY="20.0" text="ID: " textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nombre" layoutX="79.0" layoutY="20.0" prefHeight="17.0" prefWidth="50.0" text="Jorge" textFill="WHITE">
+                  <Label fx:id="nombre" layoutX="79.0" layoutY="20.0" prefHeight="17.0" prefWidth="69.0" text="Jorge" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -66,7 +76,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="IDTrabajador" layoutX="288.0" layoutY="20.0" prefHeight="17.0" prefWidth="14.0" text="1" textFill="WHITE">
+                  <Label fx:id="IDTrabajador" layoutX="298.0" layoutY="20.0" prefHeight="17.0" prefWidth="14.0" text="1" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -81,30 +91,69 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textfieldNombre" layoutX="77.0" layoutY="16.0" prefHeight="25.0" prefWidth="50.0" visible="false" />
+                  <TextField fx:id="textfieldNombre" layoutX="77.0" layoutY="16.0" prefHeight="25.0" prefWidth="64.0" visible="false" />
                   <TextField fx:id="textfieldContraseña" layoutX="247.0" layoutY="58.0" prefHeight="25.0" prefWidth="78.0" visible="false" />
                   <TextField fx:id="textFieldidTienda" layoutX="306.0" layoutY="101.0" prefHeight="25.0" prefWidth="31.0" visible="false" />
                   <ComboBox fx:id="comboboxPuesto" layoutX="71.0" layoutY="58.0" prefHeight="25.0" prefWidth="94.0" visible="false" />
                   <ComboBox fx:id="comboboxHorario" layoutX="169.0" layoutY="101.0" prefHeight="25.0" prefWidth="71.0" visible="false" />
-                  <Label fx:id="apellido1" layoutX="129.0" layoutY="20.0" prefHeight="17.0" prefWidth="62.0" text="Cabrera" textFill="WHITE">
+                  <Label fx:id="apellido1" layoutX="146.0" layoutY="20.0" prefHeight="17.0" prefWidth="62.0" text="Cabrera" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="apellido2" layoutX="194.0" layoutY="20.0" prefHeight="17.0" prefWidth="62.0" text="Sánchez" textFill="WHITE">
+                  <Label fx:id="apellido2" layoutX="215.0" layoutY="20.0" prefHeight="17.0" prefWidth="64.0" text="Sánchez" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="textfieldApellido1" layoutX="129.0" layoutY="16.0" prefHeight="25.0" prefWidth="62.0" visible="false" />
-                  <TextField fx:id="textfieldApellido2" layoutX="194.0" layoutY="16.0" prefHeight="25.0" prefWidth="62.0" visible="false" />
+                  <TextField fx:id="textfieldApellido1" layoutX="137.0" layoutY="16.0" prefHeight="25.0" prefWidth="64.0" visible="false" />
+                  <TextField fx:id="textfieldApellido2" layoutX="203.0" layoutY="16.0" prefHeight="25.0" prefWidth="62.0" visible="false" />
                </children>
             </AnchorPane>
-            <ImageView fx:id="foto" fitHeight="141.0" fitWidth="180.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="botonModificar" layoutX="277.0" layoutY="171.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-            <Button fx:id="botonCancelar" layoutX="431.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
-            <DatePicker fx:id="datePickerHasta" editable="false" layoutX="359.0" layoutY="230.0" onAction="#introducirFecha" />
-            <DatePicker fx:id="datePickerDesde" editable="false" layoutX="109.0" layoutY="230.0" onAction="#introducirFecha" />
+            <Button fx:id="botonModificar" layoutX="277.0" layoutY="171.0" mnemonicParsing="false" onAction="#modificar" text="Modificar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <Button fx:id="botonCancelar" layoutX="431.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <DatePicker fx:id="datePickerHasta" editable="false" layoutX="359.0" layoutY="230.0" onAction="#introducirFecha">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></DatePicker>
+            <DatePicker fx:id="datePickerDesde" editable="false" layoutX="109.0" layoutY="230.0" onAction="#introducirFecha">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></DatePicker>
             <Text fx:id="label2" layoutX="315.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasta:">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -115,9 +164,40 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <Button fx:id="buttonEditar" layoutX="272.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" />
-            <Button fx:id="buttonEliminar" layoutX="432.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
-            <Button fx:id="buttonNuevo" layoutX="103.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nueva" />
+            <Button fx:id="buttonEditar" layoutX="272.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <Button fx:id="buttonEliminar" layoutX="432.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <Button fx:id="buttonNuevo" layoutX="103.0" layoutY="528.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nueva">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <Pane fx:id="foto" layoutX="14.0" layoutY="14.0" prefHeight="152.0" prefWidth="197.0" />
          </children>
       </AnchorPane>
    </children>

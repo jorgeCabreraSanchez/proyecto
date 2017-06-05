@@ -115,6 +115,8 @@ public class TrabajadoresController implements Initializable {
     private Button botonEliminar;
     @FXML
     private AnchorPane fondoTotal;
+    @FXML
+    private Button botonVer;
 
     /**
      * Initializes the controller class.

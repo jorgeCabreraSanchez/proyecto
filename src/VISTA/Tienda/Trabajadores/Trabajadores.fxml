@@ -16,22 +16,52 @@
    <children>
       <AnchorPane fx:id="fondo" layoutX="-8.0" prefHeight="513.0" prefWidth="818.0" stylesheets="@Trabajadores.css">
          <children>
-            <Button fx:id="botonEliminar" layoutX="367.0" layoutY="454.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+            <Button fx:id="botonEliminar" layoutX="368.0" layoutY="467.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
-            <Button fx:id="botonNuevo" layoutX="680.0" layoutY="391.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
+            <Button fx:id="botonNuevo" layoutX="680.0" layoutY="404.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
-            <Button layoutX="716.0" layoutY="117.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
+            <Button fx:id="botonVer" layoutX="716.0" layoutY="132.0" mnemonicParsing="false" onAction="#accionVer" text="Ver">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </Button>
-            <TableView fx:id="tabla" editable="true" layoutX="89.0" layoutY="117.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="598.0" tableMenuButtonVisible="true">
+            <TableView fx:id="tabla" editable="true" layoutX="101.0" layoutY="132.0" onMousePressed="#desclickar" prefHeight="249.0" prefWidth="598.0" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="columnaID" prefWidth="64.0" text="ID" />
                 <TableColumn fx:id="columnaNombre" prefWidth="104.0" text="Nombre" />
@@ -41,10 +71,20 @@
                   <TableColumn fx:id="columnaHorario" prefWidth="77.0" text="Horario" />
                   <TableColumn fx:id="columnaIncidencias" prefWidth="75.0" text="Incidencias" />
               </columns>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </TableView>
-            <AnchorPane fx:id="fondito" layoutY="52.0" prefHeight="43.0" prefWidth="818.0">
+            <AnchorPane fx:id="fondito" layoutY="35.0" prefHeight="75.0" prefWidth="818.0">
                <children>
-                  <TextField fx:id="textfieldApellido1" layoutX="434.0" layoutY="12.0" onMousePressed="#apellido1Clickado" prefHeight="25.0" prefWidth="175.0">
+                  <TextField fx:id="textfieldApellido1" layoutX="434.0" layoutY="36.0" onMousePressed="#apellido1Clickado" prefHeight="25.0" prefWidth="175.0">
                      <contextMenu>
                         <ContextMenu fx:id="contextmenuApellido1">
                           <items>
@@ -52,8 +92,18 @@
                           </items>
                         </ContextMenu>
                      </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
                   </TextField>
-                  <TextField fx:id="textfieldNombre" layoutX="169.0" layoutY="12.0" onMousePressed="#nombreClickado">
+                  <TextField fx:id="textfieldNombre" layoutX="169.0" layoutY="36.0" onMousePressed="#nombreClickado">
                      <contextMenu>
                         <ContextMenu fx:id="contextmenuNombre">
                           <items>
@@ -61,36 +111,116 @@
                           </items>
                         </ContextMenu>
                      </contextMenu>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
                   </TextField>
-                  <Label layoutX="365.0" layoutY="16.0" text="Apellido1:" textFill="WHITE">
+                  <Label layoutX="366.0" layoutY="40.0" text="Apellido1:" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="104.0" layoutY="16.0" text="Nombre:" textFill="WHITE">
+                  <Label layoutX="108.0" layoutY="40.0" text="Nombre:" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <MenuButton fx:id="menu" layoutX="755.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="48.0" prefWidth="63.0">
+                  <MenuButton fx:id="menu" layoutX="753.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="75.0" prefWidth="65.0">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
                       <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
                     </items>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
                   </MenuButton>
+                  <Label fx:id="labelTienda" layoutX="284.0" layoutY="5.0" text="Trabajadores de la Tienda Nº" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="buttonVolver" layoutX="23.0" layoutY="454.0" mnemonicParsing="false" onAction="#accionVolver" text="volver" />
-            <TextField fx:id="Nombre" layoutX="47.0" layoutY="391.0" prefHeight="25.0" prefWidth="99.0" promptText="Nombre" />
-            <TextField fx:id="Apellido1" layoutX="157.0" layoutY="391.0" prefHeight="25.0" prefWidth="119.0" promptText="Apellido1" />
-            <TextField fx:id="Apellido2" layoutX="294.0" layoutY="391.0" prefHeight="25.0" prefWidth="119.0" promptText="Appelido2" />
-            <ComboBox fx:id="Puesto" layoutX="433.0" layoutY="391.0" prefHeight="25.0" prefWidth="99.0" promptText="Puesto" />
-            <ComboBox fx:id="Horario" layoutX="554.0" layoutY="391.0" prefHeight="25.0" prefWidth="99.0" promptText="Horario" />
-            <Label fx:id="labelTienda" layoutX="295.0" layoutY="23.0" text="Trabajadores de la Tienda Nº" textFill="#50f4fa">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
+            <Button fx:id="buttonVolver" layoutX="23.0" layoutY="467.0" mnemonicParsing="false" onAction="#accionVolver" text="volver">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></Button>
+            <TextField fx:id="Nombre" layoutX="47.0" layoutY="404.0" prefHeight="25.0" prefWidth="99.0" promptText="Nombre">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></TextField>
+            <TextField fx:id="Apellido1" layoutX="156.0" layoutY="404.0" prefHeight="25.0" prefWidth="119.0" promptText="1er Apellido">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></TextField>
+            <TextField fx:id="Apellido2" layoutX="290.0" layoutY="404.0" prefHeight="25.0" prefWidth="119.0" promptText="2º Apellido">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></TextField>
+            <ComboBox fx:id="Puesto" layoutX="431.0" layoutY="404.0" prefHeight="25.0" prefWidth="99.0" promptText="Puesto">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></ComboBox>
+            <ComboBox fx:id="Horario" layoutX="555.0" layoutY="404.0" prefHeight="25.0" prefWidth="99.0" promptText="Horario">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></ComboBox>
          </children>
       </AnchorPane>
    </children>

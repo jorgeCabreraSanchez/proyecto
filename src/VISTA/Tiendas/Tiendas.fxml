@@ -15,7 +15,7 @@
         <URL value="@Tiendas.css" />
     </stylesheets>
    <children>
-      <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" prefHeight="455.0" prefWidth="606.0">
+      <AnchorPane fx:id="fondo" onMouseReleased="#nadaClick" pickOnBounds="false" prefHeight="455.0" prefWidth="606.0">
          <children>
             <TableView fx:id="tabla" layoutX="38.0" layoutY="100.0" onMouseReleased="#nadaClick" prefHeight="281.0" prefWidth="470.0">
               <columns>
@@ -33,7 +33,7 @@
                   </Lighting>
                </effect>
             </TableView>
-            <Button fx:id="buttonEditar" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionEditar" prefHeight="25.0" prefWidth="51.0" text="Editar">
+            <Button fx:id="buttonEditar" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#accionEditar" prefHeight="27.0" prefWidth="56.0" text="Editar">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -139,6 +139,16 @@
                       <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
                         <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
                     </items>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
                   </MenuButton>
                </children>
             </AnchorPane>

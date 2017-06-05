@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -8,40 +10,112 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" onMousePressed="#desclickar" prefHeight="350.0" prefWidth="606.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="VISTA.Catalogo.CatalogoController">
+<AnchorPane id="AnchorPane" onMousePressed="#desclickar" prefHeight="350.0" prefWidth="606.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Catalogo.CatalogoController">
     <stylesheets>
         <URL value="@Catalogo.css" />
     </stylesheets>
    <children>
-      <AnchorPane fx:id="barra" layoutY="20.0" opacity="0.42" prefHeight="43.0" prefWidth="607.0">
+      <AnchorPane fx:id="fondo" prefHeight="350.0" prefWidth="607.0">
          <children>
-            <TextField fx:id="textFieldNombre" layoutX="238.0" layoutY="10.0" onMousePressed="#nombreClickado" prefHeight="25.0" prefWidth="132.0">
+            <AnchorPane fx:id="barra" layoutX="1.0" layoutY="14.0" prefHeight="37.0" prefWidth="607.0">
+               <children>
+                  <MenuButton fx:id="menu" layoutX="548.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="43.0" prefWidth="59.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
+                      <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
+                    </items>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </MenuButton>
+                  <Label layoutX="274.0" layoutY="12.0" text="Catalogo" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Button fx:id="botonEditar" layoutX="281.0" layoutY="316.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <TableView fx:id="tablaCatalogo" layoutX="88.0" layoutY="105.0" onMousePressed="#desclickar" prefHeight="200.0" prefWidth="436.0">
+              <columns>
+                <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="columnaNombre" prefWidth="135.0" text="Nombre" />
+                  <TableColumn fx:id="columnaDescripcion" prefWidth="225.0" text="Descripción" />
+              </columns>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </TableView>
+            <Button fx:id="botonEliminar" layoutX="499.0" layoutY="316.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <Button fx:id="botonNuevo" layoutX="54.0" layoutY="316.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo">
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Button>
+            <TextField fx:id="textFieldNombre" layoutX="238.0" layoutY="72.0" onMousePressed="#nombreClickado" prefHeight="25.0" prefWidth="132.0">
                <contextMenu>
                   <ContextMenu fx:id="contextMenuNombre" />
                </contextMenu>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </TextField>
-            <Label layoutX="175.0" layoutY="13.0" text="Nombre:" textFill="#ffeeee">
+            <Label layoutX="176.0" layoutY="76.0" text="Nombre:" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <MenuButton fx:id="menu" layoutX="548.0" mnemonicParsing="false" onMousePressed="#desclickarPerfil" prefHeight="43.0" prefWidth="59.0">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#perfil" text="Perfil" />
-                <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
-              </items>
-            </MenuButton>
          </children>
       </AnchorPane>
-      <Button fx:id="botonNuevo" layoutX="69.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionNuevo" text="Nuevo" />
-      <Button fx:id="botonEditar" layoutX="277.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionEditar" text="Editar" />
-      <Button fx:id="botonEliminar" layoutX="479.0" layoutY="300.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
-      <TableView fx:id="tablaCatalogo" layoutX="83.0" layoutY="83.0" onMousePressed="#desclickar" prefHeight="200.0" prefWidth="436.0">
-        <columns>
-          <TableColumn fx:id="columnaID" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="columnaNombre" prefWidth="135.0" text="Nombre" />
-            <TableColumn fx:id="columnaDescripcion" prefWidth="225.0" text="Descripción" />
-        </columns>
-      </TableView>
    </children>
 </AnchorPane>

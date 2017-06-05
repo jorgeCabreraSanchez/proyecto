@@ -72,11 +72,9 @@ public class TrabajadorController implements Initializable {
     @FXML
     private Label idTienda;
     @FXML
-    private ImageView foto;
+    private Pane foto;
     @FXML
     private Label nombre;
-    @FXML
-    private AnchorPane fondo1;
     @FXML
     private AnchorPane fondito;
     @FXML
@@ -140,7 +138,11 @@ public class TrabajadorController implements Initializable {
     @FXML
     private Text label1;
     @FXML
-    private ListView<IncidenciaTrabajador> listViewIncidencias;
+    private AnchorPane fondo;
+    @FXML
+    private AnchorPane fondo1;
+    @FXML
+    private ListView<IncidenciaTrabajador> listaVistaIncidencias;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -228,7 +230,7 @@ public class TrabajadorController implements Initializable {
 
         try {
             this.lit = new ListaIncidenciasTrabajador(this.trabajadorVer.getId());
-            this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias()));
+            this.listaVistaIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias()));
 
         } catch (SQLException ex) {
             Alertas.generarAlerta("BD", "No se ha podido mostrar las incidencias", Alert.AlertType.ERROR);
@@ -279,8 +281,9 @@ public class TrabajadorController implements Initializable {
         this.buttonEditar.setManaged(false);
         this.buttonEliminar.setVisible(false);
         this.buttonEliminar.setManaged(false);
-        this.listViewIncidencias.setVisible(false);
-        this.listViewIncidencias.setManaged(false);
+        this.listaVistaIncidencias.setVisible(false);
+        this.listaVistaIncidencias.setManaged(false);
+        this.fondo.maxHeight(216);
         this.fondo1.maxHeight(216);
     }
 
@@ -502,7 +505,7 @@ public class TrabajadorController implements Initializable {
 
     @FXML
     private void accionEditar(ActionEvent event) {
-        IncidenciaTrabajador incidenciaDar = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        IncidenciaTrabajador incidenciaDar = this.listaVistaIncidencias.getSelectionModel().getSelectedItem();
         if (incidenciaDar != null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -518,7 +521,7 @@ public class TrabajadorController implements Initializable {
 
                 IncidenciaTrabajador incidencia = controller.cogerIncidencia();
                 if (incidencia != null) {
-                    this.listViewIncidencias.setItems(FXCollections.observableArrayList(this.lit.editarIncidencia(incidencia)));
+                    this.listaVistaIncidencias.setItems(FXCollections.observableArrayList(this.lit.editarIncidencia(incidencia)));
 
                     actualizarIncidencias();
                 }
@@ -545,12 +548,12 @@ public class TrabajadorController implements Initializable {
             fechaSalida = this.datePickerHasta.getValue();
 
         }
-        this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(fechaEntrada, fechaSalida)));
+        this.listaVistaIncidencias.setItems(FXCollections.observableArrayList(lit.mostrarIncidencias(fechaEntrada, fechaSalida)));
     }
 
     @FXML
     private void accionEliminar(ActionEvent event) {
-        IncidenciaTrabajador incidencia = this.listViewIncidencias.getSelectionModel().getSelectedItem();
+        IncidenciaTrabajador incidencia = this.listaVistaIncidencias.getSelectionModel().getSelectedItem();
         if (incidencia != null) {
             Optional<ButtonType> boton = Alertas.generarAlerta("Tiendas", "Esta seguro que desea borra la Incidencia?", "Información de la Incidencia:  ID: " + incidencia.getIdIncidencia() + "   Titulo: " + incidencia.getTitulo() + " \n  Descripción: " + incidencia.getDescripcion(), Alert.AlertType.CONFIRMATION);
             if (boton.get().getText().equalsIgnoreCase("aceptar")) {
@@ -589,7 +592,7 @@ public class TrabajadorController implements Initializable {
             IncidenciaTrabajador incidencia = controller.cogerIncidencia();
             if (incidencia != null) {
                 incidencia.setIdTrabajador(this.trabajadorVer.getId());
-                this.listViewIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
+                this.listaVistaIncidencias.setItems(FXCollections.observableArrayList(lit.nuevaIncidencia(incidencia)));
                 actualizarIncidencias();
                 if (this.trabajadorVer instanceof Empleado) {
                     Empleado empleado = (Empleado) this.trabajadorVer;

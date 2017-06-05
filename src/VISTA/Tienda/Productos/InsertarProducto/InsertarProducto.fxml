@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -8,24 +9,73 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="381.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController">
+<AnchorPane id="fondo" fx:id="fondo" prefHeight="381.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VISTA.Tienda.Productos.InsertarProducto.InsertarProductoController">
     <stylesheets>
         <URL value="@InsertarProducto.css" />
     </stylesheets>
    <children>
-      <ListView fx:id="tableviewCatalogo" layoutX="34.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
-      <ListView fx:id="tableviewProductos" layoutX="361.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="432.0" layoutY="69.0" text="Productos">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="109.0" layoutY="69.0" text="Catálogo">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Button fx:id="buttonAgregar" layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onAction="#accionAgregar" prefHeight="54.0" prefWidth="89.0" text="Agregar  --&gt; " />
-      <Button fx:id="buttonEliminar" layoutX="431.0" layoutY="328.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar" />
+      <ListView fx:id="tableviewCatalogo" layoutX="34.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></ListView>
+      <ListView fx:id="tableviewProductos" layoutX="361.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></ListView>
+      <Button fx:id="buttonAgregar" layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onAction="#accionAgregar" prefHeight="54.0" prefWidth="89.0" text="Agregar  --&gt; ">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Button>
+      <Button fx:id="buttonEliminar" layoutX="431.0" layoutY="328.0" mnemonicParsing="false" onAction="#accionEliminar" text="Eliminar">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect></Button>
+      <AnchorPane fx:id="fondito" layoutY="22.0" prefHeight="73.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="108.0" layoutY="43.0" text="Catálogo" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="435.0" layoutY="43.0" text="Productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="239.0" layoutY="4.0" text="Insertar productos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
