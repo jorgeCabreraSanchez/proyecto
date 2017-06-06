@@ -283,8 +283,8 @@ public class TrabajadorController implements Initializable {
         this.buttonEliminar.setManaged(false);
         this.listaVistaIncidencias.setVisible(false);
         this.listaVistaIncidencias.setManaged(false);
-        this.fondo.maxHeight(216);
-        this.fondo1.maxHeight(216);
+        this.fondo.setMaxHeight(216);
+        this.fondo1.setMaxHeight(216);
     }
 
     /* id del trabajador que ha abierto la aplicacion */
